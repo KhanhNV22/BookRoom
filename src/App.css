@@ -1,0 +1,49 @@
+.mt--30{
+    margin-top: 30px!important;
+}
+.mb--30{
+    margin-bottom: 30px!important;
+}
+.mt--42{
+    margin-top: 42px !important;
+}
+.text_decoration{
+    text-decoration: none;
+}
+.container--md {
+    max-width: calc(1520px + 5.6rem);
+} 
+.container--sm {
+    max-width: calc(1296px + 5.6rem);
+}
+
+.margin--body{
+    margin: auto;
+    padding: 0 1.25rem;
+}
+.formik_error{
+    color: red !important;
+    font-size: 12px !important;
+    margin-bottom: 0;
+}
+.slick-prev, .slick-next{
+    display: none !important;
+}
+.is-absolute {
+    position: absolute!important;
+}
+.is-relative {
+    position: relative;
+}
+.px--6 {
+    padding-left: 6px!important;
+}
+@media (min-width: 1200px){
+    .col-lg-20 {
+        flex-basis: 20%;
+        max-width: 20%;
+    }
+    .margin--body {
+        padding: 0 2.8rem;
+    }
+}

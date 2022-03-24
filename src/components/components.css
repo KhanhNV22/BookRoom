@@ -1,0 +1,149 @@
+/* login */
+.welcome {
+    background: linear-gradient(90deg,#f65e38 0,#f68a39 51%,#f65e38);
+    padding: 3rem 0 5rem;
+    color: #fff;
+}
+
+.welcome__title {
+    font-size: 1.25rem;
+    margin-bottom: 0.625rem;
+    font-weight: 900;
+}
+
+.welcome__desc {
+    font-size: 1.125rem;
+    margin: 0;
+}
+
+.account {
+    padding: 0.975rem;
+    background: #fff;
+    box-shadow: 0 9px 46px 8px rgb(0 0 0 / 2%), 0 24px 38px 3px rgb(0 0 0 / 4%), 0 11px 15px -7px rgb(0 0 0 / 5%);
+    border-radius: 0.625rem;
+    margin-top: -3.375rem;
+}
+
+.media {
+    margin-top: 3rem;
+}
+.icons_login{
+    width: 65px;
+    height: 70px;
+    border-style: none;
+    max-width: 100%;
+    vertical-align: middle;
+}
+.media__title {
+    margin: 1.5rem 0 0.875rem;
+    font-size: 1.125rem;
+    font-weight: 900;
+}
+.media__content {
+    color: #555;
+}
+.m--0{
+    margin-bottom: 0;
+}
+
+/* footer */
+.footer{
+    border-top: 1px solid #f2f2f2;
+    padding: 24px 15px;
+    font-weight: 500;
+    letter-spacing: .23px;
+    background: #fff;
+    text-align: center;
+    margin-top: 2rem;
+}
+.footer p{
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+.mt--30{
+    margin-top: 30px;
+}
+
+.btn-top{
+    position: fixed;
+    right: 30px;
+    bottom: 40px;
+    border: none;
+    background: no-repeat;
+    color: #f65e38;
+    padding: 0 5px;
+    font-size: 39px;
+}
+
+
+/* slick */
+.post-relative{
+    position: relative !important;
+}
+/* btn slick */
+.button_slick{
+    position: absolute;
+    display: block;
+    line-height: 0;
+    font-size: 0;
+    cursor: pointer;
+    color: #222;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    outline: none;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 0 7px -4px #000;
+    width: 56px;
+    height: 56px;
+    border-radius: 56px;
+    transition: all .3s ease-in-out;
+    z-index: 2;
+    opacity: 0.5;
+}
+.button_slick:hover{
+    opacity: 1;
+}
+.btn_prev{
+    left: -15px;
+}
+.btn_next{
+    right: -15px;
+}
+.icon_slick{
+    font-size:18px;
+}
+
+@media (min-width: 1500px) {
+    .btn_prev{
+        left: -32px;
+    }
+    .btn_next{
+        right: -32px;
+    }
+}
+
+/* login gg */
+.login_gg, .logout_gg{
+    border: 1px solid #fff !important;
+    background: #fff;
+    width: 100% !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+.login_gg span{
+    width: 100%;
+    padding: 0 !important;
+}
+.logout_gg span{
+    padding: 0 !important;
+    font-size: 16px;
+    text-decoration: none;
+    color: #222;
+}
+.logout_gg:hover span {
+    color: #333;
+    transition: all .2s;
+    font-weight: 600 !important;
+}

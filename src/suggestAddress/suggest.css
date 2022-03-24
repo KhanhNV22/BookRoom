@@ -1,0 +1,60 @@
+.homestay-page{
+    max-width: 100%;
+}
+.search-filter{
+    margin: 0;
+    padding: 0;
+}
+.search-filter li{
+    display: inline-block;
+    margin-right: 10px;
+}
+.search-filter li button{
+    border: 1px solid #e6e6e6;
+    color: #222;
+    background-color: #fff;
+    padding: 0.5em 0.8em;
+    font-size: .875rem;
+    font-weight: 600;
+    border-radius: 5px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+}
+.search-filter li button:hover{
+    color: #fff;
+    background: #f65e39;
+}
+.search-filter li button svg{
+    margin-right: 5px;
+}
+
+.title p svg{
+    border: 1px solid #f65e39;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    border-radius: 32px;
+    color: #fff;
+    background: #f65e39;
+    margin-right: 10px;
+}
+.promo__title{
+    font-weight: bold;
+}
+.promo__title:hover{
+    color: #f65e39;
+}
+.promo__description{
+    font-size: 14px;
+}
+.star_icons{
+    align-items: center;
+    flex-direction: row;
+    display: inline-flex;
+}
+.star_icons svg{
+    color: #f65e39;
+    font-size: 14px;
+    margin-right: 2px;
+}

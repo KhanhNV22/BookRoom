@@ -1,0 +1,113 @@
+.account__title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 900;
+}
+.input-group {
+    margin-bottom: 1rem;
+}
+.input-group__label {
+    position: relative;
+}
+
+.bold{
+    font-weight: 700;
+}
+.is-block {
+    display: block;
+}
+.account__body>* {
+    margin-top: 2rem;
+}
+input, textarea {
+    padding: 0.5rem 1.25rem;
+    height: 3rem;
+    border: 1px solid #e6e6e6;
+    transition: all .3s;
+    font-size: 14px;
+    font-family: Luxstay;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    border-radius: 5px;
+}
+.input-icon.is-absolute {
+    top: 10px;
+}
+.input-group__icon span {
+    right: 1.15rem;
+    top: calc(50% - 4px);
+}
+.input:not(.input--square) {
+    border-radius: 3rem;
+    outline: none;
+}
+.btn--shadow {
+    box-shadow: 0 4px 12px 0 rgb(246 116 57 / 40%);
+}
+.btn-grad--primary {
+    background-image: linear-gradient(90deg,#f65e38 0,#f68a39 51%,#f65e38);
+    background-size: 200% auto;
+}
+.btn--radius, .btn--radius:before {
+    border-radius: 3rem;
+}
+.btn--full {
+    width: 100%;
+    text-align: center;
+}
+
+.btn--md, .btn--xl {
+    padding: 0 1.875rem;
+    height: 3.5rem;
+    line-height: 3.5rem;
+}
+.btn {
+    outline: 0;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1rem;
+    display: inline-block;
+    transition: all .3s;
+    text-align: center;
+}
+.center-xs {
+    justify-content: center;
+    text-align: center;
+}
+.mt--30 {
+    margin-top: 30px!important;
+}
+.text-orange {
+    color: #f65e39;
+}
+.account__btn a{
+    color: #fff;
+}
+.account__btn:hover a{
+    color: #fff;
+}
+.account__3rd .btn:last-child {
+    margin-top: 1rem;
+}
+.account__3rd .btn {
+    border-color: #e6e6e6;
+}
+.btn-outline--secondary {
+    border: 1px solid #555;
+    color: #555;
+}
+.btn span {
+    pointer-events: none;
+}
+.account__3rd .icon-square {
+    top: calc(50% - 0.5rem);
+    right: 1.275rem;
+    font-size: 22px;
+}
+.icon-square {
+    color: #3a5999;
+}
+.btn-outline--secondary:hover span {
+    color: #f65e39;
+}

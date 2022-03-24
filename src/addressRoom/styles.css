@@ -1,0 +1,44 @@
+.title p {
+    color: #555;
+    margin: 0;
+    font-size: 16px;
+}
+
+.title-h2{
+    font-size: 24px;
+    color: #222;
+    margin-bottom: 20px;
+    font-weight: 900;
+}
+.img-room{
+    border-radius: 3px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+}
+.title__room{
+    color: rgb(118, 118, 118);
+    font-size: 14px;
+    margin-top: 0.5rem;
+}
+.promo__title {
+    font-size: 1rem;
+    margin-bottom: 0;
+    display: -webkit-box;
+    max-height: 52px;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    color: rgb(72, 72, 72);
+    -webkit-line-clamp: 1;
+    margin-bottom: 3px;
+}
+.promo__price span {
+    font-weight: bold;
+    font-size: 14px;
+    color: #222;
+}
