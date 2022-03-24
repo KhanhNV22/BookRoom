@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {  Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 import "./styles.css";
 import Footer from "../components/footer";
 
@@ -39,147 +39,21 @@ const AddressRoom = () => {
         <Row>
           <Col xs={6} md={3} className="col-lg-20">
             <div className="div-room">
-              <Link to="/" className="text_decoration">
+              <Link to="/rooms" className="text_decoration" target="_blank">
                 <img alt=""
                   src="https://cdn.luxstay.com/admins/12/2TR6G7u6ua140zR2NI4yUJdG.png"
                   className="img-room"
                 />
-              </Link>
-              <div>
-                <span className="title__room">
-                  Căn hộ dịch vụ - 1 phòng ngủ
+                <div>
+                  <span className="title__room">
+                    Căn hộ dịch vụ - 1 phòng ngủ
+                  </span>
+                </div>
+                <span className="promo__title">
+                  The Galaxy Home - 1 Phòng Ngủ, 60m2, View Thành Phố, Ban Công -
+                  Dịch Vọng
                 </span>
-              </div>
-              <Link to="/" className="text_decoration promo__title">
-                The Galaxy Home - 1 Phòng Ngủ, 60m2, View Thành Phố, Ban Công -
-                Dịch Vọng
               </Link>
-
-              <div className="promo__price">
-                <span>850,000 /đêm </span>
-              </div>
-              <div className="mb--30"></div>
-            </div>
-          </Col>
-
-          <Col xs={6} md={3} className="col-lg-20">
-            <div className="div-room">
-              <Link to="/" className="text_decoration">
-                <img alt=""
-                  src="https://cdn.luxstay.com/admins/12/2TR6G7u6ua140zR2NI4yUJdG.png"
-                  className="img-room"
-                />
-              </Link>
-              <div>
-                <span className="title__room">
-                  Căn hộ dịch vụ - 1 phòng ngủ
-                </span>
-              </div>
-              <Link to="/" className="text_decoration promo__title">
-                The Galaxy Home - 1 Phòng Ngủ, 60m2, View Thành Phố, Ban Công -
-                Dịch Vọng
-              </Link>
-
-              <div className="promo__price">
-                <span>850,000 /đêm </span>
-              </div>
-              <div className="mb--30"></div>
-            </div>
-          </Col>
-
-          <Col xs={6} md={3} className="col-lg-20">
-            <div className="div-room">
-              <Link to="/" className="text_decoration">
-                <img alt=""
-                  src="https://cdn.luxstay.com/admins/12/2TR6G7u6ua140zR2NI4yUJdG.png"
-                  className="img-room"
-                />
-              </Link>
-              <div>
-                <span className="title__room">
-                  Căn hộ dịch vụ - 1 phòng ngủ
-                </span>
-              </div>
-              <Link to="/" className="text_decoration promo__title">
-                The Galaxy Home - 1 Phòng Ngủ, 60m2, View Thành Phố, Ban Công -
-                Dịch Vọng
-              </Link>
-
-              <div className="promo__price">
-                <span>850,000 /đêm </span>
-              </div>
-              <div className="mb--30"></div>
-            </div>
-          </Col>
-
-          <Col xs={6} md={3} className="col-lg-20">
-            <div className="div-room">
-              <Link to="/" className="text_decoration">
-                <img alt=""
-                  src="https://cdn.luxstay.com/admins/12/2TR6G7u6ua140zR2NI4yUJdG.png"
-                  className="img-room"
-                />
-              </Link>
-              <div>
-                <span className="title__room">
-                  Căn hộ dịch vụ - 1 phòng ngủ
-                </span>
-              </div>
-              <Link to="/" className="text_decoration promo__title">
-                The Galaxy Home - 1 Phòng Ngủ, 60m2, View Thành Phố, Ban Công -
-                Dịch Vọng
-              </Link>
-
-              <div className="promo__price">
-                <span>850,000 /đêm </span>
-              </div>
-              <div className="mb--30"></div>
-            </div>
-          </Col>
-
-          <Col xs={6} md={3} className="col-lg-20">
-            <div className="div-room">
-              <Link to="/" className="text_decoration">
-                <img alt=""
-                  src="https://cdn.luxstay.com/admins/12/2TR6G7u6ua140zR2NI4yUJdG.png"
-                  className="img-room"
-                />
-              </Link>
-              <div>
-                <span className="title__room">
-                  Căn hộ dịch vụ - 1 phòng ngủ
-                </span>
-              </div>
-              <Link to="/" className="text_decoration promo__title">
-                The Galaxy Home - 1 Phòng Ngủ, 60m2, View Thành Phố, Ban Công -
-                Dịch Vọng
-              </Link>
-
-              <div className="promo__price">
-                <span>850,000 /đêm </span>
-              </div>
-              <div className="mb--30"></div>
-            </div>
-          </Col>
-
-          <Col xs={6} md={3} className="col-lg-20">
-            <div className="div-room">
-              <Link to="/" className="text_decoration">
-                <img alt=""
-                  src="https://cdn.luxstay.com/admins/12/2TR6G7u6ua140zR2NI4yUJdG.png"
-                  className="img-room"
-                />
-              </Link>
-              <div>
-                <span className="title__room">
-                  Căn hộ dịch vụ - 1 phòng ngủ
-                </span>
-              </div>
-              <Link to="/" className="text_decoration promo__title">
-                The Galaxy Home - 1 Phòng Ngủ, 60m2, View Thành Phố, Ban Công -
-                Dịch Vọng
-              </Link>
-
               <div className="promo__price">
                 <span>850,000 /đêm </span>
               </div>

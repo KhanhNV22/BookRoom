@@ -147,3 +147,13 @@
     transition: all .2s;
     font-weight: 600 !important;
 }
+/* read more */
+.text{
+    display: inline;
+    width: 100%;
+  }
+    
+  .read-or-hide{
+    color: #f65e39;
+    cursor: pointer;
+  }

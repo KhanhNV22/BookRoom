@@ -5,6 +5,7 @@ import Home from "./home";
 import AddressRoom from "./addressRoom";
 import SuggestAddress from './suggestAddress';
 import "./App.css";
+import Rooms from "./rooms";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="home" element={<Home />} />
         <Route path="addressRoom" element={<AddressRoom />} />
         <Route path="suggestAddress" element={<SuggestAddress />} />
+        <Route path="rooms" element={<Rooms />} />
       </Routes>
     </div>
   );
