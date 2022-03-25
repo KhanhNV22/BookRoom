@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import SliderBanner from "./silde";
 import SliderCarousel from "../components/sliderCarousel";
 import Header from "../header";
+import axios from "axios";
 
 import {
   AiFillWechat,
@@ -14,8 +15,39 @@ import {
 } from "react-icons/ai";
 import Footer from "../components/footer";
 import BtnToTop from "../components/BtnToTop";
+interface IPost {
+  id: number,
+  address: string,
+  image_address: string
+}
+const defaultProps:IPost[] = [];
 
 const Home: React.FC = () => {
+  const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = useState(defaultProps);
+  const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState<boolean>(true);
+  const [error, setError]: [string, (error: string) => void] = useState("");
+
+  const URL = "http://localhost:4000/rooms";
+
+  useEffect(() => {
+    axios
+    .get<IPost[]>(URL)
+    .then(response => {
+      setPosts(response.data);
+      setLoading(false);
+    })
+    .catch(ex => {
+      const err =
+        ex.response.status === 404
+          ? "Resource not found"
+          : "An unexpected error has occurred";
+      setError(err);
+      setLoading(false);
+    });
+  },[])
+
+  const numberAdd = posts.length;
+
   return (
     <div className="home">
       <Header />
@@ -48,105 +80,23 @@ const Home: React.FC = () => {
 
           <div>
             <SliderCarousel dots={false} slidesToShow={5} styles={{ display: 'block' }}>
-              <div className="product__cover">
-                <Link to="/addressRoom">
-                  <img alt=""
-                    className="product__image"
-                    src="https://cdn.luxstay.com/home/location/location_1_1559734709.png"
-                  />
-
-                  <div className="product__content">
-                    <div className="product__title">Ha Noi</div>
-                    <span className="product__price">
-                      <b>2295</b> Chỗ ở
-                    </span>
-                  </div>
-                </Link>
-              </div>
-
-              <div className="product__cover">
-                <img alt=""
-                  className="product__image"
-                  src="https://cdn.luxstay.com/home/location/location_1_1559734709.png"
-                />
-
-                <div className="product__content">
-                  <div className="product__title">Ha Noi</div>
-                  <span className="product__price">
-                    <b>2295</b> Chỗ ở
-                  </span>
+              {posts.map((post) => (
+                <div className="product__cover" key={post.id}>
+                  <Link to="/addressRoom">
+                    <img alt=""
+                      className="product__image"
+                      src={post.image_address}
+                    />
+                    <div className="product__content">
+                      <div className="product__title">{post.address}</div>
+                      <span className="product__price">
+                        <b>{numberAdd}</b> Chỗ ở
+                      </span>
+                    </div>
+                  </Link>
                 </div>
-              </div>
-
-              <div className="product__cover">
-                <img alt=""
-                  className="product__image"
-                  src="https://cdn.luxstay.com/home/location/location_1_1559734709.png"
-                />
-
-                <div className="product__content">
-                  <div className="product__title">Ha Noi</div>
-                  <span className="product__price">
-                    <b>2295</b> Chỗ ở
-                  </span>
-                </div>
-              </div>
-
-              <div className="product__cover">
-                <img alt=""
-                  className="product__image"
-                  src="https://cdn.luxstay.com/home/location/location_1_1559734709.png"
-                />
-
-                <div className="product__content">
-                  <div className="product__title">Ha Noi</div>
-                  <span className="product__price">
-                    <b>2295</b> Chỗ ở
-                  </span>
-                </div>
-              </div>
-
-              <div className="product__cover">
-                <img alt=""
-                  className="product__image"
-                  src="https://cdn.luxstay.com/home/location/location_1_1559734709.png"
-                />
-
-                <div className="product__content">
-                  <div className="product__title">Ha Noi</div>
-                  <span className="product__price">
-                    <b>2295</b> Chỗ ở
-                  </span>
-                </div>
-              </div>
-
-              <div className="product__cover">
-                <img alt=""
-                  className="product__image"
-                  src="https://cdn.luxstay.com/home/location/location_1_1559734709.png"
-                />
-
-                <div className="product__content">
-                  <div className="product__title">Ha Noi</div>
-                  <span className="product__price">
-                    <b>2295</b> Chỗ ở
-                  </span>
-                </div>
-              </div>
-
-              <div className="product__cover">
-                <img alt=""
-                  className="product__image"
-                  src="https://cdn.luxstay.com/home/location/location_1_1559734709.png"
-                />
-
-                <div className="product__content">
-                  <div className="product__title">Ha Noi</div>
-                  <span className="product__price">
-                    <b>2295</b> Chỗ ở
-                  </span>
-                </div>
-              </div>
+              ))}
+              {error && <p className="error">{error}</p>}
             </SliderCarousel>
           </div>
         </div>

@@ -37,7 +37,7 @@ useEffect(() => {
     setShowlogoutButton(false);
     navigate("/");
   };
-console.log(values, 'abc');
+  
   return (
     <div>
       {showloginButton ? (

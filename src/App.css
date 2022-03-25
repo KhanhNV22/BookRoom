@@ -56,6 +56,9 @@
 .bold{
     font-weight: bold;
 }
+.error{
+    color: red;
+}
 @media (min-width: 1200px){
     .col-lg-20 {
         flex-basis: 20%;

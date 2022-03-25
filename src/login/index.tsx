@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
 import LoginComponent from "../components/LoginComponent";
@@ -13,12 +13,31 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import LoginSocial from "../components/LoginSocial";
 
-
 const Login = () => {
-  // useEffect(() => {
-  //   localStorage.setItem("user", JSON.stringify())
-  // })
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(localStorage.getItem('user-info')) {
+      navigate("/home")
+    }
+  },[])
+
+  async function login() {
+    let result = await fetch("http://localhost:4000/users", {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    });
+    result = await result.json();
+    localStorage.setItem("user-info", JSON.stringify(result));
+    navigate("/")
+  }
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -54,12 +73,9 @@ const Login = () => {
               name="email"
               placeholder="Địa chỉ email"
               className="input"
-              value={formik.values.email}
-              onChange={formik.handleChange}
+             
+              onChange={(e) => setEmail(e.target.value)}
             />
-            {formik.errors.email && formik.touched.email && (
-              <p className="formik_error">{formik.errors.email}</p>
-            )}
             <span className="is-absolute input-icon">
               <AiOutlineMail />
             </span>
@@ -70,18 +86,15 @@ const Login = () => {
               type="password"
               placeholder="Mật khẩu"
               className="input"
-              value={formik.values.password}
-              onChange={formik.handleChange}
+              onChange={(e) => setPassword(e.target.value)}
             />{" "}
-            {formik.errors.password && formik.touched.password && (
-              <p className="formik_error">{formik.errors.password}</p>
-            )}
             <span className="is-absolute input-icon">
               <BsLock />
             </span>{" "}
           </div>{" "}
           <button
             type="submit"
+            onClick={login}
             className="account__btn btn btn-grad--primary btn--shadow btn--md btn--radius btn--full bold"
           >
             Đăng nhập
