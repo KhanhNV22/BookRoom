@@ -16,7 +16,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="addressRoom" element={<AddressRoom />} />
         <Route path="suggestAddress" element={<SuggestAddress />} />
-        <Route path="rooms" element={<Rooms />} />
+        <Route path="rooms/:id" element={<Rooms />} />
       </Routes>
     </div>
   );

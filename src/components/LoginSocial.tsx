@@ -24,7 +24,7 @@ useEffect(() => {
     setValues(res);
     setShowloginButton(false);
     setShowlogoutButton(true);
-    navigate("/home");
+    navigate("/");
   };
 
   const onLoginFailure = (res: any) => {
@@ -35,7 +35,7 @@ useEffect(() => {
     console.clear();
     setShowloginButton(true);
     setShowlogoutButton(false);
-    navigate("/");
+    navigate("/login");
   };
   
   return (

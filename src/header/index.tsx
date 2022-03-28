@@ -7,19 +7,15 @@ import "./styles.css";
 import { BsBagPlus } from "react-icons/bs";
 import { AiOutlineMail, AiOutlineCalendar, AiOutlineSetting, AiOutlineHeart, AiOutlineLogout } from "react-icons/ai";
 
-interface PropsLogin {
-  email: string
-}
 
 const Header = () => {
-  let user = localStorage.getItem('user-info')
+  let navigate = useNavigate();
 
-  const navigate = useNavigate()
-  function Logout() {
+  function logout() {
     localStorage.clear();
-    navigate("/");
+    navigate("/login")
   }
-  
+
   return (
     <div className="header">
       <div className="container--md margin--body">
@@ -50,104 +46,58 @@ const Header = () => {
                 <li className="li_menu">
                   <Link to="/" className="menu_link">Host</Link>
                 </li>
-
-                {localStorage.getItem("user-info") ?
-                  <>
-                    <li className="is-relative menu-item li_menu">
-                      <span className="menu__link menu__link--user btn--dropdown">
-                        <div className="user-avatar">
-                          <img src="https://lh3.googleusercontent.com/a/AATXAJzT56VA7fRZyrIx9kgl4po9tOKI7USqcjZRTCnp=s96-c" alt="" />
-                        </div>
-                        <span className="px--6">{user}</span>
-                      </span>
-
-                      <div className=" popover--user-menu">
-                        <ul className="user-menu is-relative">
-                          <li>
-                            <Link to="/" className="user-menu__link">
-                              <AiOutlineCalendar /> {""}
-                              Đặt chỗ của tôi
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/" className="user-menu__link">
-                              <AiOutlineMail /> {""}
-                              Tin Nhắn
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/" className="user-menu__link">
-                              <AiOutlineSetting /> {""}
-                              Cài đặt tài khoản
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/" className="user-menu__link">
-                              <AiOutlineHeart /> {""}
-                              Yêu thích
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/" className="user-menu__link">
-                              <BsBagPlus /> {""}
-                              Luxstay for Business
-                            </Link>
-                          </li>
-
-                          <li>
-                            {localStorage.getItem("user-info") ?
-                              <>
-                                <span className="user-menu__link user_logut" onClick={Logout}>
-                                  <AiOutlineLogout /> {""}
-                                  Đăng xuất
-                                </span>
-                              </> :
-                              <>
-                                <span className="user-menu__link user_logut">
-                                  <AiOutlineLogout /> {""}
-                                  <LoginSocial children />
-                                </span>
-                              </>
-                            }
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                  </> :
-                  <>
-                    <li className="li_menu">
-                      <Link to="/registration" className="menu_link">Đăng Ký</Link>
-                    </li>
-                    <li className="li_menu">
-                      <Link to="/login" className="menu_link">Đăng Nhập</Link>
-                    </li>
-                  </>
-                }
-
                 <li className="is-relative menu-item li_menu">
                   <span className="menu__link menu__link--user btn--dropdown">
                     <div className="user-avatar">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg/230px-Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg.png" alt="" />
+                      <img src="https://lh3.googleusercontent.com/a/AATXAJzT56VA7fRZyrIx9kgl4po9tOKI7USqcjZRTCnp=s96-c" alt="" />
                     </div>
-                    <span className="px--6">VI</span>
+                    <span className="px--6">khanh</span>
                   </span>
 
-                  <div className=" popover--user-menu" style={{ minWidth: '150px' }}>
+                  <div className=" popover--user-menu">
                     <ul className="user-menu is-relative">
                       <li>
-                        <Link to="/" className="user-menu__link">
-                          <img className="flag_icons" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg/230px-Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg.png" alt="" />
-                          VI
+                        <Link to="/" className="user-menu__link" >
+                          <AiOutlineCalendar /> {""}
+                          Đặt chỗ của tôi
                         </Link>
                       </li>
                       <li>
                         <Link to="/" className="user-menu__link">
-                          <img className="flag_icons" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/300px-Flag_of_the_United_Kingdom.svg.png" alt="" />
-                          ENG
+                          <AiOutlineMail /> {""}
+                          Tin Nhắn
                         </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="user-menu__link">
+                          <AiOutlineSetting /> {""}
+                          Cài đặt tài khoản
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="user-menu__link">
+                          <AiOutlineHeart /> {""}
+                          Yêu thích
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="user-menu__link">
+                          <BsBagPlus /> {""}
+                          Luxstay for Business
+                        </Link>
+                      </li>
+
+                      <li>
+                        <span className="user-menu__link user_logut">
+                          <AiOutlineLogout /> {""}
+                          <LoginSocial children />
+                        </span>
                       </li>
                     </ul>
                   </div>
+                </li>
+                <li className="li_menu">
+                  <span className="menu_link" onClick={logout}>Đăng xuất</span>
                 </li>
               </ul>
             </div>

@@ -57,7 +57,7 @@ const Registration = () => {
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
       localStorage.setItem("foo", JSON.stringify({ foo: "bar" }));
-      navigate("/home");
+      navigate("/");
     },
   });
 

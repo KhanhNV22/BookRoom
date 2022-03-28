@@ -21,17 +21,13 @@ const Login = () => {
 
   useEffect(() => {
     if(localStorage.getItem('user-info')) {
-      navigate("/home")
+      navigate("/")
     }
   },[])
 
   async function login() {
     let result = await fetch("http://localhost:4000/users", {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      }
+      method: 'GET'
     });
     result = await result.json();
     localStorage.setItem("user-info", JSON.stringify(result));
@@ -56,6 +52,7 @@ const Login = () => {
       navigate("/home");
     },
   });
+  
   return (
     <div>
       <LoginComponent>

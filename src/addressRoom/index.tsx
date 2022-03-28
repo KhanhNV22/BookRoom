@@ -1,10 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
 import "./styles.css";
 import Footer from "../components/footer";
 
+interface IPost {
+  room_id: number,
+  room_img: string,
+  room_category: string,
+  room_title: string,
+  room_price: string
+}
+const defaultProps:IPost[] = [];
+
 const AddressRoom = () => {
+  const [rooms, setRooms] = useState<undefined | any>();
+  const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState<boolean>(true);
+  const [error, setError]: [string, (error: string) => void] = useState("");
+  
+  const URL = "http://localhost:4000/rooms";
+
+  const fetchData = () => {
+    fetch(URL)
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        setRooms(data);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error.massge);
+      });
+      
+  };
+  console.log("rooms", rooms);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
       <div className="container--md margin--body">
@@ -24,7 +57,7 @@ const AddressRoom = () => {
         <Row>
           <div className="mt--30"></div>
           <Col md={9}>
-            <h2 className="title-h2">1698 homestay tại Hà Nội</h2>
+            <h2 className="title-h2">Homestay tại Hà Nội</h2>
           </Col>
           <Col md={3}>
             <Form.Select aria-label="Default select example">
@@ -37,32 +70,33 @@ const AddressRoom = () => {
 
         <div className="mt--30"></div>
         <Row>
-          <Col xs={6} md={3} className="col-lg-20">
-            <div className="div-room">
-              <Link to="/rooms" className="text_decoration" target="_blank">
-                <img alt=""
-                  src="https://cdn.luxstay.com/admins/12/2TR6G7u6ua140zR2NI4yUJdG.png"
-                  className="img-room"
-                />
-                <div>
-                  <span className="title__room">
-                    Căn hộ dịch vụ - 1 phòng ngủ
+          {rooms?.map((post: any) => (
+            <Col xs={6} md={3} className="col-lg-20" key={post.content.room_id}>
+              <div className="div-room">
+                <Link to={`/rooms/${post.content.room_id}`} className="text_decoration">
+                  <img alt=""
+                    src={post.content.room_img}
+                    className="img-room"
+                  />
+                  <div>
+                    <span className="title__room">
+                      {post.content.room_category}
+                    </span>
+                  </div>
+                  <span className="promo__title">
+                    {post.content.room_title}
                   </span>
+                </Link>
+                <div className="promo__price">
+                  <span>{post.content.room_price}</span>
                 </div>
-                <span className="promo__title">
-                  The Galaxy Home - 1 Phòng Ngủ, 60m2, View Thành Phố, Ban Công -
-                  Dịch Vọng
-                </span>
-              </Link>
-              <div className="promo__price">
-                <span>850,000 /đêm </span>
+                <div className="mb--30"></div>
               </div>
-              <div className="mb--30"></div>
-            </div>
-          </Col>
+            </Col>
+          ))}
+          {error && <p className="error">{error}</p>}
         </Row>
       </div>
-
       <Footer />
     </div>
   );
