@@ -6,6 +6,8 @@ import AddressRoom from "./addressRoom";
 import SuggestAddress from './suggestAddress';
 import "./App.css";
 import Rooms from "./rooms";
+import Host from "./host";
+import RoomDetail from "./host/roomsDetail";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="addressRoom" element={<AddressRoom />} />
         <Route path="suggestAddress" element={<SuggestAddress />} />
         <Route path="rooms/:id" element={<Rooms />} />
+        <Route path="host" element={<Host />} />
+        <Route path="roomdetail" element={<RoomDetail />} />
       </Routes>
     </div>
   );

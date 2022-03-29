@@ -57,7 +57,7 @@ const AddressRoom = () => {
         <Row>
           <div className="mt--30"></div>
           <Col md={9}>
-            <h2 className="title-h2">Homestay tại Hà Nội</h2>
+            <h2 className="title-h2">Homestay tại Ha Noi</h2>
           </Col>
           <Col md={3}>
             <Form.Select aria-label="Default select example">
@@ -71,24 +71,24 @@ const AddressRoom = () => {
         <div className="mt--30"></div>
         <Row>
           {rooms?.map((post: any) => (
-            <Col xs={6} md={3} className="col-lg-20" key={post.content.room_id}>
+            <Col xs={6} md={3} className="col-lg-20" key={post.content[0].room_id}>
               <div className="div-room">
-                <Link to={`/rooms/${post.content.room_id}`} className="text_decoration">
+                <Link to={`/rooms/${post.content[0].room_id}`} className="text_decoration">
                   <img alt=""
-                    src={post.content.room_img}
+                    src={post.content[0].room_img}
                     className="img-room"
                   />
                   <div>
                     <span className="title__room">
-                      {post.content.room_category}
+                      {post.content[0].room_category}
                     </span>
                   </div>
                   <span className="promo__title">
-                    {post.content.room_title}
+                    {post.content[0].room_title}
                   </span>
                 </Link>
                 <div className="promo__price">
-                  <span>{post.content.room_price}</span>
+                  <span>{post.content[0].room_price}</span>
                 </div>
                 <div className="mb--30"></div>
               </div>

@@ -44,7 +44,7 @@ const Header = () => {
                   <Link to="/" className="menu_link">Guide</Link>
                 </li>
                 <li className="li_menu">
-                  <Link to="/" className="menu_link">Host</Link>
+                  <Link to="/host" className="menu_link">Host</Link>
                 </li>
                 <li className="is-relative menu-item li_menu">
                   <span className="menu__link menu__link--user btn--dropdown">
