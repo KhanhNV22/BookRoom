@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
 import "./styles.css";
-import Footer from "../components/footer";
+import Footer from "../../components/footer";
 
 interface IPost {
   room_id: number,

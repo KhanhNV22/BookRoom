@@ -1,6 +1,6 @@
 import React  from "react";
 import './suggest.css';
-import Footer from "../components/footer";
+import Footer from "../../components/footer";
 import { Link } from "react-router-dom";
 import {  Row, Col } from "react-bootstrap";
 import { BsFillGeoAltFill } from "react-icons/bs";

@@ -4,9 +4,9 @@ import './rooms.css';
 import { BsFillGeoAltFill } from "react-icons/bs";
 import { RiBuilding4Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
-import ReadMore from '../components/readMore';
+import ReadMore from '../../components/readMore';
 import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
-import Footer from '../components/footer';
+import Footer from '../../components/footer';
 
 const Rooms = () => {
     const startValue: Date = new Date(new Date().getFullYear(), new Date().getMonth(), 14);

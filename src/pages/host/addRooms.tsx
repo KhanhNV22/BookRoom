@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap'
 import Select from 'react-select'
+import { API_URL } from '../../constants';
 
 const options = [
     { value: 'Homestay', label: 'Homestay' },
@@ -28,37 +29,43 @@ function AddRooms() {
     const [name, setName] = useState("");
     const [cate, setCate] = useState("");
     const [address, setAddress] = useState("");
+    const [addressDetail, setAddressDetail] = useState("");
     const [square, setSquare] = useState("");
     const [price, setPrice] = useState("");
     const [people, setPeople] = useState("");
     const [info, setInfo] = useState("");
     const [bedRoom, setBedRoom] = useState("");
-    const [img, setImg] = useState("");
-
+    const [img_rooms, setImg] = useState("");
 
     const onchangeType = (e: any) => {
-        const value = e.target.value;
-        setType(value);
+        setType(e.value);
     }
-    
+
+    const onchangeCate = (e: any) => {
+        setCate(e.value);
+    }
+
+    const onchangeAddress = (e: any) => {
+        setAddress(e.value);
+    }
+
     const addProduct = (e: any) => {
         e.preventDefault();
         try {
-            const data = {type, name, cate, address, square, bedRoom, price, people, info, img };
+            const data = { type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms };
             const requestOptions = {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             };
-            fetch("http://localhost:4000/host", requestOptions)
+            fetch(`${API_URL}/rooms`, requestOptions)
                 .then(response => response.json())
                 .then(res => console.log(res));
-            alert("Thêm Thành công")
-        }   catch (error) {
+            alert("Thêm Thành công");
+            setName('')
+        } catch (error) {
             alert(error)
-          }
-
-        
+        }
     }
 
     return (
@@ -66,21 +73,27 @@ function AddRooms() {
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicName">
                     <Form.Label>CHỖ NGHỈ CỦA BẠN LÀ (*)</Form.Label>
-                    <Select options={options} isClearable onChange={() => onchangeType} />
+                    <Select options={options} isClearable onChange={onchangeType} />
                 </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formBasicNameRooms">
                     <Form.Label>Tên Chỗ Nghỉ (*)</Form.Label>
-                    <Form.Control type="name" placeholder="Name" onChange={(e) => setName(e.target.value)} />
+                    <Form.Control type="name" onChange={(e) => setName(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicCate">
-                    <Form.Label>Loại Đặt Phòng</Form.Label>
-                    <Select options={options_cate} isClearable />
+                    <Form.Label>Loại Đặt Phòng (*)</Form.Label>
+                    <Select options={options_cate} isClearable onChange={onchangeCate} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicTP">
-                    <Form.Label>Thành Phố</Form.Label>
-                    <Select options={options_city} isClearable />
+                    <Form.Label>Thành Phố (*)</Form.Label>
+                    <Select options={options_city} isClearable onChange={onchangeAddress}/>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicTP">
+                    <Form.Label>Địa chỉ cụ thể (*)</Form.Label>
+                    <Form.Control type="name" onChange={(e) => setAddressDetail(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicNameRooms">

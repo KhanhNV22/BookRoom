@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import SliderBanner from "./silde";
-import SliderCarousel from "../components/sliderCarousel";
+import SliderCarousel from "../../components/sliderCarousel";
 import Header from "../header";
 import axios from "axios";
 
@@ -13,12 +13,12 @@ import {
   AiFillYoutube,
   AiFillFacebook,
 } from "react-icons/ai";
-import Footer from "../components/footer";
-import BtnToTop from "../components/BtnToTop";
+import Footer from "../../components/footer";
+import BtnToTop from "../../components/BtnToTop";
 interface IPost {
   id: number,
   address: string,
-  image_address: string
+  img_address: string
 }
 const defaultProps:IPost[] = [];
 
@@ -45,8 +45,6 @@ const Home: React.FC = () => {
       setLoading(false);
     });
   },[])
-
-  const numberAdd = posts.length;
 
   return (
     <div className="home">
@@ -85,13 +83,10 @@ const Home: React.FC = () => {
                   <Link to="/addressRoom">
                     <img alt=""
                       className="product__image"
-                      src={post.image_address}
+                      src={post.img_address}
                     />
                     <div className="product__content">
                       <div className="product__title">{post.address}</div>
-                      <span className="product__price">
-                        <b>{numberAdd}</b> Chỗ ở
-                      </span>
                     </div>
                   </Link>
                 </div>

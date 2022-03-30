@@ -1,9 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { useNavigate } from "react-router-dom";
-
-const clientId =
-  "422653143846-21pcn0fknnquh0hs9881tbkhnn4f855d.apps.googleusercontent.com";
+import { GOOGLE_CLIENT_ID } from "../constants";
 
 interface Props {
   children: any
@@ -42,7 +40,7 @@ useEffect(() => {
     <div>
       {showloginButton ? (
         <GoogleLogin
-          clientId={clientId}
+          clientId={GOOGLE_CLIENT_ID}
           buttonText={children}
           onSuccess={onLoginSuccess}
           onFailure={onLoginFailure}
@@ -54,7 +52,7 @@ useEffect(() => {
       ) : null}
       {showlogoutButton ? (
         <GoogleLogout
-          clientId={clientId}
+          clientId={GOOGLE_CLIENT_ID}
           buttonText="Đăng xuất"
           onLogoutSuccess={onSignoutSuccess}
           icon={false}

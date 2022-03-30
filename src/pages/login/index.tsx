@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
-import LoginComponent from "../components/LoginComponent";
+import Footer from "../../components/footer";
+import LoginComponent from "../../components/LoginComponent";
 import "./login.css";
 import { BsLock } from "react-icons/bs";
 import {
@@ -11,7 +11,9 @@ import {
 } from "react-icons/ai";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import LoginSocial from "../components/LoginSocial";
+import LoginSocial from "../../components/LoginSocial";
+import { API_URL } from "../../constants";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,18 +21,17 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if(localStorage.getItem('user-info')) {
-      navigate("/")
-    }
-  },[])
-
-  async function login() {
-    let result = await fetch("http://localhost:4000/users", {
-      method: 'GET'
-    });
-    result = await result.json();
-    localStorage.setItem("user-info", JSON.stringify(result));
+  function handleSubmit(e: any) {
+    fetch(`${API_URL}/users`, {
+      method: 'POST',
+      body: JSON.stringify({email, password}),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(
+      (response) => response.json()
+    )
+    e.preventDefault()
     navigate("/")
   }
 
@@ -52,7 +53,7 @@ const Login = () => {
       navigate("/home");
     },
   });
-  
+
   return (
     <div>
       <LoginComponent>
@@ -63,14 +64,13 @@ const Login = () => {
           </label>
         </div>
 
-        <form className="account__body" onSubmit={formik.handleSubmit}>
+        <form className="account__body" onSubmit={handleSubmit}>
           <div className="input-group__icon is-relative">
             <input
               type="email"
               name="email"
               placeholder="Địa chỉ email"
               className="input"
-             
               onChange={(e) => setEmail(e.target.value)}
             />
             <span className="is-absolute input-icon">
@@ -90,8 +90,7 @@ const Login = () => {
             </span>{" "}
           </div>{" "}
           <button
-            type="submit"
-            onClick={login}
+            type="submit" onClick={handleSubmit}
             className="account__btn btn btn-grad--primary btn--shadow btn--md btn--radius btn--full bold"
           >
             Đăng nhập
@@ -128,7 +127,7 @@ const Login = () => {
               </div>
             </div>{" "}
             <div className="mt-2">
-            <LoginSocial>
+              <LoginSocial>
                 <div className="btn btn-outline--secondary btn--md btn--radius btn--full is-relative">
                   <span>Đăng nhập với Google</span>{" "}
                   <AiFillGooglePlusCircle className="is-absolute icon-square" />

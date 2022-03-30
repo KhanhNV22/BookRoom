@@ -1,27 +1,24 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
-import LoginComponent from "../components/LoginComponent";
+import Footer from "../../components/footer";
+import LoginComponent from "../../components/LoginComponent";
 import { BsLock } from "react-icons/bs";
 import {
   AiOutlineMail,
   AiFillFacebook,
-  AiOutlinePhone,
   AiFillGooglePlusCircle,
 } from "react-icons/ai";
 import "./registration.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import LoginSocial from "../components/LoginSocial";
+import LoginSocial from "../../components/LoginSocial";
 
 const Registration = () => {
   const navigate = useNavigate();
-  const phoneRegExp =
-    /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+  
   const formik_regis = useFormik({
     initialValues: {
       email: "",
-      phoneNumber: "",
       name: "",
       middle_name: "",
       password: "",
@@ -31,11 +28,6 @@ const Registration = () => {
       email: Yup.string()
         .email("Cần nhập email theo đúng định dạng")
         .required("Email không được để trống!"),
-      phoneNumber: Yup.string()
-        .matches(phoneRegExp, "Phone number is not valid")
-        .min(10, "Tối thiểu 10 ký tự")
-        .max(11, "Tối đa 11 ký tự")
-        .required("Số điện thoại không được để trống!"),
       name: Yup.string()
         .min(2, "Nhập tối thiểu 2 ký tự")
         .max(15, "Nhập tối đa 15 ký tự")
@@ -85,27 +77,7 @@ const Registration = () => {
               <p className="formik_error">{formik_regis.errors.email}</p>
             )}
           </div>
-          <label className="input-group__label bold is-block">
-            Số điện thoại
-          </label>
-          <div className="input-group__icon is-relative">
-            <input
-              name="phoneNumber"
-              className="input"
-              type="number"
-              value={formik_regis.values.phoneNumber}
-              onChange={formik_regis.handleChange}
-            />
-            <span className="is-absolute input-icon">
-              <AiOutlinePhone />
-            </span>
-            {formik_regis.errors.phoneNumber &&
-              formik_regis.touched.phoneNumber && (
-                <p className="formik_error">
-                  {formik_regis.errors.phoneNumber}
-                </p>
-              )}
-          </div>
+          
           <label className="input-group__label bold is-block">Tên</label>
           <div className="input-group__icon is-relative">
             <input

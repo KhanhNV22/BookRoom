@@ -26,6 +26,7 @@
     "reactjs-image-gallery": "^1.1.7",
     "reactstrap": "^9.0.1",
     "slick-carousel": "^1.8.1",
+    "sweetalert": "^2.1.2",
     "uuidv4": "^6.2.12",
     "web-vitals": "^2.1.4",
     "xxxx": "^3.0.4",

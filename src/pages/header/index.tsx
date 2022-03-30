@@ -2,11 +2,9 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import LoginSocial from "../components/LoginSocial";
+import LoginSocial from "../../components/LoginSocial";
 import "./styles.css";
-import { BsBagPlus } from "react-icons/bs";
-import { AiOutlineMail, AiOutlineCalendar, AiOutlineSetting, AiOutlineHeart, AiOutlineLogout } from "react-icons/ai";
-
+import { AiOutlineSetting, AiOutlineLogout } from "react-icons/ai";
 
 const Header = () => {
   let navigate = useNavigate();
@@ -41,9 +39,6 @@ const Header = () => {
             <div className="header_right">
               <ul>
                 <li className="li_menu">
-                  <Link to="/" className="menu_link">Guide</Link>
-                </li>
-                <li className="li_menu">
                   <Link to="/host" className="menu_link">Host</Link>
                 </li>
                 <li className="is-relative menu-item li_menu">
@@ -57,36 +52,11 @@ const Header = () => {
                   <div className=" popover--user-menu">
                     <ul className="user-menu is-relative">
                       <li>
-                        <Link to="/" className="user-menu__link" >
-                          <AiOutlineCalendar /> {""}
-                          Đặt chỗ của tôi
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/" className="user-menu__link">
-                          <AiOutlineMail /> {""}
-                          Tin Nhắn
-                        </Link>
-                      </li>
-                      <li>
                         <Link to="/" className="user-menu__link">
                           <AiOutlineSetting /> {""}
                           Cài đặt tài khoản
                         </Link>
                       </li>
-                      <li>
-                        <Link to="/" className="user-menu__link">
-                          <AiOutlineHeart /> {""}
-                          Yêu thích
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/" className="user-menu__link">
-                          <BsBagPlus /> {""}
-                          Luxstay for Business
-                        </Link>
-                      </li>
-
                       <li>
                         <span className="user-menu__link user_logut">
                           <AiOutlineLogout /> {""}
