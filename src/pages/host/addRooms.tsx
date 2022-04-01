@@ -20,8 +20,10 @@ const options_cate = [
 const options_city = [
   { value: 'Hà Nội', label: 'Hà Nội' },
   { value: 'TP. Hồ Chí Minh', label: 'TP. Hồ Chí Minh' },
-  { value: 'Đà Nẵng', label: 'Đà Nẵng' },
+  { value: 'Vũng Tàu', label: 'Vũng Tàu' },
   { value: 'Đà Lạt', label: 'Đà Lạt' },
+  { value: 'Đà Nẵng', label: 'Đà Nẵng' },
+  { value: 'Nha Trang', label: 'Nha Trang' },
 ]
 
 function AddRooms() {

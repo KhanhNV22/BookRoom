@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 import Select from 'react-select'
 import axios from 'axios';
 import { API_URL } from '../../constants';
+import { useParams } from 'react-router-dom';
 
 const options = [
   { value: 'Homestay', label: 'Homestay' },
@@ -50,21 +51,53 @@ interface IPost {
 
 function RoomDetail() {
   const [disable, setDisable] = useState(true);
+  const [notes, setNotes] = useState<any>({});
+
+  const [hostId, setHostId] = useState();
+  const [type, setType] = useState("");
+  const [name, setName] = useState("");
+  const [cate, setCate] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [square, setSquare] = useState("");
+  const [price, setPrice] = useState("");
+  const [people, setPeople] = useState("");
+  const [info, setInfo] = useState("");
+  const [bedRoom, setBedRoom] = useState("");
+  const [img_rooms, setImg] = useState("");
+
+  const params = useParams();
+
+  const { id } = params;
 
   const triggerDisable = () => {
     setDisable(false)
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: response } = await axios.get(`${API_URL}/rooms/${id}`);
+        setNotes(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [])
+
+  console.log("notes ===", notes);
 
   return (
     <div className='container--md margin--body mt--18 mb--18'>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>CHỖ NGHỈ CỦA BẠN LÀ (*)</Form.Label>
-          <Select options={options} isClearable isDisabled={disable} />
+          <Select options={options} isClearable isDisabled={disable} value={notes.type} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Tên Chỗ Nghỉ (*)</Form.Label>
-          <Form.Control type="name" placeholder="Name" disabled={disable} />
+          <Form.Control type="name" placeholder="Name" disabled={disable} onChange={(e) => setName(e.target.value)} value={notes.name} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicCate">
@@ -79,37 +112,37 @@ function RoomDetail() {
 
         <Form.Group className="mb-3" controlId="formBasicTP">
           <Form.Label>Địa chỉ cụ thể (*)</Form.Label>
-          <Form.Control type="name" disabled={disable} />
+          <Form.Control type="name" disabled={disable} value={notes.addressDetail} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Diện tích m<sup>2</sup> (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} />
+          <Form.Control type="number" disabled={disable} value={notes.square} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Số Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} />
+          <Form.Control type="number" disabled={disable} value={notes.bedRoom}/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Gía Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} />
+          <Form.Control type="number" disabled={disable} value={notes.price} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Số Người (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} />
+          <Form.Control type="number" disabled={disable} value={notes.people} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Thông tin (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} />
+          <Form.Control type="text" disabled={disable} value={notes.info} />
         </Form.Group>
 
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Hình ảnh (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} />
+          <Form.Control type="text" disabled={disable} value={notes.img_rooms} />
         </Form.Group>
 
         {disable ? (

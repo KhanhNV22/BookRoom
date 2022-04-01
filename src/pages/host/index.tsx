@@ -7,7 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import { API_URL } from '../../constants';
 
 interface IPost {
-  id: number,
+  id: string,
   img_rooms: string,
   name: string,
   info: string
@@ -80,7 +80,7 @@ function Host() {
                           <p>{item.info}</p>
                         </div>
                         <button className='tabs_btn' onClick={() => deleteItem(item.id)}>Xóa</button>
-                        <Link to="/roomdetail">
+                        <Link to={`/roomdetail/${item.id}`}>
                           <button className='tabs_btn'>Xem Thêm</button>
                         </Link>
                         <span className='btn_status'>Đang duyệt</span>

@@ -15,10 +15,11 @@ import {
 } from "react-icons/ai";
 import Footer from "../../components/footer";
 import BtnToTop from "../../components/BtnToTop";
+import { API_URL } from "../../constants";
 interface IPost {
   id: number,
-  address: string,
-  img_rooms: string
+  nameAddress: string,
+  img: string
 }
 const defaultProps:IPost[] = [];
 
@@ -27,24 +28,18 @@ const Home: React.FC = () => {
   const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState<boolean>(true);
   const [error, setError]: [string, (error: string) => void] = useState("");
 
-  const URL = "http://localhost:4000/rooms";
-
   useEffect(() => {
-    axios
-    .get<IPost[]>(URL)
-    .then(response => {
-      setPosts(response.data);
-      setLoading(false);
-    })
-    .catch(ex => {
-      const err =
-        ex.response.status === 404
-          ? "Resource not found"
-          : "An unexpected error has occurred";
-      setError(err);
-      setLoading(false);
-    });
-  },[])
+    const fetchData = async () => {
+      try {
+        const { data: response } = await axios.get(`${API_URL}/address`);
+        setPosts(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [])
+  const user = localStorage.getItem('userName')
 
   return (
     <div className="home">
@@ -80,13 +75,13 @@ const Home: React.FC = () => {
             <SliderCarousel dots={false} slidesToShow={5} styles={{ display: 'block' }}>
               {posts.map((post) => (
                 <div className="product__cover" key={post.id}>
-                  <Link to="/addressRoom">
+                  <Link to={`/addressRoom/${post.nameAddress}`}>
                     <img alt=""
                       className="product__image"
-                      src={post.img_rooms}
+                      src={post.img}
                     />
                     <div className="product__content">
-                      <div className="product__title">{post.address}</div>
+                      <div className="product__title">{post.nameAddress}</div>
                     </div>
                   </Link>
                 </div>

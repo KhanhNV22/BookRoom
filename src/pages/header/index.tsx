@@ -14,6 +14,8 @@ const Header = () => {
     navigate("/login")
   }
 
+  const user = localStorage.getItem('userName')
+
   return (
     <div className="header">
       <div className="container--md margin--body">
@@ -46,7 +48,7 @@ const Header = () => {
                     <div className="user-avatar">
                       <img src="https://lh3.googleusercontent.com/a/AATXAJzT56VA7fRZyrIx9kgl4po9tOKI7USqcjZRTCnp=s96-c" alt="" />
                     </div>
-                    <span className="px--6">khanh</span>
+                    <span className="px--6">{user}</span>
                   </span>
 
                   <div className=" popover--user-menu">

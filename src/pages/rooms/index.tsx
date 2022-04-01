@@ -9,6 +9,9 @@ import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 import Footer from '../../components/footer';
 import axios from 'axios';
 import { API_URL } from '../../constants';
+import Map from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import BtnToTop from '../../components/BtnToTop';
 
 interface IPost {
   id: any,
@@ -19,7 +22,7 @@ interface IPost {
   price: string,
   addressDetail: string,
   type: string,
-  square: string,
+  square: string
 
 }
 const defaultProps: IPost[] = [];
@@ -52,11 +55,13 @@ const Rooms = () => {
 
   return (
     <div>
+        <img alt="" src={notes.img_rooms} className="img_rooms" />
+        <div className='mb--30'></div>
       <Container>
-        <div className='mt--42'></div>
+        
         <Row>
           <Col lg={8}>
-            <h1 className='h1-title mb--12'>{notes.name}-{notes.info}</h1>
+            <h1 className='h1-title mb--12'>{notes.name} - {notes.info}</h1>
 
             <div className='detail__location mt--18'>
               <BsFillGeoAltFill />
@@ -166,11 +171,11 @@ const Rooms = () => {
             <div className='room-price mt--18'>
               <div className='room-price__wrap'>
                 <span>Thứ hai - Thứ năm</span>
-                <span className='bold'>850,000₫</span>
+                <span className='bold'>{notes.price}₫</span>
               </div>
               <div className='room-price__wrap'>
                 <span>Thứ sáu - Chủ nhật</span>
-                <span className='bold'>900,000₫</span>
+                <span className='bold'>{notes.price}₫</span>
               </div>
               <div className='room-price__wrap'>
                 <span>Phí trẻ em tăng thêm</span>
@@ -194,6 +199,10 @@ const Rooms = () => {
               <h3>Lưu ý đặc biệt</h3>
               <span>Giá có thể tăng vào cuối tuần hoặc ngày lễ</span>
             </div>
+
+            <div className='title mt--60' id="map">
+              <h3>Bản đồ</h3>
+            </div>
           </Col>
           <Col lg={4}>
             <div className='room-sidebar'>
@@ -201,7 +210,7 @@ const Rooms = () => {
                 <div className='room-sidebar__wrap'>
                   <div className="room-sidebar__pricing">
                     <p className="fadeIn mb--18">
-                      <span className="extra-bold">{notes.price}₫</span>
+                      <span className="extra-bold">{notes.price} ₫</span>
                       <span className="p--small">/đêm</span>
                     </p>
                   </div>
@@ -215,6 +224,10 @@ const Rooms = () => {
                     format="dd/MM/yyyy"
                     cssClass='date_picker'
                   />
+                  <div className='mb--30'></div>
+                  <button className='btn_order' type='submit'>
+                    Đặt ngay
+                  </button>
                 </div>
               </div>
             </div>
@@ -222,6 +235,7 @@ const Rooms = () => {
         </Row>
       </Container>
       <Footer />
+      <BtnToTop />
     </div>
   )
 }

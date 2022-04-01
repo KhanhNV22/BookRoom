@@ -8,6 +8,7 @@ import "./App.css";
 import Rooms from "./pages/rooms";
 import Host from "./pages/host";
 import RoomDetail from "./pages/host/roomsDetail";
+import Admin from "./pages/admin";
 
 function App() {
   return (
@@ -16,11 +17,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="registration" element={<Registration />} />
         <Route path="login" element={<Login />} />
-        <Route path="addressRoom" element={<AddressRoom />} />
+        <Route path="addressRoom/:id" element={<AddressRoom />} />
         <Route path="suggestAddress" element={<SuggestAddress />} />
         <Route path="rooms/:id" element={<Rooms />} />
         <Route path="host" element={<Host />} />
-        <Route path="roomdetail" element={<RoomDetail />} />
+        <Route path="roomdetail/:id" element={<RoomDetail />} />
+        <Route path="admin" element={<Admin />} />
       </Routes>
     </div>
   );
