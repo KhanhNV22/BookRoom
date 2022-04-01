@@ -13,10 +13,6 @@ const LoginSocial: React.FC<Props> = ({ children } : Props) => {
   const [showlogoutButton, setShowlogoutButton] = useState<boolean>(false);
   const [values, setValues] = useState<any>([]);
 
-useEffect(() => {
-  localStorage.setItem('user', JSON.stringify(values));
-}, [values]);
-
   const onLoginSuccess = (res: any) => {
     console.log("Login Success:", res.profileObj);
     setValues(res);

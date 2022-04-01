@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/footer";
 import LoginComponent from "../../components/LoginComponent";
@@ -11,48 +11,37 @@ import {
 } from "react-icons/ai";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import LoginSocial from "../../components/LoginSocial";
+import LoginSocial from "../../components/LoginGoogle";
 import { API_URL } from "../../constants";
 import axios from "axios";
+import { setUserSession } from "../../services/common";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
-  function handleSubmit(e: any) {
-    fetch(`${API_URL}/users`, {
-      method: 'POST',
-      body: JSON.stringify({email, password}),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(
-      (response) => response.json()
-    )
-    e.preventDefault()
-    navigate("/")
-  }
+  useEffect(() => {
+    if(localStorage.getItem('user-info')) {
+      navigate('/')
+    }
+  })
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Cần nhập đúng định dạng email!")
-        .required("Email không được để trống!"),
-      password: Yup.string()
-        .min(8, "Mật khẩu cần ít nhất 8 ký tự!")
-        .required("Mật khẩu không được để trống."),
-    }),
-    onSubmit: (values) => {
-      // localStorage.setItem(JSON.stringify(values, null, 2));
-      navigate("/home");
-    },
-  });
+  async function handleClickLogin() {
+    let result = await fetch(`${API_URL}/users`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+    });
+    result = await result.json();
+    localStorage.setItem("user-info", JSON.stringify(result));
+    console.log('login');
+    navigate("/")
+  };
 
   return (
     <div>
@@ -64,7 +53,7 @@ const Login = () => {
           </label>
         </div>
 
-        <form className="account__body" onSubmit={handleSubmit}>
+        <form className="account__body">
           <div className="input-group__icon is-relative">
             <input
               type="email"
@@ -84,38 +73,39 @@ const Login = () => {
               placeholder="Mật khẩu"
               className="input"
               onChange={(e) => setPassword(e.target.value)}
-            />{" "}
+            />
             <span className="is-absolute input-icon">
               <BsLock />
-            </span>{" "}
-          </div>{" "}
+            </span>
+          </div>
           <button
-            type="submit" onClick={handleSubmit}
+            type="submit" onClick={handleClickLogin}
             className="account__btn btn btn-grad--primary btn--shadow btn--md btn--radius btn--full bold"
           >
             Đăng nhập
           </button>{" "}
-          <div className="center-xs">
-            <div>
-              Quên mật khẩu?
-              {""}
-              <Link to="/" className="color-i bold">
-                Nhấn vào đây
-              </Link>
-            </div>{" "}
-            <div className="mt--30">
-              Bạn chưa có tài khoản Luxstay?{" "}
-              <Link to="../registration" className="text_decoration">
-                <span
-                  className="text-orange bold"
-                  style={{ cursor: "pointer" }}
-                >
-                  Đăng ký
-                </span>
-              </Link>
-            </div>
-          </div>
         </form>
+
+        <div className="center-xs mt--18">
+          <div>
+            Quên mật khẩu?
+            {""}
+            <Link to="/" className="color-i bold">
+              Nhấn vào đây
+            </Link>
+          </div>{" "}
+          <div className="mt--30">
+            Bạn chưa có tài khoản Luxstay?{" "}
+            <Link to="../registration" className="text_decoration">
+              <span
+                className="text-orange bold"
+                style={{ cursor: "pointer" }}
+              >
+                Đăng ký
+              </span>
+            </Link>
+          </div>
+        </div>
 
         <div className="account__body">
           <div className="center-xs">Hoặc</div>{" "}
@@ -140,6 +130,7 @@ const Login = () => {
       <Footer />
     </div>
   );
-};
+}
+
 
 export default Login;

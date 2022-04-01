@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import LoginSocial from "../../components/LoginSocial";
+import LoginSocial from "../../components/LoginGoogle";
 import "./styles.css";
 import { AiOutlineSetting, AiOutlineLogout } from "react-icons/ai";
 
@@ -37,7 +37,7 @@ const Header = () => {
           </Col>
           <Col lg="6" className="col_right">
             <div className="header_right">
-              <ul>
+              <ul className="ul-wrap">
                 <li className="li_menu">
                   <Link to="/host" className="menu_link">Host</Link>
                 </li>
@@ -57,24 +57,28 @@ const Header = () => {
                           Cài đặt tài khoản
                         </Link>
                       </li>
-                      <li>
-                        <span className="user-menu__link user_logut">
+
+                      {localStorage.getItem('user-info') ?
+                        <li className="user-menu__link user_logut">
                           <AiOutlineLogout /> {""}
-                          <LoginSocial children />
-                        </span>
-                      </li>
+                          <span className="menu_link-span" onClick={logout}>Đăng xuất</span>
+                        </li> :
+                        <li>
+                          <span className="user-menu__link user_logut">
+                            <AiOutlineLogout /> {""}
+                            <LoginSocial children />
+                          </span>
+                        </li>
+                      }
                     </ul>
                   </div>
-                </li>
-                <li className="li_menu">
-                  <span className="menu_link" onClick={logout}>Đăng xuất</span>
                 </li>
               </ul>
             </div>
           </Col>
         </Row>
       </div>
-    </div>
+    </div >
   );
 };
 

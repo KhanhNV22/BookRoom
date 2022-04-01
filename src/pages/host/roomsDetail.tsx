@@ -47,57 +47,12 @@ interface IPost {
   bedRoom: number,
   img_rooms: string
 }
-const defaultProps: IPost[] = [];
 
 function RoomDetail() {
   const [disable, setDisable] = useState(true);
-  const [id, setId] = useState("");
-  const [type, setType] = useState("");
-  const [name, setName] = useState("");
-  const [cate, setCate] = useState("");
-  const [address, setAddress] = useState("");
-  const [addressDetail, setAddressDetail] = useState("");
-  const [square, setSquare] = useState("");
-  const [price, setPrice] = useState("");
-  const [people, setPeople] = useState("");
-  const [info, setInfo] = useState("");
-  const [bedRoom, setBedRoom] = useState("");
-  const [img_rooms, setImg] = useState("");
 
   const triggerDisable = () => {
     setDisable(false)
-  }
-
-  const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = useState(defaultProps);
-
-  useEffect(() => {
-    fetchData();
-  }, [])
-
-  const fetchData = async () => {
-    try {
-      const { data: response } = await axios.get(`${API_URL}/rooms`);
-      setPosts(response);
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  }
-
-  function updateItem() {
-    const data = { type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms };
-    fetch(`${API_URL}/rooms/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then((result) => {
-      result.json().then((resp) => {
-        console.warn(resp)
-        fetchData()
-      })
-    })
   }
 
   return (

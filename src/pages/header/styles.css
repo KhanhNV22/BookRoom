@@ -55,9 +55,12 @@
     justify-content: flex-end;
     text-align: right;
 }
-.header_right ul{
+.header_right ul.ul-wrap{
     padding: 0;
     margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 .header_right ul li.li_menu{
     display: inline-block;
@@ -160,7 +163,7 @@
 }
 .user-menu__link:hover {
     font-weight: 500;
-    color: #333;
+    color: #f65e39;
     transition: all .2s;
 }
 
@@ -183,6 +186,7 @@
 }
 .user_logut{
     display: flex;
+    align-items: center;
 }
 .flag_icons{
     width: 40px;

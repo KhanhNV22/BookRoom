@@ -18,7 +18,7 @@ import BtnToTop from "../../components/BtnToTop";
 interface IPost {
   id: number,
   address: string,
-  img_address: string
+  img_rooms: string
 }
 const defaultProps:IPost[] = [];
 
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
                   <Link to="/addressRoom">
                     <img alt=""
                       className="product__image"
-                      src={post.img_address}
+                      src={post.img_rooms}
                     />
                     <div className="product__content">
                       <div className="product__title">{post.address}</div>

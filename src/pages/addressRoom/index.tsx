@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
 import "./styles.css";
 import Footer from "../../components/footer";
+import { API_URL } from "../../constants";
 
 interface IPost {
-  room_id: number,
-  room_img: string,
-  room_category: string,
-  room_title: string,
-  room_price: string
+  id: any,
+  img_rooms: string,
+  cate: string,
+  info: string,
+  price: string
 }
 const defaultProps:IPost[] = [];
 
 const AddressRoom = () => {
-  const [rooms, setRooms] = useState<undefined | any>();
+  const [rooms, setRooms] : [IPost[], (posts: IPost[]) => void] = useState(defaultProps);
   const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState<boolean>(true);
   const [error, setError]: [string, (error: string) => void] = useState("");
   
-  const URL = "http://localhost:4000/rooms";
-
   const fetchData = () => {
-    fetch(URL)
+    fetch(`${API_URL}/rooms`)
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
@@ -31,9 +30,8 @@ const AddressRoom = () => {
         setLoading(false);
         setError(error.massge);
       });
-      
   };
-  console.log("rooms", rooms);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -60,35 +58,31 @@ const AddressRoom = () => {
             <h2 className="title-h2">Homestay tại Ha Noi</h2>
           </Col>
           <Col md={3}>
-            <Form.Select aria-label="Default select example">
-              <option>Sắp xếp: Lựa chọn</option>
-              <option value="1">Gía tăng dần</option>
-              <option value="2">Gía giảm dần</option>
-            </Form.Select>
+            
           </Col>
         </Row>
 
         <div className="mt--30"></div>
         <Row>
-          {rooms?.map((post: any) => (
-            <Col xs={6} md={3} className="col-lg-20" key={post.content[0].room_id}>
+          {rooms.map((post: any) => (
+            <Col xs={6} md={3} className="col-lg-20" key={post.id}>
               <div className="div-room">
-                <Link to={`/rooms/${post.content[0].room_id}`} className="text_decoration">
+                <Link to={`/rooms/${post.id}`} className="text_decoration">
                   <img alt=""
-                    src={post.content[0].room_img}
+                    src={post.img_rooms}
                     className="img-room"
                   />
                   <div>
                     <span className="title__room">
-                      {post.content[0].room_category}
+                      {post.cate}
                     </span>
                   </div>
                   <span className="promo__title">
-                    {post.content[0].room_title}
+                    {post.info}
                   </span>
                 </Link>
                 <div className="promo__price">
-                  <span>{post.content[0].room_price}</span>
+                  <span>{post.price}</span>
                 </div>
                 <div className="mb--30"></div>
               </div>

@@ -6,6 +6,7 @@
 }
 .detail__location {
     font-size: 14px;
+    display: flex;
 }
 .detail__location svg {
     width: 24px;
@@ -14,6 +15,7 @@
 }
 .detail__location span{
     margin-right: 12px;
+    font-size: 16px;
 }
 .detail__location a{
     text-decoration: none;
