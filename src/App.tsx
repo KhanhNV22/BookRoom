@@ -9,6 +9,7 @@ import Rooms from "./pages/rooms";
 import Host from "./pages/host";
 import RoomDetail from "./pages/host/roomsDetail";
 import Admin from "./pages/admin";
+import CheckoutRooms from "./pages/rooms/checkRooms";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="addressRoom/:id" element={<AddressRoom />} />
         <Route path="suggestAddress" element={<SuggestAddress />} />
         <Route path="rooms/:id" element={<Rooms />} />
+        <Route path="checkoutRooms/:id" element={<CheckoutRooms />} />
         <Route path="host" element={<Host />} />
         <Route path="roomdetail/:id" element={<RoomDetail />} />
         <Route path="admin" element={<Admin />} />

@@ -3,14 +3,15 @@ import { Tabs, Tab, Row, Col } from 'react-bootstrap'
 import './styles.css'
 import axios from 'axios';
 import AddRooms from './addRooms';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { API_URL } from '../../constants';
 
 interface IPost {
   id: string,
   img_rooms: string,
   name: string,
-  info: string
+  info: string,
+  status: number
 }
 const defaultProps: IPost[] = [];
 
@@ -49,7 +50,6 @@ function Host() {
       alert(error)
     }
   }
-  
   return (
     <div>
       <div className='container--md margin--body'>
@@ -83,7 +83,20 @@ function Host() {
                         <Link to={`/roomdetail/${item.id}`}>
                           <button className='tabs_btn'>Xem Thêm</button>
                         </Link>
-                        <span className='btn_status'>Đang duyệt</span>
+                        <span
+                          style={{
+                            color: `${item.status === 0
+                              ? "orange"
+                              : item.status === 1
+                                ? "green"
+                                : "red"
+                              }`,
+                          }}
+                        > {item.status === 0
+                          ? "Đang chờ"
+                          : item.status === 1
+                            ? "Đã duyệt"
+                            : "Từ chối"}</span>
                       </Col>
                     </Row>
                   </div>

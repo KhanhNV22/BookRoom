@@ -55,7 +55,7 @@ function AddRooms() {
   const addProduct = (e: any) => {
     e.preventDefault();
     try {
-      const data = { hostId, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms };
+      const data = { hostId, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: 0 };
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },

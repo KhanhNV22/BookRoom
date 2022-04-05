@@ -21,7 +21,7 @@ interface IPost {
   nameAddress: string,
   img: string
 }
-const defaultProps:IPost[] = [];
+const defaultProps: IPost[] = [];
 
 const Home: React.FC = () => {
   const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = useState(defaultProps);
@@ -50,18 +50,22 @@ const Home: React.FC = () => {
 
       <Container>
         <div className="title">
-          <h3>Chào mừng đến với Luxstay!</h3>
+          <h3>Chào mừng đến với Luxstay! {""}
+            {user ? <>{user}</> : null}
+          </h3>
           <p>
             Đặt chỗ ở, homestay, cho thuê xe, trải nghiệm và nhiều hơn nữa trên
             Luxstay
           </p>
 
-          <p>
-            <Link to="/">Đăng nhập</Link>
-            <span className="text-lowercase">Hoặc</span>{" "}
-            <Link to="/registration">Đăng ký</Link>
-            để trải nghiệm !
-          </p>
+          {user ? null :
+              <p>
+                <Link to="/">Đăng nhập</Link>
+                <span className="text-lowercase">Hoặc</span>{" "}
+                <Link to="/registration">Đăng ký</Link>
+                để trải nghiệm !
+              </p>
+          }
         </div>
 
         {/* Địa điểm nổi bật */}

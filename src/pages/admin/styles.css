@@ -1,0 +1,20 @@
+.table_ad{
+    text-align: center;
+}
+.img_tb{
+    width: 250px;
+    height: auto;
+    object-fit: cover;
+}
+.btn_act{
+    border: none;
+    background: #f65e38;
+    color: #fff;
+    min-width: 80px;
+    font-size: 16px;
+}
+.btn_act:hover{
+    color: #f65e38;
+    background: #fff;
+    border: 1px solid #f65e38;
+}

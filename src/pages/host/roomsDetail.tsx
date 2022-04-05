@@ -4,6 +4,7 @@ import Select from 'react-select'
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import { useParams } from 'react-router-dom';
+import { getUser } from '../../services/common';
 
 const options = [
   { value: 'Homestay', label: 'Homestay' },
@@ -26,32 +27,13 @@ const options_city = [
   { value: 'Đà Lạt', label: 'Đà Lạt' },
 ]
 
-function updateItem() {
-  console.log('update');
-}
-
 function cancelItem() {
   console.log("cancel");
 }
 
-interface IPost {
-  id: number,
-  type: string,
-  name: string,
-  cate: string,
-  address: string,
-  addressDetail: string,
-  square: string,
-  price: number
-  people: string,
-  info: string,
-  bedRoom: number,
-  img_rooms: string
-}
-
 function RoomDetail() {
   const [disable, setDisable] = useState(true);
-  const [notes, setNotes] = useState<any>({});
+  const [note, setNote] = useState<any>({});
 
   const [hostId, setHostId] = useState();
   const [type, setType] = useState("");
@@ -67,7 +49,6 @@ function RoomDetail() {
   const [img_rooms, setImg] = useState("");
 
   const params = useParams();
-
   const { id } = params;
 
   const triggerDisable = () => {
@@ -78,7 +59,7 @@ function RoomDetail() {
     const fetchData = async () => {
       try {
         const { data: response } = await axios.get(`${API_URL}/rooms/${id}`);
-        setNotes(response);
+        setNote(response);
       } catch (error) {
         console.log(error);
       }
@@ -86,63 +67,88 @@ function RoomDetail() {
     fetchData();
   }, [])
 
-  console.log("notes ===", notes);
+  const updateItem = () => {
+    console.log("update===");
+  }
 
   return (
     <div className='container--md margin--body mt--18 mb--18'>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>CHỖ NGHỈ CỦA BẠN LÀ (*)</Form.Label>
-          <Select options={options} isClearable isDisabled={disable} value={notes.type} />
+          <Select
+            options={options}
+            isClearable
+            isDisabled={disable} 
+            value={{ value: note.type, label: note.type }}
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Tên Chỗ Nghỉ (*)</Form.Label>
-          <Form.Control type="name" placeholder="Name" disabled={disable} onChange={(e) => setName(e.target.value)} value={notes.name} />
+          <Form.Control
+            type="name"
+            placeholder="Name"
+            disabled={disable}
+            value={note.name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicCate">
           <Form.Label>Loại Đặt Phòng (*)</Form.Label>
-          <Select options={options_cate} isClearable isDisabled={disable} />
+          <Select 
+          options={options_cate} 
+          isClearable 
+          isDisabled={disable} 
+          value={{ value: note.cate, label: note.cate }} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTP">
           <Form.Label>Thành Phố (*)</Form.Label>
-          <Select options={options_city} isClearable isDisabled={disable} />
+          <Select 
+          options={options_city} 
+          isClearable 
+          isDisabled={disable} 
+          value={{ value: note.address, label: note.address }} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTP">
           <Form.Label>Địa chỉ cụ thể (*)</Form.Label>
-          <Form.Control type="name" disabled={disable} value={notes.addressDetail} />
+          <Form.Control 
+          type="name" 
+          disabled={disable} 
+          value={note.addressDetail} 
+          onChange={(e) => setAddressDetail(e.target.value)} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Diện tích m<sup>2</sup> (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} value={notes.square} />
+          <Form.Control type="number" disabled={disable} value={note.square} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Số Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} value={notes.bedRoom}/>
+          <Form.Control type="number" disabled={disable} value={note.bedRoom} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Gía Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} value={notes.price} />
+          <Form.Control type="number" disabled={disable} value={note.price} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Số Người (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} value={notes.people} />
+          <Form.Control type="number" disabled={disable} value={note.people} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Thông tin (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} value={notes.info} />
+          <Form.Control type="text" disabled={disable} value={note.info} />
         </Form.Group>
 
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Hình ảnh (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} value={notes.img_rooms} />
+          <Form.Control type="text" disabled={disable} value={note.img_rooms} />
         </Form.Group>
 
         {disable ? (

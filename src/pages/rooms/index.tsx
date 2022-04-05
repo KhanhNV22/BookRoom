@@ -3,40 +3,27 @@ import { Container, Row, Col } from 'react-bootstrap';
 import './rooms.css';
 import { BsFillGeoAltFill } from "react-icons/bs";
 import { RiBuilding4Line } from "react-icons/ri";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReadMore from '../../components/readMore';
 import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 import Footer from '../../components/footer';
 import axios from 'axios';
 import { API_URL } from '../../constants';
-import Map from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import BtnToTop from '../../components/BtnToTop';
 
-interface IPost {
-  id: any,
-  name: string,
-  img_rooms: string,
-  cate: string,
-  info: string,
-  price: string,
-  addressDetail: string,
-  type: string,
-  square: string
-
-}
-const defaultProps: IPost[] = [];
-
 const Rooms = () => {
-  const startValue: Date = new Date(new Date().getFullYear(), new Date().getMonth(), 14);
-  const endValue: Date = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 15);
+  const startDate: Date = new Date(new Date());
+  const endDate: Date = new Date(new Date());
   const minValue: Date = new Date(new Date());
   const maxValue: Date = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 90);
 
   const [notes, setNotes] = useState<any>({});
+  const [adult, setAdult] = useState("");
+  const [children, setChildren] = useState("");
+  const guest_nums = Number(adult)  + Number(children);
 
+  const navigate = useNavigate();
   const params = useParams();
-
   const { id } = params;
 
   useEffect(() => {
@@ -51,14 +38,30 @@ const Rooms = () => {
     fetchData();
   }, [])
 
-  console.log("notes ===", notes);
+  const addBookRoom = (e: any) => {
+    e.preventDefault();
+    try {
+      const data = { startDate, endDate, adult, children,guest_nums, status: true};
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      };
+      fetch(`${API_URL}/booking`, requestOptions)
+        .then(response => response.json())
+        .then(res => console.log(res));
+      // alert(JSON.stringify(data, null, 2));
+      navigate(`/checkoutRooms/${id}`)
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   return (
     <div>
-        <img alt="" src={notes.img_rooms} className="img_rooms" />
-        <div className='mb--30'></div>
+      <img alt="" src={notes.img_rooms} className="img_rooms" />
+      <div className='mb--30'></div>
       <Container>
-        
         <Row>
           <Col lg={8}>
             <h1 className='h1-title mb--12'>{notes.name} - {notes.info}</h1>
@@ -75,10 +78,7 @@ const Rooms = () => {
             </div>
             <div className='detail__location mt--12'>
               <span className='bold'>Phòng riêng</span>
-              <span>· 1 Phòng tắm</span>
-              <span>· 1 giường</span>
-              <span>· 1 phòng ngủ</span>
-              <span>· 2 khách (tối đa 3 khách)</span>
+              <span>· {notes.bedRoom} Phòng</span>
             </div>
             <div className='mt--42'></div>
             <div className='detail__intro'>
@@ -217,15 +217,26 @@ const Rooms = () => {
 
                   <DateRangePickerComponent
                     placeholder='Chọn ngày đặt phòng'
-                    startDate={startValue}
-                    endDate={endValue}
+                    startDate={startDate}
+                    endDate={endDate}
                     min={minValue}
                     max={maxValue}
                     format="dd/MM/yyyy"
                     cssClass='date_picker'
                   />
                   <div className='mb--30'></div>
-                  <button className='btn_order' type='submit'>
+
+                  <div>
+                    {guest_nums ? <h3 className='select_peopel'>Tổng số người: {guest_nums} </h3> : null}
+                    <label htmlFor="" className='select_peopel-label'>Người Lớn</label>
+                    <input className='select_peopel-input' type="number" onChange={(e) => setAdult(e.target.value)} />
+
+                    <label htmlFor="" className='select_peopel-label'>Trẻ Em</label>
+                    <input className='select_peopel-input' type="number" onChange={(e) => setChildren(e.target.value)} />
+                  </div>
+
+                  <div className='mb--30'></div>
+                  <button className='btn_order' type='submit' onClick={addBookRoom}>
                     Đặt ngay
                   </button>
                 </div>

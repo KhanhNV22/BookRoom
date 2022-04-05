@@ -9,12 +9,8 @@ import {
   AiFillFacebook,
   AiFillGooglePlusCircle,
 } from "react-icons/ai";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import LoginSocial from "../../components/LoginGoogle";
 import { API_URL } from "../../constants";
-import axios from "axios";
-import { setUserSession } from "../../services/common";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -39,7 +35,6 @@ const Login = () => {
     });
     result = await result.json();
     localStorage.setItem("user-info", JSON.stringify(result));
-    console.log('login');
     navigate("/")
   };
 
