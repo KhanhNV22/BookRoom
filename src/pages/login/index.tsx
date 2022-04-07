@@ -11,31 +11,49 @@ import {
 } from "react-icons/ai";
 import LoginSocial from "../../components/LoginGoogle";
 import { API_URL } from "../../constants";
+import { User } from "../../types/user";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const user = useRef({});
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if(localStorage.getItem('user-info')) {
-      navigate('/')
-    }
-  })
-
-  async function handleClickLogin() {
-    let result = await fetch(`${API_URL}/users`, {
-      method: "GET",
+  const checkUser = async (email: string, password: string) => {
+    const settings = {
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        Accept: "application/json",
       },
-    });
-    result = await result.json();
-    localStorage.setItem("user-info", JSON.stringify(result));
-    navigate("/")
+    };
+    try {
+      const response = await fetch(
+        `${API_URL}/users?email=${email}&password=${password}`,
+        settings
+      );
+
+      const data = await response.json();
+      if (data) {
+        user.current = data[0];
+        console.log('user.current', user.current);
+        return user.current;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+
+  const handleClickLogin = async (email: string, password: string) => {
+    const loginUser = await checkUser(email, password);
+    if (loginUser) {
+      navigate("/");
+      localStorage.setItem("user", JSON.stringify(user.current));
+    } else {
+      alert("Sai tài khoản hoặc mật khẩu");
+    }
   };
 
   return (
@@ -74,7 +92,7 @@ const Login = () => {
             </span>
           </div>
           <button
-            type="submit" onClick={handleClickLogin}
+            type="submit" onClick={()=>handleClickLogin}
             className="account__btn btn btn-grad--primary btn--shadow btn--md btn--radius btn--full bold"
           >
             Đăng nhập

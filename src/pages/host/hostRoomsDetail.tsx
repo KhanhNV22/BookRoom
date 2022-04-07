@@ -80,7 +80,7 @@ function RoomDetail() {
             options={options}
             isClearable
             isDisabled={disable} 
-            value={{ value: note.type, label: note.type }}
+            defaultValue={{ value: note.type, label: note.type }}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
@@ -89,7 +89,7 @@ function RoomDetail() {
             type="name"
             placeholder="Name"
             disabled={disable}
-            value={note.name}
+            defaultValue={note.name}
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
@@ -100,7 +100,7 @@ function RoomDetail() {
           options={options_cate} 
           isClearable 
           isDisabled={disable} 
-          value={{ value: note.cate, label: note.cate }} />
+          defaultValue={{ value: note.cate, label: note.cate }} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTP">
@@ -109,7 +109,7 @@ function RoomDetail() {
           options={options_city} 
           isClearable 
           isDisabled={disable} 
-          value={{ value: note.address, label: note.address }} />
+          defaultValue={{ value: note.address, label: note.address }} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTP">
@@ -117,38 +117,38 @@ function RoomDetail() {
           <Form.Control 
           type="name" 
           disabled={disable} 
-          value={note.addressDetail} 
+          defaultValue={note.addressDetail} 
           onChange={(e) => setAddressDetail(e.target.value)} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Diện tích m<sup>2</sup> (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} value={note.square} />
+          <Form.Control type="number" disabled={disable} defaultValue={note.square} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Số Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} value={note.bedRoom} />
+          <Form.Control type="number" disabled={disable} defaultValue={note.bedRoom} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Gía Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} value={note.price} />
+          <Form.Control type="number" disabled={disable} defaultValue={note.price} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Số Người (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} value={note.people} />
+          <Form.Control type="number" disabled={disable} defaultValue={note.people} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Thông tin (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} value={note.info} />
+          <Form.Control type="text" disabled={disable} defaultValue={note.info} />
         </Form.Group>
 
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Hình ảnh (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} value={note.img_rooms} />
+          <Form.Control type="text" disabled={disable} defaultValue={note.img_rooms} />
         </Form.Group>
 
         {disable ? (

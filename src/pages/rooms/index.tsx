@@ -10,6 +10,7 @@ import Footer from '../../components/footer';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import BtnToTop from '../../components/BtnToTop';
+import moment from "moment";
 
 const Rooms = () => {
   const startDate: Date = new Date(new Date());
@@ -17,10 +18,10 @@ const Rooms = () => {
   const minValue: Date = new Date(new Date());
   const maxValue: Date = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 90);
 
-  const [notes, setNotes] = useState<any>({});
+  const [noteRoom, setNoteRoom] = useState<any>({});
   const [adult, setAdult] = useState("");
   const [children, setChildren] = useState("");
-  const guest_nums = Number(adult)  + Number(children);
+  const guest_nums = Number(adult) + Number(children);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -29,19 +30,31 @@ const Rooms = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: response } = await axios.get(`${API_URL}/rooms/${id}`);
-        setNotes(response);
+        const { data } = await axios.get(`${API_URL}/rooms/${id}`);
+        setNoteRoom(data);
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [])
+  }, []);
+  const startDay = moment(startDate).format('DD/MM/YYYY');
+  const endDay = moment(endDate).format('DD/MM/YYYY');
+  const idRoom = noteRoom.id;
+  const imgBook = noteRoom.img_rooms;
+  const nameBook = noteRoom.name;
+  const infoBook = noteRoom.info;
+  const addressBook = noteRoom.address;
+  const addressDetailBook = noteRoom.addressDetail;
+  const typeBook = noteRoom.type;
+  const priceBook = noteRoom.price;
+  const squareBook = noteRoom.square;
+  const bedRoomBook = noteRoom.bedRoom;
 
   const addBookRoom = (e: any) => {
     e.preventDefault();
     try {
-      const data = { startDate, endDate, adult, children,guest_nums, status: true};
+      const data = { idRoom, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, adult, children, guest_nums, status: true, isCheck: 0 };
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -49,9 +62,7 @@ const Rooms = () => {
       };
       fetch(`${API_URL}/booking`, requestOptions)
         .then(response => response.json())
-        .then(res => console.log(res));
-      // alert(JSON.stringify(data, null, 2));
-      navigate(`/checkoutRooms/${id}`)
+      navigate(`/checkoutRooms/${idRoom}`)
     } catch (error) {
       alert(error)
     }
@@ -59,32 +70,32 @@ const Rooms = () => {
 
   return (
     <div>
-      <img alt="" src={notes.img_rooms} className="img_rooms" />
+      <img alt="" src={imgBook} className="img_rooms" />
       <div className='mb--30'></div>
       <Container>
         <Row>
           <Col lg={8}>
-            <h1 className='h1-title mb--12'>{notes.name} - {notes.info}</h1>
+            <h1 className='h1-title mb--12'>{nameBook} - {infoBook}</h1>
 
             <div className='detail__location mt--18'>
               <BsFillGeoAltFill />
-              <span className='bold'>{notes.addressDetail}</span>
+              <span className='bold'>{addressDetailBook}</span>
               <Link to="#map">Xem bản đồ</Link>
             </div>
             <div className='detail__location mt--12'>
               <RiBuilding4Line />
-              <span className='bold'>{notes.type}</span>
-              <span>* {notes.square} m<sup>2</sup></span>
+              <span className='bold'>{typeBook}</span>
+              <span>* {squareBook} m<sup>2</sup></span>
             </div>
             <div className='detail__location mt--12'>
               <span className='bold'>Phòng riêng</span>
-              <span>· {notes.bedRoom} Phòng</span>
+              <span>· {bedRoomBook} Phòng</span>
             </div>
             <div className='mt--42'></div>
             <div className='detail__intro'>
               <ReadMore>
                 <p>
-                  <strong>Tóm tắt về {notes.name}</strong>
+                  <strong>Tóm tắt về {noteRoom.name}</strong>
                 </p>
                 <p>·Vị trí rất đẹp và thuận tiện ở quận Cầu Giấy</p>
                 <p>·Gần công viên Cầu Giấy, Lotteria, trung tâm mua sắm với môi trường ngoài trời yên tĩnh</p>
@@ -171,11 +182,11 @@ const Rooms = () => {
             <div className='room-price mt--18'>
               <div className='room-price__wrap'>
                 <span>Thứ hai - Thứ năm</span>
-                <span className='bold'>{notes.price}₫</span>
+                <span className='bold'>{noteRoom.price}₫</span>
               </div>
               <div className='room-price__wrap'>
                 <span>Thứ sáu - Chủ nhật</span>
-                <span className='bold'>{notes.price}₫</span>
+                <span className='bold'>{noteRoom.price}₫</span>
               </div>
               <div className='room-price__wrap'>
                 <span>Phí trẻ em tăng thêm</span>
@@ -199,10 +210,6 @@ const Rooms = () => {
               <h3>Lưu ý đặc biệt</h3>
               <span>Giá có thể tăng vào cuối tuần hoặc ngày lễ</span>
             </div>
-
-            <div className='title mt--60' id="map">
-              <h3>Bản đồ</h3>
-            </div>
           </Col>
           <Col lg={4}>
             <div className='room-sidebar'>
@@ -210,7 +217,7 @@ const Rooms = () => {
                 <div className='room-sidebar__wrap'>
                   <div className="room-sidebar__pricing">
                     <p className="fadeIn mb--18">
-                      <span className="extra-bold">{notes.price} ₫</span>
+                      <span className="extra-bold">{noteRoom.price} ₫</span>
                       <span className="p--small">/đêm</span>
                     </p>
                   </div>

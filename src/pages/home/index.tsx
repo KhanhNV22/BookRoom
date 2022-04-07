@@ -643,56 +643,9 @@ const Home: React.FC = () => {
               </div>
             </Col>
           </Row>
-
-          <div className="mt--30"></div>
-          <Row>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
-            <Col>
-              <div className="widget">
-                <h3 className="widget__title">Certification</h3>
-                <Row>
-                  <Col md={6}>
-                    <Link to="/">
-                      <img alt=""
-                        className="logo_app-wrap"
-                        src="https://www.luxstay.com/bct.png"
-                      />
-                    </Link>
-                  </Col>
-                  <Col md={6}>
-                    <Link to="/">
-                      <img alt=""
-                        className="logo_app-wrap"
-                        src="https://www.luxstay.com/dmca.png"
-                      />
-                    </Link>
-                  </Col>
-                </Row>
-              </div>
-            </Col>
-            <Col>
-              <div className="widget">
-                <h3 className="widget__title">FOLLOW US</h3>
-
-                <Link to="/">
-                  <AiFillInstagram className="icons_mxh" />
-                </Link>
-                <Link to="/">
-                  <AiFillYoutube className="icons_mxh" />
-                </Link>
-                <Link to="/">
-                  <AiFillFacebook className="icons_mxh" />
-                </Link>
-              </div>
-            </Col>
-          </Row>
         </div>
       </Container>
-
       <Footer />
-
       <BtnToTop />
     </div>
   );

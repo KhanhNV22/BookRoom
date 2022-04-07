@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { Tab, Table, Tabs } from 'react-bootstrap'
 import { API_URL } from '../../constants';
 import { Room } from '../../types/room';
+import Bookings from './booking';
 import './styles.css'
+import Users from './users';
 
 export default function Admin() {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -41,14 +43,8 @@ export default function Admin() {
   return (
     <div className='container--md margin--body'>
       <div className='mt--60'></div>
-      <Tabs defaultActiveKey="contact" id="uncontrolled-tab-example" className="mb-3">
-        <Tab eventKey="home" title="Home">
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae, magnam!</p>
-        </Tab>
-        <Tab eventKey="profile" title="Uers">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, facilis!</p>
-        </Tab>
-        <Tab eventKey="contact" title="Rooms">
+      <Tabs defaultActiveKey="Rooms" id="uncontrolled-tab-example" className="mb-3">
+        <Tab eventKey="Rooms" title="Rooms">
           <div className='mt--42'></div>
           <Table striped bordered hover className='table_ad'>
             <thead>
@@ -98,6 +94,12 @@ export default function Admin() {
               ))}
             </tbody>
           </Table>
+        </Tab>
+        <Tab eventKey="Booking" title="Booking">
+          <Bookings />
+        </Tab>
+        <Tab eventKey="Uers" title="Uers">
+          <Users />
         </Tab>
       </Tabs>
     </div>

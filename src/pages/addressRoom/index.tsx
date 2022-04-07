@@ -82,7 +82,8 @@ const AddressRoom = () => {
                   <div className="mb--30"></div>
                 </div>
               </Col>
-            ))}
+            ))
+          }
           {error && <p className="error">{error}</p>}
         </Row>
       </div>

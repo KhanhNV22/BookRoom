@@ -2,22 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Tabs, Tab, Row, Col } from 'react-bootstrap'
 import './styles.css'
 import axios from 'axios';
-import AddRooms from './addRooms';
+import AddRooms from './hostAddRooms';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../../constants';
-
-interface IPost {
-  id: string,
-  img_rooms: string,
-  name: string,
-  info: string,
-  status: number
-}
-const defaultProps: IPost[] = [];
+import HostBooking from './hostBooking';
+import { Room } from '../../types/room';
 
 function Host() {
   const [loading, setLoading] = useState(true);
-  const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = useState(defaultProps);
+  const [posts, setPosts] = useState<Room[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +52,7 @@ function Host() {
         <div className='mt--42'></div>
         <Tabs defaultActiveKey="rooms" id="uncontrolled-tab-example" className="mb-3">
           <Tab eventKey="news" title="Bảng Tin">
-            <h1>Chỗ Nghỉ</h1>
+           <HostBooking />
 
           </Tab>
 

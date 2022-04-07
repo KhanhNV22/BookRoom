@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { API_URL } from '../../constants';
-import './rooms.css';
 import { FaCalendarAlt, FaUserAlt } from "react-icons/fa";
 import { BsFillGeoAltFill } from "react-icons/bs";
 
-const CheckoutRooms = () => {
+const CheckoutRoomDetail = () => {
     const [check, setCheck] = useState<any>({});
-    const { id } = useParams();
+    const param = useParams()
+    const { id } = param;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,9 +24,7 @@ const CheckoutRooms = () => {
         fetchData();
     }, [])
 
-    function goHome() {
-        navigate("/");
-    }
+    console.log("object", id);
 
     return (
         <Container>
@@ -81,7 +79,7 @@ const CheckoutRooms = () => {
                                 </p>
                             </div>
 
-                            <button className='btn_goHome mb--42 mt--42' onClick={goHome}>Trở về trang chủ</button>
+                            <button className='btn_goHome mb--42 mt--42' onClick={() => navigate(-1)}>Trở về</button>
                         </Col>
                         <Col md={3}></Col>
                     </Row>
@@ -91,4 +89,4 @@ const CheckoutRooms = () => {
     )
 }
 
-export default CheckoutRooms;
+export default CheckoutRoomDetail;
