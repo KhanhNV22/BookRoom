@@ -11,7 +11,6 @@ import {
 } from "react-icons/ai";
 import LoginSocial from "../../components/LoginGoogle";
 import { API_URL } from "../../constants";
-import { User } from "../../types/user";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");

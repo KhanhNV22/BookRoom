@@ -45,9 +45,9 @@ function Bookings() {
                     <img src={booking.imgBook} alt="" width={250} height={150} />
                   </td>
               <td>
-                {booking.startDate}
+                {booking.startDay}
               </td>
-              <td>{booking.endDate}</td>
+              <td>{booking.endDay}</td>
               <td>{booking.guest_nums}</td>
               <td>
                 <span

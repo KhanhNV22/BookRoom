@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { useNavigate } from "react-router-dom";
 import { GOOGLE_CLIENT_ID } from "../constants";
@@ -15,6 +15,7 @@ const LoginSocial: React.FC<Props> = ({ children } : Props) => {
 
   const onLoginSuccess = (res: any) => {
     localStorage.setItem('userName', JSON.stringify(res.profileObj.name))
+    localStorage.setItem('userImg', JSON.stringify(res.profileObj.imageUrl))
     setValues(res);
     setShowloginButton(false);
     setShowlogoutButton(true);

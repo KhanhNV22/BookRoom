@@ -10,8 +10,8 @@ export interface Booking {
     priceBook: number; 
     squareBook: number; 
     bedRoomBook: number;
-    startDate: Date;
-    endDate: Date;
+    startDay: Date;
+    endDay: Date;
     adult: number;
     children: number;
     guest_nums: number;

@@ -18,6 +18,8 @@ const Rooms = () => {
   const minValue: Date = new Date(new Date());
   const maxValue: Date = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 90);
 
+  const [date, setDate] = useState("");
+
   const [noteRoom, setNoteRoom] = useState<any>({});
   const [adult, setAdult] = useState("");
   const [children, setChildren] = useState("");
@@ -38,6 +40,7 @@ const Rooms = () => {
     }
     fetchData();
   }, []);
+
   const startDay = moment(startDate).format('DD/MM/YYYY');
   const endDay = moment(endDate).format('DD/MM/YYYY');
   const idRoom = noteRoom.id;

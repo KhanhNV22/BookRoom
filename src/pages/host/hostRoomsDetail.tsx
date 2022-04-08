@@ -4,7 +4,7 @@ import Select from 'react-select'
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import { useParams } from 'react-router-dom';
-import { getUser } from '../../services/common';
+import _ from "lodash";
 
 const options = [
   { value: 'Homestay', label: 'Homestay' },
@@ -33,9 +33,8 @@ function cancelItem() {
 
 function RoomDetail() {
   const [disable, setDisable] = useState(true);
-  const [note, setNote] = useState<any>({});
+  const [roomdetail, setRoomDetail] = useState<any>({});
 
-  const [hostId, setHostId] = useState();
   const [type, setType] = useState("");
   const [name, setName] = useState("");
   const [cate, setCate] = useState("");
@@ -47,6 +46,7 @@ function RoomDetail() {
   const [info, setInfo] = useState("");
   const [bedRoom, setBedRoom] = useState("");
   const [img_rooms, setImg] = useState("");
+  const [status, setStatus] = useState(roomdetail.status);
 
   const params = useParams();
   const { id } = params;
@@ -59,7 +59,7 @@ function RoomDetail() {
     const fetchData = async () => {
       try {
         const { data: response } = await axios.get(`${API_URL}/rooms/${id}`);
-        setNote(response);
+        setRoomDetail(response);
       } catch (error) {
         console.log(error);
       }
@@ -67,8 +67,45 @@ function RoomDetail() {
     fetchData();
   }, [])
 
-  const updateItem = () => {
-    console.log("update===");
+  const data = { type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: roomdetail.status };
+
+  useEffect(() => {
+    if (
+      !_.isEmpty(roomdetail) &&
+      _.isEmpty(roomdetail.id) &&
+      _.isEmpty(type) &&
+      _.isEmpty(name) &&
+      _.isEmpty(cate) &&
+      _.isEmpty(address) &&
+      _.isEmpty(addressDetail) &&
+      _.isEmpty(square) &&
+      _.isEmpty(bedRoom) &&
+      _.isEmpty(price) &&
+      _.isEmpty(people) &&
+      _.isEmpty(info) &&
+      _.isEmpty(img_rooms)
+    ) {
+      setType(roomdetail.type);
+      setName(roomdetail.name);
+      setCate(roomdetail.cate);
+      setAddress(roomdetail.address);
+      setAddressDetail(roomdetail.addressDetail);
+      setSquare(roomdetail.square);
+      setBedRoom(roomdetail.bedRoom);
+      setPrice(roomdetail.price);
+      setPeople(roomdetail.people);
+      setInfo(roomdetail.info);
+      setImg(roomdetail.img_rooms);
+      setStatus(roomdetail.status)
+    }
+  }, [roomdetail, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status]);
+
+  const updateItem = (e: any) => {
+    e.preventDefault()
+    axios.put(`${API_URL}/rooms/${id}`, { ...data, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms })
+      .then(res => console.log(res))
+      .then(res => alert("Cập nhật thành công"))
+      .catch(err => console.log('Login: ', err));
   }
 
   return (
@@ -79,8 +116,9 @@ function RoomDetail() {
           <Select
             options={options}
             isClearable
-            isDisabled={disable} 
-            defaultValue={{ value: note.type, label: note.type }}
+            isDisabled={disable}
+            defaultValue={{ value: roomdetail.type, label: roomdetail.type }}
+            onChange={(e: any) => setType(e.value)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
@@ -89,66 +127,70 @@ function RoomDetail() {
             type="name"
             placeholder="Name"
             disabled={disable}
-            defaultValue={note.name}
+            defaultValue={roomdetail.name}
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicCate">
           <Form.Label>Loại Đặt Phòng (*)</Form.Label>
-          <Select 
-          options={options_cate} 
-          isClearable 
-          isDisabled={disable} 
-          defaultValue={{ value: note.cate, label: note.cate }} />
+          <Select
+            options={options_cate}
+            isClearable
+            isDisabled={disable}
+            defaultValue={{ value: roomdetail.cate, label: roomdetail.cate }}
+            onChange={(e: any) => setCate(e.value)}
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTP">
           <Form.Label>Thành Phố (*)</Form.Label>
-          <Select 
-          options={options_city} 
-          isClearable 
-          isDisabled={disable} 
-          defaultValue={{ value: note.address, label: note.address }} />
+          <Select
+            options={options_city}
+            isClearable
+            isDisabled={disable}
+            defaultValue={{ value: roomdetail.address, label: roomdetail.address }}
+            onChange={(e: any) => setAddress(e.value)}
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTP">
           <Form.Label>Địa chỉ cụ thể (*)</Form.Label>
-          <Form.Control 
-          type="name" 
-          disabled={disable} 
-          defaultValue={note.addressDetail} 
-          onChange={(e) => setAddressDetail(e.target.value)} />
+          <Form.Control
+            type="name"
+            disabled={disable}
+            defaultValue={roomdetail.addressDetail}
+            onChange={(e) => setAddressDetail(e.target.value)} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Diện tích m<sup>2</sup> (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} defaultValue={note.square} />
+          <Form.Control type="number" disabled={disable} defaultValue={roomdetail.square} onChange={(e: any) => setSquare(e.target.value)} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Số Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} defaultValue={note.bedRoom} />
+          <Form.Control type="number" disabled={disable} defaultValue={roomdetail.bedRoom} onChange={(e: any) => setBedRoom(e.target.value)} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Gía Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} defaultValue={note.price} />
+          <Form.Control type="number" disabled={disable} defaultValue={roomdetail.price} onChange={(e: any) => setPrice(e.target.value)} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Số Người (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} defaultValue={note.people} />
+          <Form.Control type="number" disabled={disable} defaultValue={roomdetail.people} onChange={(e: any) => setPeople(e.target.value)} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicNameRooms">
           <Form.Label>Thông tin (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} defaultValue={note.info} />
+          <Form.Control type="text" disabled={disable} defaultValue={roomdetail.info} onChange={(e: any) => setInfo(e.target.value)} />
         </Form.Group>
 
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Hình ảnh (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} defaultValue={note.img_rooms} />
+          <Form.Control type="text" disabled={disable} defaultValue={roomdetail.img_rooms} onChange={(e: any) => setImg(e.target.value)} />
         </Form.Group>
 
         {disable ? (

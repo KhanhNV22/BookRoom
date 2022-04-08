@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './styles.css'
 import axios from 'axios';
 import { API_URL } from '../../constants';
-import { Room } from '../../types/room';
 import { Table } from 'react-bootstrap';
 import { Booking } from '../../types/booking';
 
@@ -64,8 +63,8 @@ function HostBooking() {
                   <td>
                     <img src={hostBook.imgBook} alt="" width={250} height={150} />
                   </td>
-                  <td>{hostBook.startDate}</td>
-                  <td>{hostBook.endDate}</td>
+                  <td>{hostBook.startDay}</td>
+                  <td>{hostBook.endDay}</td>
                   <td>{hostBook.guest_nums}</td>
                   <td>
                     <span

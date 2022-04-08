@@ -15,6 +15,7 @@ const Header = () => {
   }
 
   const user = localStorage.getItem('userName')
+  const userImg = localStorage.getItem('userImg')
 
   return (
     <div className="header">
@@ -46,7 +47,7 @@ const Header = () => {
                 <li className="is-relative menu-item li_menu">
                   <span className="menu__link menu__link--user btn--dropdown">
                     <div className="user-avatar">
-                      <img src="https://lh3.googleusercontent.com/a/AATXAJzT56VA7fRZyrIx9kgl4po9tOKI7USqcjZRTCnp=s96-c" alt="" />
+                      <img src={userImg ? userImg : "https://www.w3schools.com/howto/img_avatar.png"} alt="" />
                     </div>
                     <span className="px--6">{user}</span>
                   </span>

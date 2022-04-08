@@ -13,8 +13,24 @@
     min-width: 80px;
     font-size: 16px;
 }
-.btn_act:hover{
+.btn_act:hover, .form_update button:hover{
     color: #f65e38;
     background: #fff;
     border: 1px solid #f65e38;
+}
+.form_update label{
+    color: #222;
+    margin-bottom: 10px;
+}
+.form_update input{
+    margin-bottom: 10px;
+}
+
+.form_update button{
+    border: none;
+    background: #f65e38;
+    color: #fff;
+    padding: 10px;
+    min-width: 100px;
+    margin-right: 10px;
 }
