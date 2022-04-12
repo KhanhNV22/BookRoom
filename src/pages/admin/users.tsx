@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Modal, Table, Form } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../../constants';
 import { User } from '../../types/user';

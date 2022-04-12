@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { API_URL } from '../../constants';
 import HostBooking from './hostBooking';
 import { Room } from '../../types/room';
+import { userId } from '../../services/userService';
 
 function Host() {
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ function Host() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: response } = await axios.get(`${API_URL}/rooms`);
+        const { data: response } = await axios.get(`${API_URL}/rooms?hostId=${userId}`);
         setPosts(response);
       } catch (error: any) {
         console.error(error.message);

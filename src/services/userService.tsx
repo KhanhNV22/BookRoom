@@ -5,3 +5,7 @@ export const login = () => {
       method: 'GET'
     });
 }
+
+
+export const userId = localStorage.getItem('userId');
+export const userIdName = localStorage.getItem('userIdName');

@@ -18,8 +18,6 @@ const Rooms = () => {
   const minValue: Date = new Date(new Date());
   const maxValue: Date = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 90);
 
-  const [date, setDate] = useState("");
-
   const [noteRoom, setNoteRoom] = useState<any>({});
   const [adult, setAdult] = useState("");
   const [children, setChildren] = useState("");
@@ -53,11 +51,12 @@ const Rooms = () => {
   const priceBook = noteRoom.price;
   const squareBook = noteRoom.square;
   const bedRoomBook = noteRoom.bedRoom;
+  console.log("noteRoom", noteRoom);
 
   const addBookRoom = (e: any) => {
     e.preventDefault();
     try {
-      const data = { idRoom, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, adult, children, guest_nums, status: true, isCheck: 0 };
+      const data = { idRoom, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, adult, children, guest_nums, status: 0, isCheck: true };
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },

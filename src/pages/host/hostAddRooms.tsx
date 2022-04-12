@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap'
 import Select from 'react-select'
 import { API_URL } from '../../constants';
+import { userId } from '../../services/userService';
 
 const options = [
   { value: 'Homestay', label: 'Homestay' },
@@ -27,7 +28,7 @@ const options_city = [
 ]
 
 function AddRooms() {
-  const [hostId, setHostId] = useState();
+  const hostId = userId;
   const [type, setType] = useState("");
   const [name, setName] = useState("");
   const [cate, setCate] = useState("");

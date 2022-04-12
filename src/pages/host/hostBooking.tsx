@@ -8,9 +8,9 @@ import { Booking } from '../../types/booking';
 function HostBooking() {
   const [hostBooks, setHostBooks] = useState<any[]>([])
 
-  const onUpdateStatus = (hostBook: Booking, index: number, isCheck: number) => {
+  const onUpdateStatus = (hostBook: Booking, index: number, isCheck: boolean, status: number) => {
     const { id } = hostBook;
-    const newBookRoom = { ...hostBook, isCheck };
+    const newBookRoom = { ...hostBook, isCheck, status };
 
     const requestOptions = {
       method: "PUT",
@@ -46,50 +46,65 @@ function HostBooking() {
         <thead>
           <tr>
             <th>STT</th>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Guest Nums</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>Tên</th>
+            <th>Hình Ảnh</th>
+            <th>Ngày Bắt Đầu</th>
+            <th>Ngày Kết Thúc</th>
+            <th>Số Người</th>
+            <th>Yêu Cầu</th>
+            <th>Tình Trạng</th>
+            <th>Hành Động</th>
           </tr>
         </thead>
         <tbody>
           {hostBooks.map((hostBook: Booking, index: number) => (
-                <tr key={index}>
-                  <td>{hostBook.id}</td>
-                  <td>{hostBook.nameBook}</td>
-                  <td>
-                    <img src={hostBook.imgBook} alt="" width={250} height={150} />
-                  </td>
-                  <td>{hostBook.startDay}</td>
-                  <td>{hostBook.endDay}</td>
-                  <td>{hostBook.guest_nums}</td>
-                  <td>
-                    <span
-                      style={{
-                        color: `${hostBook.isCheck === 0
-                          ? "orange"
-                          : hostBook.isCheck === 1
-                            ? "green"
-                            : "red"
-                          }`
-                      }}
-                    > {hostBook.isCheck === 0
-                      ? "Đang chờ"
-                      : hostBook.isCheck === 1
-                        ? "Đã duyệt"
-                        : "Từ chối"}
-                    </span>
-                  </td>
-                  <td>
-                    <button className='btn_act mb--12' onClick={() => onUpdateStatus(hostBook, index, 1)}>Duyệt</button>
-                    <br />
-                    <button className='btn_act' onClick={() => onUpdateStatus(hostBook, index, 2)}>Từ Chối</button>
-                  </td>
-                </tr>
-              ))}
+            <tr key={index}>
+              <td>{hostBook.id}</td>
+              <td>{hostBook.nameBook}</td>
+              <td>
+                <img src={hostBook.imgBook} alt="" width={250} height={150} />
+              </td>
+              <td>{hostBook.startDay}</td>
+              <td>{hostBook.endDay}</td>
+              <td>{hostBook.guest_nums}</td>
+              <td>
+                <span
+                  style={{
+                    color: `${hostBook.status === 0
+                      ? "orange"
+                      : hostBook.status === 1
+                        ? "green"
+                        : "red"
+                      }`
+                  }}
+                > {hostBook.status === 0
+                  ? "Đang chờ"
+                  : hostBook.status === 1
+                    ? "Đã duyệt"
+                    : "Từ chối"}
+                </span>
+              </td>
+              <td>
+                <span
+                  style={{
+                    color: `${hostBook.isCheck === true
+                      ? "orange"
+                      : "green"
+                      }`
+                  }}
+                > {hostBook.isCheck === true
+                  ? "Chưa cho thuê"
+                  : "Đang cho thuê"
+                  }
+                </span>
+              </td>
+              <td>
+                <button className='btn_act mb--12' onClick={() => onUpdateStatus(hostBook, index, false, 1)}>Duyệt</button>
+                <br />
+                <button className='btn_act' onClick={() => onUpdateStatus(hostBook, index, true, 2)}>Từ Chối</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>

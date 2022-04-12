@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/footer";
 import LoginComponent from "../../components/LoginComponent";
@@ -15,8 +15,10 @@ import { API_URL } from "../../constants";
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const user = useRef({});
 
+  const user = useRef();
+  const userId = useRef();
+  const userIdName = useRef();
   const navigate = useNavigate();
 
   const checkUser = async (email: string, password: string) => {
@@ -33,25 +35,34 @@ const Login = () => {
       );
 
       const data = await response.json();
-      if (data) {
+      if (data.length > 0) {
         user.current = data[0];
-        console.log('user.current', user.current);
+        userId.current = data[0].id;
+        userIdName.current = data[0].name;
         return user.current;
       } else {
-        return false;
+        return;
       }
     } catch (error) {
-      return error;
+      throw(error);
     }
   }
 
-  const handleClickLogin = async (email: string, password: string) => {
-    const loginUser = await checkUser(email, password);
-    if (loginUser) {
-      navigate("/");
-      localStorage.setItem("user", JSON.stringify(user.current));
-    } else {
-      alert("Sai tài khoản hoặc mật khẩu");
+  const handleClickLogin = async () => {
+    try {
+      const loginUser = await checkUser(email, password);
+
+      if (loginUser) {
+        localStorage.setItem("user", JSON.stringify(user.current));
+        localStorage.setItem("userId", JSON.stringify(userId.current));
+        localStorage.setItem("userIdName", JSON.stringify(userIdName.current));
+
+        navigate("/");
+      } else {
+        alert("Sai tài khoản hoặc mật khẩu");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -65,7 +76,7 @@ const Login = () => {
           </label>
         </div>
 
-        <form className="account__body">
+        <div className="account__body">
           <div className="input-group__icon is-relative">
             <input
               type="email"
@@ -91,12 +102,12 @@ const Login = () => {
             </span>
           </div>
           <button
-            type="submit" onClick={()=>handleClickLogin}
+            onClick={handleClickLogin}
             className="account__btn btn btn-grad--primary btn--shadow btn--md btn--radius btn--full bold"
           >
             Đăng nhập
-          </button>{" "}
-        </form>
+          </button>
+        </div>
 
         <div className="center-xs mt--18">
           <div>

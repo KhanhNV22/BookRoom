@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LoginSocial from "../../components/LoginGoogle";
 import "./styles.css";
 import { AiOutlineSetting, AiOutlineLogout } from "react-icons/ai";
+import { userIdName } from "../../services/userService";
 
 const Header = () => {
   let navigate = useNavigate();
@@ -14,7 +15,7 @@ const Header = () => {
     navigate("/login")
   }
 
-  const user = localStorage.getItem('userName')
+  const userName = localStorage.getItem('userName')
   const userImg = localStorage.getItem('userImg')
 
   return (
@@ -49,9 +50,8 @@ const Header = () => {
                     <div className="user-avatar">
                       <img src={userImg ? userImg : "https://www.w3schools.com/howto/img_avatar.png"} alt="" />
                     </div>
-                    <span className="px--6">{user}</span>
+                    <span className="px--6">{userName ? userName : userIdName}</span>
                   </span>
-
                   <div className=" popover--user-menu">
                     <ul className="user-menu is-relative">
                       <li>
@@ -61,16 +61,16 @@ const Header = () => {
                         </Link>
                       </li>
 
-                      {localStorage.getItem('user-info') ?
-                        <li className="user-menu__link user_logut">
-                          <AiOutlineLogout /> {""}
-                          <span className="menu_link-span" onClick={logout}>Đăng xuất</span>
-                        </li> :
+                      {localStorage.getItem('userName') ?
                         <li>
                           <span className="user-menu__link user_logut">
                             <AiOutlineLogout /> {""}
                             <LoginSocial children />
                           </span>
+                        </li> :
+                        <li className="user-menu__link user_logut">
+                          <AiOutlineLogout /> {""}
+                          <span className="menu_link-span" onClick={logout}>Đăng xuất</span>
                         </li>
                       }
                     </ul>

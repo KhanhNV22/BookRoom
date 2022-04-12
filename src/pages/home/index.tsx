@@ -9,9 +9,6 @@ import axios from "axios";
 import {
   AiFillWechat,
   AiFillPhone,
-  AiFillInstagram,
-  AiFillYoutube,
-  AiFillFacebook,
 } from "react-icons/ai";
 import Footer from "../../components/footer";
 import BtnToTop from "../../components/BtnToTop";
@@ -25,7 +22,6 @@ const defaultProps: IPost[] = [];
 
 const Home: React.FC = () => {
   const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = useState(defaultProps);
-  const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState<boolean>(true);
   const [error, setError]: [string, (error: string) => void] = useState("");
 
   useEffect(() => {

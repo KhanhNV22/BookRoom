@@ -15,6 +15,6 @@ export interface Booking {
     adult: number;
     children: number;
     guest_nums: number;
-    status: boolean;
-    isCheck: number;
+    status: number;
+    isCheck: boolean;
 }

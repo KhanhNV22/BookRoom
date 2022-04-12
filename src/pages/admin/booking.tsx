@@ -52,16 +52,16 @@ function Bookings() {
               <td>
                 <span
                   style={{
-                    color: `${booking.isCheck === 0
+                    color: `${booking.status === 0
                       ? "orange"
-                      : booking.isCheck === 1
+                      : booking.status === 1
                         ? "green"
                         : "red"
                       }`
                   }}
-                > {booking.isCheck === 0
+                > {booking.status === 0
                   ? "Đang chờ"
-                  : booking.isCheck === 1
+                  : booking.status === 1
                     ? "Đã duyệt"
                     : "Từ chối"}
                 </span>

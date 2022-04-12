@@ -64,6 +64,8 @@ function UpdateUser() {
     e.preventDefault();
     try {
       const response = await axios.put(`${API_URL}/users/${id}`, { ...user });
+      navigate(-1)
+      alert("Cập nhập Thành công")
     } catch (error) {
       console.log(error);
       alert("Cập nhập thất bại!")

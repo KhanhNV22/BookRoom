@@ -27,9 +27,9 @@ const LoginSocial: React.FC<Props> = ({ children } : Props) => {
   };
 
   const onSignoutSuccess = () => {
-    console.clear();
     setShowloginButton(true);
     setShowlogoutButton(false);
+    localStorage.clear();
     navigate("/login");
   };
   
