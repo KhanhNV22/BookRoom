@@ -11,6 +11,8 @@ import axios from 'axios';
 import { API_URL } from '../../constants';
 import BtnToTop from '../../components/BtnToTop';
 import moment from "moment";
+import { userId } from '../../services/userService';
+import NumberFormat from "react-number-format";
 
 const Rooms = () => {
   const startDate: Date = new Date(new Date());
@@ -39,6 +41,8 @@ const Rooms = () => {
     fetchData();
   }, []);
 
+  const idHost = userId;
+  const idUser = userId;
   const startDay = moment(startDate).format('DD/MM/YYYY');
   const endDay = moment(endDate).format('DD/MM/YYYY');
   const idRoom = noteRoom.id;
@@ -51,12 +55,11 @@ const Rooms = () => {
   const priceBook = noteRoom.price;
   const squareBook = noteRoom.square;
   const bedRoomBook = noteRoom.bedRoom;
-  console.log("noteRoom", noteRoom);
 
   const addBookRoom = (e: any) => {
     e.preventDefault();
     try {
-      const data = { idRoom, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, adult, children, guest_nums, status: 0, isCheck: true };
+      const data = { idHost, idUser, idRoom, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, adult, children, guest_nums, status: 0, isCheck: true };
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -184,11 +187,25 @@ const Rooms = () => {
             <div className='room-price mt--18'>
               <div className='room-price__wrap'>
                 <span>Thứ hai - Thứ năm</span>
-                <span className='bold'>{noteRoom.price}₫</span>
+                <span className='bold'>
+                  <NumberFormat
+                    value={noteRoom.price}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    suffix={"₫"}
+                  />
+                </span>
               </div>
               <div className='room-price__wrap'>
                 <span>Thứ sáu - Chủ nhật</span>
-                <span className='bold'>{noteRoom.price}₫</span>
+                <span className='bold'>
+                  <NumberFormat
+                    value={noteRoom.price}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    suffix={"₫"}
+                  />
+                </span>
               </div>
               <div className='room-price__wrap'>
                 <span>Phí trẻ em tăng thêm</span>
@@ -219,7 +236,14 @@ const Rooms = () => {
                 <div className='room-sidebar__wrap'>
                   <div className="room-sidebar__pricing">
                     <p className="fadeIn mb--18">
-                      <span className="extra-bold">{noteRoom.price} ₫</span>
+                      <span className="extra-bold">
+                        <NumberFormat
+                          value={noteRoom.price}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          suffix={"₫"}
+                        />
+                      </span>
                       <span className="p--small">/đêm</span>
                     </p>
                   </div>
@@ -238,10 +262,10 @@ const Rooms = () => {
                   <div>
                     {guest_nums ? <h3 className='select_peopel'>Tổng số người: {guest_nums} </h3> : null}
                     <label htmlFor="" className='select_peopel-label'>Người Lớn</label>
-                    <input className='select_peopel-input' type="number" onChange={(e) => setAdult(e.target.value)} />
+                    <input className='select_peopel-input' type="number" min={0} onChange={(e) => setAdult(e.target.value)} />
 
                     <label htmlFor="" className='select_peopel-label'>Trẻ Em</label>
-                    <input className='select_peopel-input' type="number" onChange={(e) => setChildren(e.target.value)} />
+                    <input className='select_peopel-input' type="number" min={0} onChange={(e) => setChildren(e.target.value)} />
                   </div>
 
                   <div className='mb--30'></div>

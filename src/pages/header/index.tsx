@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LoginSocial from "../../components/LoginGoogle";
 import "./styles.css";
 import { AiOutlineSetting, AiOutlineLogout } from "react-icons/ai";
+import { BsCardList } from "react-icons/bs";
 import { userIdName } from "../../services/userService";
 
 const Header = () => {
@@ -55,7 +56,13 @@ const Header = () => {
                   <div className=" popover--user-menu">
                     <ul className="user-menu is-relative">
                       <li>
-                        <Link to="/" className="user-menu__link">
+                        <Link to="/listBookingsUser" className="user-menu__link">
+                          <BsCardList /> {""}
+                          Danh Sách Đặt Phòng
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/settingUser" className="user-menu__link">
                           <AiOutlineSetting /> {""}
                           Cài đặt tài khoản
                         </Link>

@@ -6,6 +6,7 @@ import { Room } from '../../types/room';
 import Bookings from './booking';
 import './styles.css'
 import Users from './users';
+import { BsFillXCircleFill, BsCheckLg, BsPencilSquare } from "react-icons/bs";
 
 export default function Admin() {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -86,9 +87,16 @@ export default function Admin() {
                     </span>
                   </td>
                   <td>
-                    <button className='btn_act mb--12' onClick={() => onUpdateStatus(room, index, 1)}>Duyệt</button>
+                    <button className='btn_act mb--12' onClick={() => onUpdateStatus(room, index, 1)}>
+                      <BsCheckLg />
+                    </button>
                     <br />
-                    <button className='btn_act' onClick={() => onUpdateStatus(room, index, 2)}>Từ Chối</button>
+                    <button className='btn_act' onClick={() => onUpdateStatus(room, index, 2)}>
+                      <BsFillXCircleFill />
+                    </button>
+                    <button className='btn_act'>
+                      <BsPencilSquare />
+                    </button>
                   </td>
                 </tr>
               ))}

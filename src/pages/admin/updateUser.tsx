@@ -77,7 +77,7 @@ function UpdateUser() {
       <Row>
         <Col md={4}></Col>
         <Col md={4}>
-          <h3>Cập nhật thông tin người dùng</h3>
+          <h3 className='text-center'>Cập nhật thông tin người dùng</h3>
           <form onSubmit={handleSubmit} className="mt--42 form_update">
             <label>Name</label>
             <input type="name" name="name" defaultValue={userId.name} onChange={handleInput} />
@@ -85,8 +85,10 @@ function UpdateUser() {
             <input type="email" name="email" defaultValue={userId.email} onChange={handleInput} />
             <label>Password</label>
             <input type="text" name="password" defaultValue={userId.password} onChange={handleInput} />
-            <button type='submit'>Cập nhật</button>
-            <button onClick={() => navigate(-1)}>Trở Về</button>
+            <div className='text-center mt--18'>
+              <button type='submit'>Cập nhật</button>
+              <button onClick={() => navigate(-1)}>Trở Về</button>
+            </div>
           </form>
         </Col>
         <Col md={4}></Col>

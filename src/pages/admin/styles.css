@@ -8,15 +8,12 @@
 }
 .btn_act{
     border: none;
-    background: #f65e38;
-    color: #fff;
-    min-width: 80px;
+    background: none;
+    color: #222;
     font-size: 16px;
 }
 .btn_act:hover, .form_update button:hover{
     color: #f65e38;
-    background: #fff;
-    border: 1px solid #f65e38;
 }
 .form_update label{
     color: #222;

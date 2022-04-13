@@ -8,6 +8,8 @@ import { API_URL } from '../../constants';
 import HostBooking from './hostBooking';
 import { Room } from '../../types/room';
 import { userId } from '../../services/userService';
+import Header from '../header';
+import Footer from '../../components/footer';
 
 function Host() {
   const [loading, setLoading] = useState(true);
@@ -17,8 +19,9 @@ function Host() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: response } = await axios.get(`${API_URL}/rooms?hostId=${userId}`);
+        const { data: response } = await axios.get(`${API_URL}/rooms?idHost=${userId}`);
         setPosts(response);
+        getData();
       } catch (error: any) {
         console.error(error.message);
       }
@@ -29,7 +32,7 @@ function Host() {
 
   // cập nhật api
   const getData = () => {
-    axios.get(`${API_URL}/rooms`)
+    axios.get(`${API_URL}/rooms?idHost=${userId}`)
       .then((getData) => {
         setPosts(getData.data);
       })
@@ -44,14 +47,12 @@ function Host() {
       alert(error)
     }
   }
+  
   return (
     <div>
-      <div className='container--md margin--body'>
-        <Link to="/">
-          Home
-        </Link>
-        <div className='mt--42'></div>
-        <Tabs defaultActiveKey="rooms" id="uncontrolled-tab-example" className="mb-3">
+      <Header />
+      <div className='container--md margin--body mt--150'>
+        <Tabs defaultActiveKey="news" id="uncontrolled-tab-example" className="mb-3">
           <Tab eventKey="news" title="Bảng Tin">
            <HostBooking />
 
@@ -109,6 +110,7 @@ function Host() {
           </Tab>
         </Tabs>
       </div>
+      <Footer />
     </div>
   )
 }

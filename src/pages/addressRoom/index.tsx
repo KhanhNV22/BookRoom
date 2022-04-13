@@ -14,7 +14,7 @@ const AddressRoom = () => {
   const { id } = params;
 
   const fetchData = () => {
-    fetch(`${API_URL}/rooms`)
+    fetch(`${API_URL}/rooms?address=${id}`)
       .then((response) => response.json())
       .then((data) => {
         setRooms(data);
@@ -57,7 +57,6 @@ const AddressRoom = () => {
         <div className="mt--30"></div>
         <Row>
           {rooms
-            .filter((post: any) => (post.address === id))
             .filter((post: any) => (post.status === 1))
             .map((post: any) => (
               <Col xs={6} md={3} className="col-lg-20" key={post.id}>

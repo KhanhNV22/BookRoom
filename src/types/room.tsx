@@ -3,7 +3,7 @@ export interface Room {
     id: number;
     address: string;
     img_address: string;
-    hostId: number;
+    idHost: number;
     type: string;
     name: string;
     addressDetail: string;

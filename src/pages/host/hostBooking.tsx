@@ -4,6 +4,8 @@ import axios from 'axios';
 import { API_URL } from '../../constants';
 import { Table } from 'react-bootstrap';
 import { Booking } from '../../types/booking';
+import { userId } from '../../services/userService';
+import { BsFillXCircleFill, BsCheckLg, BsPencilSquare } from "react-icons/bs";
 
 function HostBooking() {
   const [hostBooks, setHostBooks] = useState<any[]>([])
@@ -29,7 +31,7 @@ function HostBooking() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: response } = await axios.get(`${API_URL}/booking`);
+        const { data: response } = await axios.get(`${API_URL}/booking?idHost=${userId}`);
         setHostBooks(response);
       } catch (error: any) {
         console.error(error.message);
@@ -37,7 +39,6 @@ function HostBooking() {
     }
     fetchData();
   }, [])
-
 
   return (
     <div>
@@ -57,54 +58,65 @@ function HostBooking() {
           </tr>
         </thead>
         <tbody>
-          {hostBooks.map((hostBook: Booking, index: number) => (
-            <tr key={index}>
-              <td>{hostBook.id}</td>
-              <td>{hostBook.nameBook}</td>
-              <td>
-                <img src={hostBook.imgBook} alt="" width={250} height={150} />
-              </td>
-              <td>{hostBook.startDay}</td>
-              <td>{hostBook.endDay}</td>
-              <td>{hostBook.guest_nums}</td>
-              <td>
-                <span
-                  style={{
-                    color: `${hostBook.status === 0
-                      ? "orange"
-                      : hostBook.status === 1
-                        ? "green"
-                        : "red"
-                      }`
-                  }}
-                > {hostBook.status === 0
-                  ? "Đang chờ"
-                  : hostBook.status === 1
-                    ? "Đã duyệt"
-                    : "Từ chối"}
-                </span>
-              </td>
-              <td>
-                <span
-                  style={{
-                    color: `${hostBook.isCheck === true
-                      ? "orange"
-                      : "green"
-                      }`
-                  }}
-                > {hostBook.isCheck === true
-                  ? "Chưa cho thuê"
-                  : "Đang cho thuê"
-                  }
-                </span>
-              </td>
-              <td>
-                <button className='btn_act mb--12' onClick={() => onUpdateStatus(hostBook, index, false, 1)}>Duyệt</button>
-                <br />
-                <button className='btn_act' onClick={() => onUpdateStatus(hostBook, index, true, 2)}>Từ Chối</button>
-              </td>
-            </tr>
-          ))}
+          {hostBooks
+            .filter((hostBook: any) => (hostBook.idHost === userId))
+            .map((hostBook: Booking, index: number) => (
+              <tr key={index}>
+                <td>{hostBook.id}</td>
+                <td>{hostBook.nameBook}</td>
+                <td>
+                  <img src={hostBook.imgBook} alt="" width={250} height={150} />
+                </td>
+                <td>{hostBook.startDay}</td>
+                <td>{hostBook.endDay}</td>
+                <td>{hostBook.guest_nums}</td>
+                <td>
+                  <span
+                    style={{
+                      color: `${hostBook.status === 0
+                        ? "orange"
+                        : hostBook.status === 1
+                          ? "green"
+                          : "red"
+                        }`
+                    }}
+                  > {hostBook.status === 0
+                    ? "Đang chờ"
+                    : hostBook.status === 1
+                      ? "Đã duyệt"
+                      : hostBook.status === 3
+                      ? "Hủy Phòng"
+                      : "Từ chối"}
+                  </span>
+                </td>
+                <td>
+                  <span
+                    style={{
+                      color: `${hostBook.isCheck === true
+                        ? "orange"
+                        : "green"
+                        }`
+                    }}
+                  > {hostBook.isCheck === true
+                    ? "Chưa cho thuê"
+                    : "Đang cho thuê"
+                    }
+                  </span>
+                </td>
+                <td>
+                  <button className='btn_act mb--12' onClick={() => onUpdateStatus(hostBook, index, false, 1)}>
+                    <BsCheckLg />
+                  </button>
+                  <br />
+                  <button className='btn_act' onClick={() => onUpdateStatus(hostBook, index, true, 2)}>
+                    <BsFillXCircleFill />
+                  </button>
+                  <button className='btn_act'>
+                    <BsPencilSquare />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </div>

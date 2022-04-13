@@ -28,7 +28,7 @@ const options_city = [
 ]
 
 function AddRooms() {
-  const hostId = userId;
+  const idHost = userId;
   const [type, setType] = useState("");
   const [name, setName] = useState("");
   const [cate, setCate] = useState("");
@@ -56,7 +56,7 @@ function AddRooms() {
   const addProduct = (e: any) => {
     e.preventDefault();
     try {
-      const data = { hostId, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: 0 };
+      const data = { idHost, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: 0 };
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },

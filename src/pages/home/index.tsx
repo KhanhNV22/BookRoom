@@ -13,6 +13,7 @@ import {
 import Footer from "../../components/footer";
 import BtnToTop from "../../components/BtnToTop";
 import { API_URL } from "../../constants";
+import { userIdName } from "../../services/userService";
 interface IPost {
   id: number,
   nameAddress: string,
@@ -47,7 +48,10 @@ const Home: React.FC = () => {
       <Container>
         <div className="title">
           <h3>Chào mừng đến với Luxstay! {""}
-            {user ? <>{user}</> : null}
+            {user ? {user}
+              : userIdName === userIdName
+                ? userIdName : null
+            }
           </h3>
           <p>
             Đặt chỗ ở, homestay, cho thuê xe, trải nghiệm và nhiều hơn nữa trên
@@ -55,6 +59,8 @@ const Home: React.FC = () => {
           </p>
 
           {user ? null :
+            userIdName === userIdName
+              ? null :
               <p>
                 <Link to="/">Đăng nhập</Link>
                 <span className="text-lowercase">Hoặc</span>{" "}
@@ -73,7 +79,9 @@ const Home: React.FC = () => {
 
           <div>
             <SliderCarousel dots={false} slidesToShow={5} styles={{ display: 'block' }}>
-              {posts.map((post) => (
+              {posts
+              
+              .map((post) => (
                 <div className="product__cover" key={post.id}>
                   <Link to={`/addressRoom/${post.nameAddress}`}>
                     <img alt=""

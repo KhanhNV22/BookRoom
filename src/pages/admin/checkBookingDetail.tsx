@@ -3,32 +3,27 @@ import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { API_URL } from '../../constants';
-import './rooms.css';
 import { FaCalendarAlt, FaUserAlt } from "react-icons/fa";
 import { BsFillGeoAltFill } from "react-icons/bs";
-import { userId } from '../../services/userService';
 
-const CheckoutRooms = () => {
-  const [check, setCheck] = useState<any>([]);
-  const { id } = useParams();
+const CheckoutBookingDetail = () => {
+  const [check, setCheck] = useState<any>({});
+  const param = useParams()
+  const { id } = param;
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async (id:any) => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_URL}/booking?idRoom=${id}&idUser=${userId}`);
-        setCheck(response.data);
+        const { data: response } = await axios.get(`${API_URL}/booking/${id}`);
+        setCheck(response);
       } catch (error) {
         console.log(error);
       }
     }
-    fetchData(id);
+    fetchData();
   }, [])
-  console.log("user-room", userId, id);
 
-  function goHome() {
-    navigate("/");
-  }
 
   return (
     <Container>
@@ -52,7 +47,7 @@ const CheckoutRooms = () => {
                 <div className='check_people'>
                   <p>
                     <FaCalendarAlt />
-                    {check.startDay} - {check.endDay}
+                    2 đêm - {check.startDate} / {check.endDate}
                   </p>
                   <p>
                     <FaUserAlt />
@@ -61,7 +56,7 @@ const CheckoutRooms = () => {
                 </div>
                 <hr />
                 <div className='check_price mb--12'>
-                  <span>Giá thuê</span>
+                  <span>Giá thuê 2 đêm</span>
                   <span>{check.priceBook}</span>
                 </div>
 
@@ -83,7 +78,7 @@ const CheckoutRooms = () => {
                 </p>
               </div>
 
-              <button className='btn_goHome mb--42 mt--42' onClick={goHome}>Trở về trang chủ</button>
+              <button className='btn_goHome mb--42 mt--42' onClick={() => navigate(-1)}>Trở về</button>
             </Col>
             <Col md={3}></Col>
           </Row>
@@ -93,4 +88,4 @@ const CheckoutRooms = () => {
   )
 }
 
-export default CheckoutRooms;
+export default CheckoutBookingDetail;

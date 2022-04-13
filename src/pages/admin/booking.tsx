@@ -27,13 +27,14 @@ function Bookings() {
         <thead>
           <tr>
             <th>STT</th>
-            <th>Room</th>
-            <th>Image</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Total Number</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>Tên</th>
+            <th>Hình Ảnh</th>
+            <th>Ngày Bắt Đầu</th>
+            <th>Ngày Kết Thúc</th>
+            <th>Số Người</th>
+            <th>Yêu Cầu</th>
+            <th>Tình Trạng</th>
+            <th>Hành Động</th>
           </tr>
         </thead>
         <tbody>
@@ -41,9 +42,9 @@ function Bookings() {
             <tr key={index}>
               <td>{booking.id}</td>
               <td>{booking.nameBook}</td>
-                  <td>
-                    <img src={booking.imgBook} alt="" width={250} height={150} />
-                  </td>
+              <td>
+                <img src={booking.imgBook} alt="" width={250} height={150} />
+              </td>
               <td>
                 {booking.startDay}
               </td>
@@ -63,11 +64,27 @@ function Bookings() {
                   ? "Đang chờ"
                   : booking.status === 1
                     ? "Đã duyệt"
+                    : booking.status === 3
+                      ? "Hủy Phòng"
                     : "Từ chối"}
                 </span>
               </td>
               <td>
-                <Link to={`CheckoutRoomDetail/${booking.id}`}>Xem chi tiết</Link>
+                <span
+                  style={{
+                    color: `${booking.isCheck === true
+                      ? "orange"
+                      : "green"
+                      }`
+                  }}
+                > {booking.isCheck === true
+                  ? "Chưa cho thuê"
+                  : "Đang cho thuê"
+                  }
+                </span>
+              </td>
+              <td>
+                <Link to={`CheckoutBookingDetail/${booking.id}`}>Xem chi tiết</Link>
               </td>
             </tr>
           ))}

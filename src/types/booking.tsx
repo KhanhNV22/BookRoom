@@ -1,6 +1,8 @@
 
 export interface Booking {
     id: number;
+    idHost: string;
+    idRoom: string;
     imgBook: string; 
     nameBook: string; 
     infoBook: string; 
