@@ -52,43 +52,55 @@ const Header = () => {
                 <li className="li_menu">
                   <Link to="/host" className="menu_link">Host</Link>
                 </li>
-                <li className="is-relative menu-item li_menu">
-                  <span className="menu__link menu__link--user btn--dropdown">
-                    <div className="user-avatar">
-                      <img src={userImg ? userImg : "https://www.w3schools.com/howto/img_avatar.png"} alt="" />
-                    </div>
-                    <span className="px--6">{userName ? userName : userIdName}</span>
-                  </span>
-                  <div className=" popover--user-menu">
-                    <ul className="user-menu is-relative">
-                      <li>
-                        <Link to="/listBookingsUser" className="user-menu__link">
-                          <BsCardList /> {""}
-                          Danh Sách Đặt Phòng
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/settingUser" className="user-menu__link">
-                          <AiOutlineSetting /> {""}
-                          Cài đặt tài khoản
-                        </Link>
-                      </li>
-
-                      {localStorage.getItem('userName') ?
+                {userName ?
+                  <li className="is-relative menu-item li_menu">
+                    <span className="menu__link menu__link--user btn--dropdown">
+                      <div className="user-avatar">
+                        <img src={userImg ? userImg : "https://www.w3schools.com/howto/img_avatar.png"} alt="" />
+                      </div>
+                      <span className="px--6">{userName ? userName : userIdName}</span>
+                    </span>
+                    <div className=" popover--user-menu">
+                      <ul className="user-menu is-relative">
                         <li>
-                          <span className="user-menu__link user_logut">
-                            <AiOutlineLogout /> {""}
-                            <LoginSocial children />
-                          </span>
-                        </li> :
-                        <li className="user-menu__link user_logut">
-                          <AiOutlineLogout /> {""}
-                          <span className="menu_link-span" onClick={logout}>Đăng xuất</span>
+                          <Link to="/listBookingsUser" className="user-menu__link">
+                            <BsCardList /> {""}
+                            Danh Sách Đặt Phòng
+                          </Link>
                         </li>
-                      }
-                    </ul>
-                  </div>
-                </li>
+                        <li>
+                          <Link to="/settingUser" className="user-menu__link">
+                            <AiOutlineSetting /> {""}
+                            Cài đặt tài khoản
+                          </Link>
+                        </li>
+
+                        {localStorage.getItem('userName') ?
+                          <li>
+                            <span className="user-menu__link user_logut">
+                              <AiOutlineLogout /> {""}
+                              <LoginSocial children />
+                            </span>
+                          </li> :
+                          <li className="user-menu__link user_logut">
+                            <AiOutlineLogout /> {""}
+                            <span className="menu_link-span" onClick={logout}>Đăng xuất</span>
+                          </li>
+                        }
+                      </ul>
+                    </div>
+                  </li> : (
+                    <>
+                      <li className="li_menu">
+                        <Link to="/login" className="menu_link">Đăng Nhập</Link>
+                      </li>
+                      <li className="li_menu">
+                        <Link to="/registration" className="menu_link">Đăng Ký</Link>
+                      </li>
+                    </>
+                  )
+                }
+
               </ul>
             </div>
           </Col>
