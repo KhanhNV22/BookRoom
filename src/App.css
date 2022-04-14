@@ -28,6 +28,9 @@
 .mt--150{
     margin-top: 150px!important;
 }
+.mt--91{
+    height: 91px!important;
+}
 .text_decoration{
     text-decoration: none;
 }
@@ -72,5 +75,11 @@
     }
     .margin--body {
         padding: 0 2.8rem;
+    }
+}
+
+@media (max-width: 990px){
+    table {
+        overflow: scroll;
     }
 }

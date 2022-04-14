@@ -7,6 +7,7 @@ import { API_URL } from '../../constants';
 import { userId } from '../../services/userService';
 import { Booking } from '../../types/booking';
 import Header from '../header';
+import NumberFormat from "react-number-format";
 
 function ListBookingsUser() {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -14,8 +15,8 @@ function ListBookingsUser() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`${API_URL}/booking?idUser=${userId}`);
-        setBookings(data);
+        const res = await axios.get(`${API_URL}/bookings?user_id=${userId}`);
+        setBookings(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -32,7 +33,7 @@ function ListBookingsUser() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newBookRoom)
     };
-    fetch(`${API_URL}/booking/${id}`, requestOptions)
+    fetch(`${API_URL}/bookings/${id}`, requestOptions)
       .then(response => response.json())
       .then(res => {
         const newBookRooms = [...bookings];
@@ -66,7 +67,7 @@ function ListBookingsUser() {
             {bookings
               .map((booking: Booking, index: number) => (
                 <tr key={index}>
-                  <td>{booking.id}</td>
+                  <td>{index + 1}</td>
                   <td>{booking.nameBook}</td>
                   <td>
                     <img src={booking.imgBook} alt="" width={250} height={150} />
@@ -76,7 +77,14 @@ function ListBookingsUser() {
                   </td>
                   <td>{booking.endDay}</td>
                   <td>{booking.guest_nums}</td>
-                  <td>{booking.priceBook}</td>
+                  <td>
+                    <NumberFormat
+                      value={booking.priceBook}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      suffix={"₫"}
+                    />
+                  </td>
                   <td>
                     <span
                       style={{
@@ -100,7 +108,7 @@ function ListBookingsUser() {
                     <button className='btn_act mb--12' onClick={() => onUpdateStatus(booking, index, true, 3)}>Hủy Đặt Phòng</button>
                   </td>
                   <td>
-                    <Link to={`CheckoutRoomDetail/${booking.id}`}>Xem chi tiết</Link>
+                    <Link to={`CheckoutBookingDetail/${booking.id}`}>Xem chi tiết</Link>
                   </td>
                 </tr>
               ))}

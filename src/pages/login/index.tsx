@@ -19,8 +19,6 @@ const Login = () => {
   const user = useRef();
   const userId = useRef();
   const userIdName = useRef();
-  const userEmail = useRef();
-  const userPass = useRef();
   const navigate = useNavigate();
 
   const checkUser = async (email: string, password: string) => {

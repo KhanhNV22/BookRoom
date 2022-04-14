@@ -19,7 +19,7 @@ function Host() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: response } = await axios.get(`${API_URL}/rooms?idHost=${userId}`);
+        const { data: response } = await axios.get(`${API_URL}/rooms?host_id=${userId}`);
         setPosts(response);
         getData();
       } catch (error: any) {
@@ -32,7 +32,7 @@ function Host() {
 
   // cập nhật api
   const getData = () => {
-    axios.get(`${API_URL}/rooms?idHost=${userId}`)
+    axios.get(`${API_URL}/rooms?host_id=${userId}`)
       .then((getData) => {
         setPosts(getData.data);
       })
@@ -47,15 +47,14 @@ function Host() {
       alert(error)
     }
   }
-  
+
   return (
     <div>
       <Header />
       <div className='container--md margin--body mt--150'>
         <Tabs defaultActiveKey="news" id="uncontrolled-tab-example" className="mb-3">
-          <Tab eventKey="news" title="Bảng Tin">
-           <HostBooking />
-
+          <Tab eventKey="news" title="Đơn Đặt Phòng">
+            <HostBooking />
           </Tab>
 
           <Tab eventKey="rooms" title="Chỗ Nghỉ">

@@ -13,17 +13,38 @@ import BtnToTop from '../../components/BtnToTop';
 import moment from "moment";
 import { userId } from '../../services/userService';
 import NumberFormat from "react-number-format";
+import Header from '../header';
 
 const Rooms = () => {
-  const startDate: Date = new Date(new Date());
-  const endDate: Date = new Date(new Date());
   const minValue: Date = new Date(new Date());
   const maxValue: Date = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 90);
 
   const [noteRoom, setNoteRoom] = useState<any>({});
   const [adult, setAdult] = useState("");
   const [children, setChildren] = useState("");
+  const [startDate, setStartDate] = useState<any>();
+  const [endDate, setEndDate] = useState<any>();
+
+  function convertDate(inputFormat: any) {
+    function pad(s: any) {
+      return s < 10 ? "0" + s : s;
+    }
+    var d = new Date(inputFormat);
+    return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("-");
+  }
+
+  const onChangeDate = (e: any) => {
+    let startDate = convertDate(e.target.startDate);
+    let endDate = convertDate(e.target.endDate);
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
+
   const guest_nums = Number(adult) + Number(children);
+  // tính ngày chênh lệch
+  const sDay = moment(startDate);
+  const eDay = moment(endDate);
+  const totalDays = eDay.diff(sDay, 'days');
 
   const navigate = useNavigate();
   const params = useParams();
@@ -41,11 +62,11 @@ const Rooms = () => {
     fetchData();
   }, []);
 
-  const idHost = userId;
-  const idUser = userId;
+  const host_id = userId;
+  const user_id = userId;
   const startDay = moment(startDate).format('DD/MM/YYYY');
   const endDay = moment(endDate).format('DD/MM/YYYY');
-  const idRoom = noteRoom.id;
+  const room_id = noteRoom.id;
   const imgBook = noteRoom.img_rooms;
   const nameBook = noteRoom.name;
   const infoBook = noteRoom.info;
@@ -56,25 +77,46 @@ const Rooms = () => {
   const squareBook = noteRoom.square;
   const bedRoomBook = noteRoom.bedRoom;
 
+  // tính tổng tiền
+  const totalPrice = Number(priceBook) * totalDays;
+
   const addBookRoom = (e: any) => {
     e.preventDefault();
     try {
-      const data = { idHost, idUser, idRoom, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, adult, children, guest_nums, status: 0, isCheck: true };
+      const data = { host_id, user_id, room_id, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, totalDays, totalPrice, adult, children, guest_nums, status: 0, isCheck: true };
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       };
-      fetch(`${API_URL}/booking`, requestOptions)
+      fetch(`${API_URL}/bookings`, requestOptions)
         .then(response => response.json())
-      navigate(`/checkoutRooms/${idRoom}`)
+      navigate(`/checkoutUserBooking/${room_id}`)
     } catch (error) {
       alert(error)
     }
   }
 
+  const AnyReactComponent = ( text:any ) => (
+    <div style={{
+      color: 'white', 
+      background: 'grey',
+      padding: '15px 10px',
+      display: 'inline-flex',
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: '100%',
+      transform: 'translate(-50%, -50%)'
+    }}>
+      {text}
+    </div>
+  );
+
   return (
     <div>
+      <Header />
+      <div className='mt--91'></div>
       <img alt="" src={imgBook} className="img_rooms" />
       <div className='mb--30'></div>
       <Container>
@@ -96,6 +138,10 @@ const Rooms = () => {
               <span className='bold'>Phòng riêng</span>
               <span>· {bedRoomBook} Phòng</span>
             </div>
+            <div className='detail__location mt--12'>
+              <span className='bold'>Số Người Tối Đa</span>
+              <span>· {noteRoom.people} Người</span>
+            </div>
             <div className='mt--42'></div>
             <div className='detail__intro'>
               <ReadMore>
@@ -112,20 +158,6 @@ const Rooms = () => {
                 <p>·Căn hộ được thiết kế với nhiều lựa chọn bố trí hợp lý và được trang bị theo tiêu chuẩn cao cấp 4 sao với ban công riêng và cảnh quan đẹp</p>
                 <p>·Có nhiều dịch vụ tại chỗ khác nhau như giặt ủi, dịch vụ vệ sinh, Wi-Fi miễn phí tốc độ cao, an ninh 24/7</p>
                 <p>·Dịch vụ khách hàng đặc biệt được cung cấp</p>
-                <p>
-                  <strong>Căn hộ Deluxe 60m2 - Có ban công - Hướng nhìn thành phố</strong>
-                </p>
-                <p>·Thang máy ra vào căn hộ với hệ thống thẻ khóa an ninh</p>
-                <p>·Phòng khách được thiết kế theo phong cách hiện đại với ghế sofa và khu vực ăn uống riêng</p>
-                <p>·Nhà bếp được trang bị đầy đủ với bếp điện và máy hút mùi điện, lò vi sóng, tủ lạnh, ấm điện, đồ thủy tinh, đồ sành sứ, dao kéo</p>
-                <p>·Phòng tắm được trang bị bồn tắm dài / tắm đứng và kính riêng</p>
-                <p>·Phòng ngủ có sẵn ga trải giường và két an toàn cá nhân trong phòng</p>
-                <p>·Hệ thống giải trí với TV LCD và các kênh truyền hình cáp</p>
-                <p>·Điều hòa hai chiều với bộ điều khiển nhiệt riêng</p>
-                <p>·Điện thoại</p>
-                <p>·Wi-fi</p>
-                <p>·Cơ sở vật chất phòng tắm và nhà bếp tiện nghi đến từ các nhãn hàng nổi tiếng như: Koller, Samsung, Electrolux...</p>
-                <p>·Căn hộ đều có tiện nghi sang trọng, điện thoại, kênh truyền hình cáp, TV màn hình phẳng, máy lạnh, khu vực phòng khách, máy giặt, tủ quần áo, giá treo quần áo, máy sấy tóc, phòng tắm, dép, vòi hoa sen, ghế sofa, sàn gỗ, tủ lạnh, lò vi sóng, đồ dùng nhà bếp, bàn ăn, khăn tắm, ga trải giường.</p>
               </ReadMore>
             </div>
 
@@ -179,12 +211,7 @@ const Rooms = () => {
               </div>
             </div>
 
-            <div className='title mt--60'>
-              <h3>Giá phòng</h3>
-              <span>Giá có thể tăng vào cuối tuần hoặc ngày lễ</span>
-            </div>
-
-            <div className='room-price mt--18'>
+            {/* <div className='room-price mt--18'>
               <div className='room-price__wrap'>
                 <span>Thứ hai - Thứ năm</span>
                 <span className='bold'>
@@ -200,21 +227,13 @@ const Rooms = () => {
                 <span>Thứ sáu - Chủ nhật</span>
                 <span className='bold'>
                   <NumberFormat
-                    value={noteRoom.price}
+                    value={Number(noteRoom.price) + Number(100000)}
                     displayType={"text"}
                     thousandSeparator={true}
                     suffix={"₫"}
                   />
                 </span>
-              </div>
-              <div className='room-price__wrap'>
-                <span>Phí trẻ em tăng thêm</span>
-                <span className='bold'>125,000₫ (sau 2 khách)</span>
-              </div>
-              <div className='room-price__wrap'>
-                <span>Thuê theo tháng</span>
-                <span className='bold'>-7.88 %</span>
-              </div>
+              </div>    
               <div className='room-price__wrap'>
                 <span>Số đêm tối thiểu</span>
                 <span className='bold'>1 đêm</span>
@@ -223,7 +242,7 @@ const Rooms = () => {
                 <span>Số đêm tối đa</span>
                 <span className='bold'>90 đêm</span>
               </div>
-            </div>
+            </div> */}
 
             <div className='title mt--60'>
               <h3>Lưu ý đặc biệt</h3>
@@ -250,23 +269,47 @@ const Rooms = () => {
 
                   <DateRangePickerComponent
                     placeholder='Chọn ngày đặt phòng'
-                    startDate={startDate}
-                    endDate={endDate}
                     min={minValue}
                     max={maxValue}
                     format="dd/MM/yyyy"
                     cssClass='date_picker'
+                    onChange={onChangeDate}
                   />
                   <div className='mb--30'></div>
 
                   <div>
-                    {guest_nums ? <h3 className='select_peopel'>Tổng số người: {guest_nums} </h3> : null}
-                    <label htmlFor="" className='select_peopel-label'>Người Lớn</label>
+                    <label htmlFor="" className='select_peopel-label' >Người Lớn</label>
                     <input className='select_peopel-input' type="number" min={0} onChange={(e) => setAdult(e.target.value)} />
 
                     <label htmlFor="" className='select_peopel-label'>Trẻ Em</label>
                     <input className='select_peopel-input' type="number" min={0} onChange={(e) => setChildren(e.target.value)} />
                   </div>
+
+                  {guest_nums && totalDays && totalPrice ?
+                      <div>
+                        <div className="room_total mb--12">
+                          <span>Tổng số người:</span>
+                          <span>{guest_nums}</span>
+                        </div>
+
+                        <div className="room_total mb--12">
+                          <span>Tổng số ngày:</span>
+                          <span>{totalDays}</span>
+                        </div>
+
+                        <div className="room_total mb--12">
+                          <span>Tổng số tiền:</span>
+                          <span>
+                            <NumberFormat
+                              value={totalPrice}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              suffix={"₫"}
+                            />
+                          </span>
+                        </div>
+                      </div> : null
+                    }
 
                   <div className='mb--30'></div>
                   <button className='btn_order' type='submit' onClick={addBookRoom}>

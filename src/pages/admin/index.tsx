@@ -7,9 +7,24 @@ import Bookings from './booking';
 import './styles.css'
 import Users from './users';
 import { BsFillXCircleFill, BsCheckLg, BsPencilSquare } from "react-icons/bs";
+import Footer from '../../components/footer';
+import { Link, useNavigate } from 'react-router-dom';
+import HeaderAdmin from './headerAdmin';
 
 export default function Admin() {
   const [rooms, setRooms] = useState<Room[]>([]);
+  const navigate = useNavigate();
+
+  const userEmailAdmin = localStorage.getItem('userEmailAdmin');
+
+  useEffect(() => {
+    const token = userEmailAdmin;
+    if(!token) {
+      navigate('/loginAdmin');
+    } else {
+      navigate('/admin')
+    }
+  },[])
 
   const onUpdateStatus = (room: Room, index: number, status: number) => {
     const { id } = room;
@@ -42,74 +57,81 @@ export default function Admin() {
   }, [])
 
   return (
-    <div className='container--md margin--body'>
-      <div className='mt--60'></div>
-      <Tabs defaultActiveKey="Rooms" id="uncontrolled-tab-example" className="mb-3">
-        <Tab eventKey="Rooms" title="Rooms">
-          <div className='mt--42'></div>
-          <Table striped bordered hover className='table_ad'>
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Category</th>
-                <th>Address</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rooms.map((room: Room, index: number) => (
-                <tr key={index}>
-                  <td>{room.id}</td>
-                  <td>{room.name}</td>
-                  <td>
-                    <img src={room.img_rooms} alt="" className='img_tb' />
-                  </td>
-                  <td>{room.cate}</td>
-                  <td>{room.address}</td>
-                  <td>
-                    <span
-                      style={{
-                        color: `${room.status === 0
-                          ? "orange"
-                          : room.status === 1
-                            ? "green"
-                            : "red"
-                          }`,
-                      }}
-                    > {room.status === 0
-                      ? "Đang chờ"
-                      : room.status === 1
-                        ? "Đã duyệt"
-                        : "Từ chối"}
-                    </span>
-                  </td>
-                  <td>
-                    <button className='btn_act mb--12' onClick={() => onUpdateStatus(room, index, 1)}>
-                      <BsCheckLg />
-                    </button>
-                    <br />
-                    <button className='btn_act' onClick={() => onUpdateStatus(room, index, 2)}>
-                      <BsFillXCircleFill />
-                    </button>
-                    <button className='btn_act'>
-                      <BsPencilSquare />
-                    </button>
-                  </td>
+    <div>
+      <HeaderAdmin />
+      <div className='container--md margin--body mt--150'>
+        <div className='mt--60'></div>
+        <Tabs defaultActiveKey="Rooms" id="uncontrolled-tab-example" className="mb-3">
+          <Tab eventKey="Rooms" title="Rooms">
+            <div className='mt--42'></div>
+            <Table striped bordered hover className='table_ad'>
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Name</th>
+                  <th>Image</th>
+                  <th>Category</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Tab>
-        <Tab eventKey="Booking" title="Booking">
-          <Bookings />
-        </Tab>
-        <Tab eventKey="Uers" title="Uers">
-          <Users />
-        </Tab>
-      </Tabs>
+              </thead>
+              <tbody>
+                {rooms.map((room: Room, index: number) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{room.name}</td>
+                    <td>
+                      <img src={room.img_rooms} alt="" className='img_tb' />
+                    </td>
+                    <td>{room.cate}</td>
+                    <td>{room.address}</td>
+                    <td>
+                      <span
+                        style={{
+                          color: `${room.status === 0
+                            ? "orange"
+                            : room.status === 1
+                              ? "green"
+                              : "red"
+                            }`,
+                        }}
+                      > {room.status === 0
+                        ? "Đang chờ"
+                        : room.status === 1
+                          ? "Đã duyệt"
+                          : "Từ chối"}
+                      </span>
+                    </td>
+                    <td>
+                      <button className='btn_act mb--12' onClick={() => onUpdateStatus(room, index, 1)}>
+                        <BsCheckLg />
+                      </button>
+                      <br />
+                      <button className='btn_act' onClick={() => onUpdateStatus(room, index, 2)}>
+                        <BsFillXCircleFill />
+                      </button>
+                      <Link to={`/rooms/${room.id}`}>
+                        <button className='btn_act'>
+                          <BsPencilSquare />
+                        </button>
+                      </Link>
+
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Tab>
+          <Tab eventKey="Booking" title="Booking">
+            <Bookings />
+          </Tab>
+          <Tab eventKey="Uers" title="Uers">
+            <Users />
+          </Tab>
+        </Tabs>
+      </div>
+      <Footer />
     </div>
   )
 }

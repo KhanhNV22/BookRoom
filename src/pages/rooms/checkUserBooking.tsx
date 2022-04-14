@@ -3,29 +3,33 @@ import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { API_URL } from '../../constants';
+import './rooms.css';
 import { FaCalendarAlt, FaUserAlt } from "react-icons/fa";
 import { BsFillGeoAltFill } from "react-icons/bs";
-import NumberFormat from "react-number-format";
+import { userId } from '../../services/userService';
 import Header from '../header';
 import Footer from '../../components/footer';
 
-const CheckoutBookingDetail = () => {
-  const [check, setCheck] = useState<any>({});
-  const param = useParams()
-  const { id } = param;
+const CheckoutBooking = () => {
+  const [check, setCheck] = useState<any>([]);
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (id: any) => {
       try {
-        const { data: response } = await axios.get(`${API_URL}/bookings/${id}`);
-        setCheck(response);
+        const response = await axios.get(`${API_URL}/bookings?room_id=${id}&user_id=${userId}`);
+        setCheck(response.data);
       } catch (error) {
         console.log(error);
       }
     }
-    fetchData();
+    fetchData(id);
   }, [])
+
+  function goHome() {
+    navigate("/");
+  }
 
   return (
     <div>
@@ -52,37 +56,28 @@ const CheckoutBookingDetail = () => {
                   <div className='check_people'>
                     <p>
                       <FaCalendarAlt />
-                      {check.totalDays} đêm - {check.startDay} - {check.endDay}
+                      {check.startDay} - {check.endDay}
                     </p>
                     <p>
                       <FaUserAlt />
-                      {check.guest_nums} người - {check.adult} người lớn {check.children ? (<> - {check.children} trẻ em</>) : null}
+                      {check.guest_nums} người
                     </p>
                   </div>
                   <hr />
                   <div className='check_price mb--12'>
-                    <span>Giá thuê 1 đêm</span>
-                    <span>
-                      <NumberFormat
-                        value={check.priceBook}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        suffix={"₫"}
-                      />
-                    </span>
+                    <span>Giá thuê</span>
+                    <span>{check.priceBook}</span>
+                  </div>
+
+                  <div className='check_price'>
+                    <span>Phí dịch vụ</span>
+                    <span>{check.priceBook}</span>
                   </div>
                   <hr />
 
                   <div className='check_price bold'>
-                    <span>Tổng tiền {check.totalDays} đêm</span>
-                    <span>
-                      <NumberFormat
-                        value={check.totalPrice}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        suffix={"₫"}
-                      />
-                    </span>
+                    <span>Tổng tiền</span>
+                    <span>{check.priceBook}</span>
                   </div>
                   <hr />
                   <p><strong>Chính sách hủy phòng</strong></p>
@@ -92,7 +87,7 @@ const CheckoutBookingDetail = () => {
                   </p>
                 </div>
 
-                <button className='btn_goHome mb--42 mt--42' onClick={() => navigate(-1)}>Trở về</button>
+                <button className='btn_goHome mb--42 mt--42' onClick={goHome}>Trở về trang chủ</button>
               </Col>
               <Col md={3}></Col>
             </Row>
@@ -104,4 +99,4 @@ const CheckoutBookingDetail = () => {
   )
 }
 
-export default CheckoutBookingDetail;
+export default CheckoutBooking;

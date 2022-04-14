@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 import "./styles.css";
 import Footer from "../../components/footer";
 import { API_URL } from "../../constants";
-
+import NumberFormat from "react-number-format";
 
 const AddressRoom = () => {
   const [rooms, setRooms] = useState<any>([]);
@@ -14,7 +14,7 @@ const AddressRoom = () => {
   const { id } = params;
 
   const fetchData = () => {
-    fetch(`${API_URL}/rooms?address=${id}`)
+    fetch(`${API_URL}/rooms?address=${id}&status=1`)
       .then((response) => response.json())
       .then((data) => {
         setRooms(data);
@@ -50,14 +50,17 @@ const AddressRoom = () => {
             <h2 className="title-h2">Homestay tại {id}</h2>
           </Col>
           <Col md={3}>
-
+            <Form.Select>
+              <option>Sắp Xếp Mặc Định</option>
+              <option>Sắp Xếp Tăng Dần</option>
+              <option>Sắp Xếp Giảm Dần</option>
+            </Form.Select>
           </Col>
         </Row>
 
         <div className="mt--30"></div>
         <Row>
           {rooms
-            .filter((post: any) => (post.status === 1))
             .map((post: any) => (
               <Col xs={6} md={3} className="col-lg-20" key={post.id}>
                 <div className="div-room">
@@ -76,7 +79,14 @@ const AddressRoom = () => {
                     </span>
                   </Link>
                   <div className="promo__price">
-                    <span>{post.price} ₫</span>
+                    <span>
+                      <NumberFormat
+                        value={post.price}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        suffix={"₫"}
+                      /> /đêm
+                    </span>
                   </div>
                   <div className="mb--30"></div>
                 </div>

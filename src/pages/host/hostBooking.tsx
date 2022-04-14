@@ -6,6 +6,7 @@ import { Table } from 'react-bootstrap';
 import { Booking } from '../../types/booking';
 import { userId } from '../../services/userService';
 import { BsFillXCircleFill, BsCheckLg, BsPencilSquare } from "react-icons/bs";
+import { Link } from 'react-router-dom';
 
 function HostBooking() {
   const [hostBooks, setHostBooks] = useState<any[]>([])
@@ -19,7 +20,7 @@ function HostBooking() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newBookRoom)
     };
-    fetch(`${API_URL}/booking/${id}`, requestOptions)
+    fetch(`${API_URL}/bookings/${id}`, requestOptions)
       .then(response => response.json())
       .then(res => {
         const newBookRooms = [...hostBooks];
@@ -31,7 +32,7 @@ function HostBooking() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: response } = await axios.get(`${API_URL}/booking?idHost=${userId}`);
+        const { data: response } = await axios.get(`${API_URL}/bookings?host_id=${userId}`);
         setHostBooks(response);
       } catch (error: any) {
         console.error(error.message);
@@ -59,10 +60,9 @@ function HostBooking() {
         </thead>
         <tbody>
           {hostBooks
-            .filter((hostBook: any) => (hostBook.idHost === userId))
             .map((hostBook: Booking, index: number) => (
               <tr key={index}>
-                <td>{hostBook.id}</td>
+                <td>{index + 1}</td>
                 <td>{hostBook.nameBook}</td>
                 <td>
                   <img src={hostBook.imgBook} alt="" width={250} height={150} />
@@ -85,8 +85,8 @@ function HostBooking() {
                     : hostBook.status === 1
                       ? "Đã duyệt"
                       : hostBook.status === 3
-                      ? "Hủy Phòng"
-                      : "Từ chối"}
+                        ? "Hủy Phòng"
+                        : "Từ chối"}
                   </span>
                 </td>
                 <td>
@@ -112,7 +112,9 @@ function HostBooking() {
                     <BsFillXCircleFill />
                   </button>
                   <button className='btn_act'>
-                    <BsPencilSquare />
+                    <Link to={`CheckoutBookingDetail/${hostBook.id}`}>
+                      <BsPencilSquare />
+                    </Link>
                   </button>
                 </td>
               </tr>

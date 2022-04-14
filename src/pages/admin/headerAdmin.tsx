@@ -3,25 +3,23 @@ import { Row, Col } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import LoginSocial from "../../components/LoginGoogle";
-import "./styles.css";
 import { AiOutlineSetting, AiOutlineLogout } from "react-icons/ai";
 import { BsCardList } from "react-icons/bs";
 import { userIdName } from "../../services/userService";
 
-const Header = () => {
+const HeaderAdmin = () => {
   let navigate = useNavigate();
 
   function logout() {
     localStorage.clear();
-    navigate("/login")
+    navigate("/loginAdmin")
   }
-
-  const userName = localStorage.getItem('userName')
-  const userImg = localStorage.getItem('userImg')
 
   const handleSearch = () => {
     console.log("search");
   }
+
+  const userNameAdmin = localStorage.getItem('userNameAdmin');
 
   return (
     <div className="header">
@@ -49,31 +47,15 @@ const Header = () => {
           <Col lg="6" className="col_right">
             <div className="header_right">
               <ul className="ul-wrap">
-                <li className="li_menu">
-                  <Link to="/host" className="menu_link">Host</Link>
-                </li>
                 <li className="is-relative menu-item li_menu">
                   <span className="menu__link menu__link--user btn--dropdown">
                     <div className="user-avatar">
-                      <img src={userImg ? userImg : "https://www.w3schools.com/howto/img_avatar.png"} alt="" />
+                      <img src= "https://www.w3schools.com/howto/img_avatar.png" alt="" />
                     </div>
-                    <span className="px--6">{userName ? userName : userIdName}</span>
+                    <span className="px--6">{userNameAdmin}</span>
                   </span>
                   <div className=" popover--user-menu">
                     <ul className="user-menu is-relative">
-                      <li>
-                        <Link to="/listBookingsUser" className="user-menu__link">
-                          <BsCardList /> {""}
-                          Danh Sách Đặt Phòng
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/settingUser" className="user-menu__link">
-                          <AiOutlineSetting /> {""}
-                          Cài đặt tài khoản
-                        </Link>
-                      </li>
-
                       {localStorage.getItem('userName') ?
                         <li>
                           <span className="user-menu__link user_logut">
@@ -98,4 +80,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderAdmin;

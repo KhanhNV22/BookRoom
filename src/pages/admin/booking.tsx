@@ -11,7 +11,7 @@ function Bookings() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`${API_URL}/booking`);
+        const { data } = await axios.get(`${API_URL}/bookings`);
         setBookings(data);
       } catch (error) {
         console.log(error);
@@ -40,7 +40,7 @@ function Bookings() {
         <tbody>
           {bookings.map((booking: Booking, index: number) => (
             <tr key={index}>
-              <td>{booking.id}</td>
+              <td>{index + 1}</td>
               <td>{booking.nameBook}</td>
               <td>
                 <img src={booking.imgBook} alt="" width={250} height={150} />

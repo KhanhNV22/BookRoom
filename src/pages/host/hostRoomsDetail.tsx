@@ -5,6 +5,9 @@ import axios from 'axios';
 import { API_URL } from '../../constants';
 import { useParams } from 'react-router-dom';
 import _ from "lodash";
+import { userId } from '../../services/userService';
+import Footer from '../../components/footer';
+import Header from '../header';
 
 const options = [
   { value: 'Homestay', label: 'Homestay' },
@@ -35,6 +38,7 @@ function RoomDetail() {
   const [disable, setDisable] = useState(true);
   const [roomdetail, setRoomDetail] = useState<any>({});
 
+  const host_id = userId;
   const [type, setType] = useState("");
   const [name, setName] = useState("");
   const [cate, setCate] = useState("");
@@ -67,7 +71,7 @@ function RoomDetail() {
     fetchData();
   }, [])
 
-  const data = { type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: roomdetail.status };
+  const data = {host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: roomdetail.status };
 
   useEffect(() => {
     if (
@@ -109,7 +113,10 @@ function RoomDetail() {
   }
 
   return (
-    <div className='container--md margin--body mt--18 mb--18'>
+    <div>
+      <Header />
+    <div className='container--md margin--body mt--18 mb--18 mt--150'>
+      <h3>Thông Tin Chỗ Nghỉ</h3>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>CHỖ NGHỈ CỦA BẠN LÀ (*)</Form.Label>
@@ -208,6 +215,8 @@ function RoomDetail() {
           </div>
         )}
       </Form>
+    </div>
+    <Footer />
     </div>
   )
 }

@@ -70,7 +70,7 @@
 .room-sidebar {
     border-radius: 3px;
     position: sticky;
-    top: 30px;
+    top: 100px;
 }
 .room-sidebar__content {
     border: 1px solid #e9e9e9;
@@ -100,7 +100,7 @@ button.btn_order {
     padding: 10px 0;
 }
 .select_peopel{
-    font-size: 18px;
+    font-size: 16px;
 }
 .select_peopel-label{
     margin-bottom: 5px;
@@ -109,7 +109,13 @@ button.btn_order {
     margin-bottom: 10px;
     outline: none;
 }
-
+.room_total{
+    display: flex;
+    justify-content: space-between;
+}
+.room_total span {
+    font-weight: 500;
+}
 /* checkout rooms */
 .checkout{
     text-align: center;
