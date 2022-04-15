@@ -3,11 +3,11 @@ import { Form, Button } from 'react-bootstrap'
 import Select from 'react-select'
 import axios from 'axios';
 import { API_URL } from '../../constants';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import _ from "lodash";
 import { userId } from '../../services/userService';
 import Footer from '../../components/footer';
-import Header from '../header';
+import HeaderHost from './headerHost';
 
 const options = [
   { value: 'Homestay', label: 'Homestay' },
@@ -30,11 +30,7 @@ const options_city = [
   { value: 'Đà Lạt', label: 'Đà Lạt' },
 ]
 
-function cancelItem() {
-  console.log("cancel");
-}
-
-function RoomDetail() {
+function HostRoomDetail() {
   const [disable, setDisable] = useState(true);
   const [roomdetail, setRoomDetail] = useState<any>({});
 
@@ -51,7 +47,8 @@ function RoomDetail() {
   const [bedRoom, setBedRoom] = useState("");
   const [img_rooms, setImg] = useState("");
   const [status, setStatus] = useState(roomdetail.status);
-
+  
+  const navigate = useNavigate();
   const params = useParams();
   const { id } = params;
 
@@ -71,7 +68,7 @@ function RoomDetail() {
     fetchData();
   }, [])
 
-  const data = {host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: roomdetail.status };
+  const data = { host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: roomdetail.status };
 
   useEffect(() => {
     if (
@@ -108,117 +105,116 @@ function RoomDetail() {
     e.preventDefault()
     axios.put(`${API_URL}/rooms/${id}`, { ...data, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms })
       .then(res => console.log(res))
-      .then(res => alert("Cập nhật thành công"))
       .catch(err => console.log('Login: ', err));
+      alert("Cập nhật thành công")
+      navigate("/host")
+      window.location.reload();
   }
 
   return (
     <div>
-      <Header />
-    <div className='container--md margin--body mt--18 mb--18 mt--150'>
-      <h3>Thông Tin Chỗ Nghỉ</h3>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicName">
-          <Form.Label>CHỖ NGHỈ CỦA BẠN LÀ (*)</Form.Label>
-          <Select
-            options={options}
-            isClearable
-            isDisabled={disable}
-            defaultValue={{ value: roomdetail.type, label: roomdetail.type }}
-            onChange={(e: any) => setType(e.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicNameRooms">
-          <Form.Label>Tên Chỗ Nghỉ (*)</Form.Label>
-          <Form.Control
-            type="name"
-            placeholder="Name"
-            disabled={disable}
-            defaultValue={roomdetail.name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Group>
+      <HeaderHost />
+      <div className='container--md margin--body mt--18 mb--18 mt--150'>
+        <h3>Thông Tin Chỗ Nghỉ</h3>
+        <Form>
+          <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Label>CHỖ NGHỈ CỦA BẠN LÀ (*)</Form.Label>
+            <Select
+              options={options}
+              isClearable
+              isDisabled={disable}
+              defaultValue={{ value: roomdetail.type, label: roomdetail.type }}
+              onChange={(e: any) => setType(e.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Tên Chỗ Nghỉ (*)</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Name"
+              disabled={disable}
+              defaultValue={roomdetail.name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicCate">
-          <Form.Label>Loại Đặt Phòng (*)</Form.Label>
-          <Select
-            options={options_cate}
-            isClearable
-            isDisabled={disable}
-            defaultValue={{ value: roomdetail.cate, label: roomdetail.cate }}
-            onChange={(e: any) => setCate(e.value)}
-          />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicCate">
+            <Form.Label>Loại Đặt Phòng (*)</Form.Label>
+            <Select
+              options={options_cate}
+              isClearable
+              isDisabled={disable}
+              defaultValue={{ value: roomdetail.cate, label: roomdetail.cate }}
+              onChange={(e: any) => setCate(e.value)}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicTP">
-          <Form.Label>Thành Phố (*)</Form.Label>
-          <Select
-            options={options_city}
-            isClearable
-            isDisabled={disable}
-            defaultValue={{ value: roomdetail.address, label: roomdetail.address }}
-            onChange={(e: any) => setAddress(e.value)}
-          />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicTP">
+            <Form.Label>Thành Phố (*)</Form.Label>
+            <Select
+              options={options_city}
+              isClearable
+              isDisabled={disable}
+              defaultValue={{ value: roomdetail.address, label: roomdetail.address }}
+              onChange={(e: any) => setAddress(e.value)}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicTP">
-          <Form.Label>Địa chỉ cụ thể (*)</Form.Label>
-          <Form.Control
-            type="name"
-            disabled={disable}
-            defaultValue={roomdetail.addressDetail}
-            onChange={(e) => setAddressDetail(e.target.value)} />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicTP">
+            <Form.Label>Địa chỉ cụ thể (*)</Form.Label>
+            <Form.Control
+              type="name"
+              disabled={disable}
+              defaultValue={roomdetail.addressDetail}
+              onChange={(e) => setAddressDetail(e.target.value)} />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicNameRooms">
-          <Form.Label>Diện tích m<sup>2</sup> (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} defaultValue={roomdetail.square} onChange={(e: any) => setSquare(e.target.value)} />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Diện tích m<sup>2</sup> (*)</Form.Label>
+            <Form.Control type="number" disabled={disable} defaultValue={roomdetail.square} onChange={(e: any) => setSquare(e.target.value)} />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicNameRooms">
-          <Form.Label>Số Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} defaultValue={roomdetail.bedRoom} onChange={(e: any) => setBedRoom(e.target.value)} />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Số Phòng (*)</Form.Label>
+            <Form.Control type="number" disabled={disable} defaultValue={roomdetail.bedRoom} onChange={(e: any) => setBedRoom(e.target.value)} />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicNameRooms">
-          <Form.Label>Gía Phòng (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} defaultValue={roomdetail.price} onChange={(e: any) => setPrice(e.target.value)} />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Gía Phòng (*)</Form.Label>
+            <Form.Control type="number" disabled={disable} defaultValue={roomdetail.price} onChange={(e: any) => setPrice(e.target.value)} />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicNameRooms">
-          <Form.Label>Số Người (*)</Form.Label>
-          <Form.Control type="number" disabled={disable} defaultValue={roomdetail.people} onChange={(e: any) => setPeople(e.target.value)} />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Số Người (*)</Form.Label>
+            <Form.Control type="number" disabled={disable} defaultValue={roomdetail.people} onChange={(e: any) => setPeople(e.target.value)} />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicNameRooms">
-          <Form.Label>Thông tin (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} defaultValue={roomdetail.info} onChange={(e: any) => setInfo(e.target.value)} />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Thông tin (*)</Form.Label>
+            <Form.Control type="text" disabled={disable} defaultValue={roomdetail.info} onChange={(e: any) => setInfo(e.target.value)} />
+          </Form.Group>
 
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Hình ảnh (*)</Form.Label>
-          <Form.Control type="text" disabled={disable} defaultValue={roomdetail.img_rooms} onChange={(e: any) => setImg(e.target.value)} />
-        </Form.Group>
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Hình ảnh (*)</Form.Label>
+            <Form.Control type="text" disabled={disable} defaultValue={roomdetail.img_rooms} onChange={(e: any) => setImg(e.target.value)} />
+          </Form.Group>
 
-        {disable ? (
-          <Button variant="primary" onClick={triggerDisable}>
-            Chỉnh sửa
-          </Button>
-        ) : (
-          <div>
-            <Button variant="primary" onClick={updateItem}>
-              Cập Nhật
-            </Button> {""}
-            <Button variant="primary" onClick={cancelItem}>
-              Hủy bỏ
+          {disable ? (
+            <Button variant="primary" onClick={triggerDisable}>
+              Chỉnh sửa
             </Button>
-          </div>
-        )}
-      </Form>
-    </div>
-    <Footer />
+          ) : (
+            <div>
+              <Button variant="primary" onClick={updateItem}>
+                Cập Nhật
+              </Button>
+            </div>
+          )}
+        </Form>
+      </div>
+      <Footer />
     </div>
   )
 }
 
-export default RoomDetail;
+export default HostRoomDetail;

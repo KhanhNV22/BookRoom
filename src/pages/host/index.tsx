@@ -2,24 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { Tabs, Tab, Row, Col } from 'react-bootstrap'
 import './styles.css'
 import axios from 'axios';
-import AddRooms from './hostAddRooms';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from '../../constants';
 import HostBooking from './hostBooking';
 import { Room } from '../../types/room';
-import { userId } from '../../services/userService';
-import Header from '../header';
+import { userHostId } from '../../services/userService';
 import Footer from '../../components/footer';
+import HeaderHost from './headerHost';
+import { BsFillPlusCircleFill } from "react-icons/bs";
+import HostStatistical from './hostStatistical';
 
 function Host() {
   const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState<Room[]>([])
+  const [posts, setPosts] = useState<Room[]>([]);
+  const navigate = useNavigate();
+
+  const userEmailHost = localStorage.getItem('userEmailHost');
+
+  useEffect(() => {
+    const token = userEmailHost;
+    if (!token) {
+      navigate('/loginHost');
+    } else {
+      navigate('/host')
+    }
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: response } = await axios.get(`${API_URL}/rooms?host_id=${userId}`);
+        const { data: response } = await axios.get(`${API_URL}/rooms?host_id=${userHostId}`);
         setPosts(response);
         getData();
       } catch (error: any) {
@@ -32,7 +45,7 @@ function Host() {
 
   // cập nhật api
   const getData = () => {
-    axios.get(`${API_URL}/rooms?host_id=${userId}`)
+    axios.get(`${API_URL}/rooms?host_id=${userHostId}`)
       .then((getData) => {
         setPosts(getData.data);
       })
@@ -50,13 +63,15 @@ function Host() {
 
   return (
     <div>
-      <Header />
+      <HeaderHost />
       <div className='container--md margin--body mt--150'>
-        <Tabs defaultActiveKey="news" id="uncontrolled-tab-example" className="mb-3">
-          <Tab eventKey="news" title="Đơn Đặt Phòng">
-            <HostBooking />
-          </Tab>
-
+        <button className='btn_addRoom'>
+          <Link to="/host/hostAddRooms">
+            <BsFillPlusCircleFill />
+            Tạo Phòng Mới
+          </Link>
+        </button>
+        <Tabs defaultActiveKey="rooms" id="uncontrolled-tab-example" className="mb-3 mt--18">
           <Tab eventKey="rooms" title="Chỗ Nghỉ">
             <div className='mt--18'></div>
             <h3>Chỗ nghỉ của bạn</h3>
@@ -74,7 +89,7 @@ function Host() {
                           <p>{item.info}</p>
                         </div>
                         <button className='tabs_btn' onClick={() => deleteItem(item.id)}>Xóa</button>
-                        <Link to={`/roomdetail/${item.id}`}>
+                        <Link to={`/hostRoomdetail/${item.id}`}>
                           <button className='tabs_btn'>Xem Thêm</button>
                         </Link>
                         <span
@@ -103,9 +118,11 @@ function Host() {
             )
             }
           </Tab>
-
-          <Tab eventKey="add_room" title="Tạo Chỗ Nghỉ Mới">
-            <AddRooms />
+          <Tab eventKey="news" title="Đơn Đặt Phòng">
+            <HostBooking />
+          </Tab>
+          <Tab eventKey="statistical" title="Thống Kê">
+            <HostStatistical />
           </Tab>
         </Tabs>
       </div>

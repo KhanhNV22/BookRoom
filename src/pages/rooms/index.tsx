@@ -44,7 +44,9 @@ const Rooms = () => {
   // tính ngày chênh lệch
   const sDay = moment(startDate);
   const eDay = moment(endDate);
-  const totalDays = eDay.diff(sDay, 'days');
+  const totalDate = eDay.diff(sDay, 'days');
+
+  const totalDays = totalDate === 0 ?  1 : totalDate;
 
   const navigate = useNavigate();
   const params = useParams();
@@ -96,22 +98,6 @@ const Rooms = () => {
       alert(error)
     }
   }
-
-  const AnyReactComponent = ( text:any ) => (
-    <div style={{
-      color: 'white', 
-      background: 'grey',
-      padding: '15px 10px',
-      display: 'inline-flex',
-      textAlign: 'center',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: '100%',
-      transform: 'translate(-50%, -50%)'
-    }}>
-      {text}
-    </div>
-  );
 
   return (
     <div>

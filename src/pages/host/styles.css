@@ -29,3 +29,23 @@
     color: #f65e38;
     text-decoration: underline;
 }
+.btn_addRoom{
+    background: none;
+    border: 1px solid #222;
+    padding: 5px 10px;
+}
+.btn_addRoom a{
+    color: #222;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+.btn_addRoom:hover{
+    border: 1px solid #f65e38;
+}
+.btn_addRoom:hover a{
+    color: #f65e38;
+}
+.btn_addRoom svg{
+    margin-right: 5px;
+}

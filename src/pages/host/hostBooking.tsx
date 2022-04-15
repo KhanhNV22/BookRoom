@@ -4,7 +4,7 @@ import axios from 'axios';
 import { API_URL } from '../../constants';
 import { Table } from 'react-bootstrap';
 import { Booking } from '../../types/booking';
-import { userId } from '../../services/userService';
+import { userHostId } from '../../services/userService';
 import { BsFillXCircleFill, BsCheckLg, BsPencilSquare } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ function HostBooking() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: response } = await axios.get(`${API_URL}/bookings?host_id=${userId}`);
+        const { data: response } = await axios.get(`${API_URL}/bookings?host_id=${userHostId}`);
         setHostBooks(response);
       } catch (error: any) {
         console.error(error.message);
@@ -112,7 +112,7 @@ function HostBooking() {
                     <BsFillXCircleFill />
                   </button>
                   <button className='btn_act'>
-                    <Link to={`CheckoutBookingDetail/${hostBook.id}`}>
+                    <Link to={`hostCheckBookingDetail/${hostBook.id}`}>
                       <BsPencilSquare />
                     </Link>
                   </button>

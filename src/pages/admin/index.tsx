@@ -10,6 +10,7 @@ import { BsFillXCircleFill, BsCheckLg, BsPencilSquare } from "react-icons/bs";
 import Footer from '../../components/footer';
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderAdmin from './headerAdmin';
+import UsersHost from './userHost';
 
 export default function Admin() {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -62,7 +63,7 @@ export default function Admin() {
       <div className='container--md margin--body mt--150'>
         <div className='mt--60'></div>
         <Tabs defaultActiveKey="Rooms" id="uncontrolled-tab-example" className="mb-3">
-          <Tab eventKey="Rooms" title="Rooms">
+          <Tab eventKey="Rooms" title="Các Phòng">
             <div className='mt--42'></div>
             <Table striped bordered hover className='table_ad'>
               <thead>
@@ -111,7 +112,7 @@ export default function Admin() {
                       <button className='btn_act' onClick={() => onUpdateStatus(room, index, 2)}>
                         <BsFillXCircleFill />
                       </button>
-                      <Link to={`/rooms/${room.id}`}>
+                      <Link to={`checkRoomDetail/${room.id}`}>
                         <button className='btn_act'>
                           <BsPencilSquare />
                         </button>
@@ -123,10 +124,13 @@ export default function Admin() {
               </tbody>
             </Table>
           </Tab>
-          <Tab eventKey="Booking" title="Booking">
+          <Tab eventKey="Booking" title="Đơn Đặt Phòng">
             <Bookings />
           </Tab>
-          <Tab eventKey="Uers" title="Uers">
+          <Tab eventKey="Hosts" title="Người Quản Lý Phòng">
+            <UsersHost />
+          </Tab>
+          <Tab eventKey="Uers" title="Người Dùng">
             <Users />
           </Tab>
         </Tabs>

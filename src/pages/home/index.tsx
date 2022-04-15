@@ -28,8 +28,8 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: response } = await axios.get(`${API_URL}/address`);
-        setPosts(response);
+        const response = await axios.get(`${API_URL}/address`);
+        setPosts(response.data);
       } catch (error) {
         console.log(error);
       }

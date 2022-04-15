@@ -56,8 +56,8 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(user.current));
         localStorage.setItem("userId", JSON.stringify(userId.current));
         localStorage.setItem("userIdName", JSON.stringify(userIdName.current));
-
         navigate("/");
+        window.location.reload();
       } else {
         alert("Sai tài khoản hoặc mật khẩu");
       }

@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import LoginSocial from "../../components/LoginGoogle";
-import { AiOutlineSetting, AiOutlineLogout } from "react-icons/ai";
-import { BsCardList } from "react-icons/bs";
-import { userIdName } from "../../services/userService";
+import { AiOutlineLogout } from "react-icons/ai"; import { API_URL } from "../../constants";
+import axios from "axios";
 
 const HeaderAdmin = () => {
+  const [search, setSearch] = useState("");
+  const [rooms, setRooms] = useState<any>({});
   let navigate = useNavigate();
 
   function logout() {
@@ -15,9 +16,27 @@ const HeaderAdmin = () => {
     navigate("/loginAdmin")
   }
 
-  const handleSearch = () => {
-    console.log("search");
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/rooms`);
+        setRooms(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const handleSearchChange = (e: any) => {
+    setSearch(e.target.value);
+  };
+
+  const filtered = !search
+    ? [""]
+    : rooms.filter((room: any) =>
+      room.name.toLowerCase().includes(search.toLowerCase())
+    );
 
   const userNameAdmin = localStorage.getItem('userNameAdmin');
 
@@ -36,10 +55,35 @@ const HeaderAdmin = () => {
                   />
                 </Link>
               </div>
-              <form className="form" onSubmit={handleSearch}>
+              <form className="form" onChange={handleSearchChange}>
                 <input className="input_header" placeholder="Tim Kiem" />
                 <div className="icons_search">
                   <BsSearch />
+                </div>
+                <div className="search_res" style={{
+                  display: search
+                    ? "block"
+                    : "none"
+                }}>
+                  {filtered
+                    .slice(0, 7)
+                    .map((room: any) => {
+                      return (
+                        <Link to={`checkRoomDetail/${room.id}`} key={room.id}>
+                          <div className="search_content" >
+                            <img src={room.img_rooms} alt="" />
+                            <div className="search_content-p">
+                              <p>
+                                {room.name}
+                              </p>
+                              <p>
+                                {room.addressDetail} - {room.address}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
                 </div>
               </form>
             </div>
@@ -50,7 +94,7 @@ const HeaderAdmin = () => {
                 <li className="is-relative menu-item li_menu">
                   <span className="menu__link menu__link--user btn--dropdown">
                     <div className="user-avatar">
-                      <img src= "https://www.w3schools.com/howto/img_avatar.png" alt="" />
+                      <img src="https://www.w3schools.com/howto/img_avatar.png" alt="" />
                     </div>
                     <span className="px--6">{userNameAdmin}</span>
                   </span>

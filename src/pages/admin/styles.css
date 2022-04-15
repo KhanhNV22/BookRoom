@@ -23,13 +23,18 @@
     margin-bottom: 10px;
 }
 
-.form_update button{
+.form_update button.btn_ora{
     border: none;
     background: #f65e38;
     color: #fff;
     padding: 10px;
     min-width: 100px;
     margin-right: 10px;
+}
+.form_update button.btn_ora:hover{
+    background: #fff;
+    color: #f65e38;
+    border: 1px solid #f65e38;
 }
 
 /* login admin */

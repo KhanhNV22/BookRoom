@@ -86,8 +86,8 @@ function UpdateUser() {
             <label>Password</label>
             <input type="text" name="password" defaultValue={userId.password} onChange={handleInput} />
             <div className='text-center mt--18'>
-              <button type='submit'>Cập nhật</button>
-              <button onClick={() => navigate(-1)}>Trở Về</button>
+              <button className='btn_ora' type='submit'>Cập nhật</button>
+              <button className='btn_ora' onClick={() => navigate(-1)}>Trở Về</button>
             </div>
           </form>
         </Col>

@@ -5,6 +5,7 @@ import "./styles.css";
 import Footer from "../../components/footer";
 import { API_URL } from "../../constants";
 import NumberFormat from "react-number-format";
+import Header from "../header";
 
 const AddressRoom = () => {
   const [rooms, setRooms] = useState<any>([]);
@@ -30,7 +31,8 @@ const AddressRoom = () => {
 
   return (
     <div>
-      <div className="container--md margin--body">
+      <Header />
+      <div className="container--md margin--body mt--150">
         <div className="mt--30"></div>
         <div className="title mb--30">
           <p>
@@ -50,11 +52,7 @@ const AddressRoom = () => {
             <h2 className="title-h2">Homestay tại {id}</h2>
           </Col>
           <Col md={3}>
-            <Form.Select>
-              <option>Sắp Xếp Mặc Định</option>
-              <option>Sắp Xếp Tăng Dần</option>
-              <option>Sắp Xếp Giảm Dần</option>
-            </Form.Select>
+            
           </Col>
         </Row>
 

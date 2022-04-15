@@ -40,7 +40,7 @@ const SettingUser = () => {
 
   useEffect(() => {
     if (
-      !_.isEmpty(userId) &&
+      !_.isEmpty(userIdSet) &&
       _.isEmpty(user.id) &&
       _.isEmpty(user.name) &&
       _.isEmpty(user.email) &&
@@ -54,13 +54,12 @@ const SettingUser = () => {
         email: userIdSet.email,
       });
     }
-  }, [user, userId]);
+  }, [user, userIdSet]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       const response = await axios.put(`${API_URL}/users/${id}`, { ...user });
-      setUser(response.data)
       alert("Cập nhập Thành công")
     } catch (error) {
       console.log(error);
