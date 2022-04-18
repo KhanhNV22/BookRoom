@@ -1,6 +1,6 @@
 /* login */
 .welcome {
-    background: linear-gradient(90deg,#f65e38 0,#f68a39 51%,#f65e38);
+    background: linear-gradient(90deg, #f65e38 0, #f68a39 51%, #f65e38);
     padding: 3rem 0 5rem;
     color: #fff;
 }
@@ -27,27 +27,31 @@
 .media {
     margin-top: 3rem;
 }
-.icons_login{
+
+.icons_login {
     width: 65px;
     height: 70px;
     border-style: none;
     max-width: 100%;
     vertical-align: middle;
 }
+
 .media__title {
     margin: 1.5rem 0 0.875rem;
     font-size: 1.125rem;
     font-weight: 900;
 }
+
 .media__content {
     color: #555;
 }
-.m--0{
+
+.m--0 {
     margin-bottom: 0;
 }
 
 /* footer */
-.footer{
+.footer {
     border-top: 1px solid #f2f2f2;
     padding: 24px 15px;
     font-weight: 500;
@@ -56,16 +60,18 @@
     text-align: center;
     margin-top: 2rem;
 }
-.footer p{
+
+.footer p {
     color: #999;
     font-size: 14px;
     margin-bottom: 6px;
 }
-.mt--30{
+
+.mt--30 {
     margin-top: 30px;
 }
 
-.btn-top{
+.btn-top {
     position: fixed;
     right: 30px;
     bottom: 40px;
@@ -78,11 +84,12 @@
 
 
 /* slick */
-.post-relative{
+.post-relative {
     position: relative !important;
 }
+
 /* btn slick */
-.button_slick{
+.button_slick {
     position: absolute;
     display: block;
     line-height: 0;
@@ -102,58 +109,74 @@
     z-index: 2;
     opacity: 0.5;
 }
-.button_slick:hover{
+
+.button_slick:hover {
     opacity: 1;
 }
-.btn_prev{
+
+.btn_prev {
     left: -15px;
 }
-.btn_next{
+
+.btn_next {
     right: -15px;
 }
-.icon_slick{
-    font-size:18px;
+
+.icon_slick {
+    font-size: 18px;
 }
 
 @media (min-width: 1500px) {
-    .btn_prev{
+    .btn_prev {
         left: -32px;
     }
-    .btn_next{
+
+    .btn_next {
         right: -32px;
     }
 }
 
+@media (max-width: 767px) {
+    .account{
+        margin-top: -7.375rem;
+    }
+}
+
 /* login gg */
-.login_gg, .logout_gg{
+.login_gg,
+.logout_gg {
     border: 1px solid #fff !important;
     background: #fff;
     width: 100% !important;
     box-shadow: none !important;
     padding: 0 !important;
 }
-.login_gg span{
+
+.login_gg span {
     width: 100%;
     padding: 0 !important;
 }
-.logout_gg span{
+
+.logout_gg span {
     padding: 0 !important;
     font-size: 16px;
     text-decoration: none;
     color: #222;
 }
+
 .logout_gg:hover span {
     color: #333;
     transition: all .2s;
     font-weight: 600 !important;
 }
+
 /* read more */
-.text{
+.text {
     display: inline;
     width: 100%;
-  }
-    
-  .read-or-hide{
+}
+
+.read-or-hide {
     color: #f65e39;
     cursor: pointer;
-  }
+}

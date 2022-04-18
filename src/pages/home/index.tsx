@@ -41,7 +41,7 @@ const Home: React.FC = () => {
   return (
     <div className="home">
       <Header />
-      <div className="mt--42"></div>
+      <div className="mt--150"></div>
       <SliderBanner interval={5000} />
       <div className="mt--42"></div>
 
@@ -80,7 +80,6 @@ const Home: React.FC = () => {
           <div>
             <SliderCarousel dots={false} slidesToShow={5} styles={{ display: 'block' }}>
               {posts
-              
               .map((post) => (
                 <div className="product__cover" key={post.id}>
                   <Link to={`/addressRoom/${post.nameAddress}`}>
@@ -486,7 +485,7 @@ const Home: React.FC = () => {
         {/* footer */}
         <div className="section">
           <Row>
-            <Col>
+            <Col className="col-lg-20" xs={6} sm={6} md={4}>
               <img alt=""
                 src="https://ximgo.com/upload/2020/06/29/luxstray-6.png"
                 style={{ width: "auto", height: "70px", marginBottom: "18px" }}
@@ -516,7 +515,7 @@ const Home: React.FC = () => {
                 </div>
               </div>
             </Col>
-            <Col>
+            <Col className="col-lg-20" xs={6} sm={6} md={4}>
               <div className="widget">
                 <h3 className="widget__title">TOP homestay được yêu thích</h3>
                 <ul className="widget__menu widget__text">
@@ -553,7 +552,7 @@ const Home: React.FC = () => {
                 </ul>
               </div>
             </Col>
-            <Col>
+            <Col className="col-lg-20" xs={6} sm={6} md={4}>
               <div className="widget">
                 <h3 className="widget__title">KHÔNG GIAN ƯA THÍCH</h3>
                 <ul className="widget__menu widget__text">
@@ -575,7 +574,7 @@ const Home: React.FC = () => {
                 </ul>
               </div>
             </Col>
-            <Col>
+            <Col className="col-lg-20" xs={6} sm={6} md={4}>
               <div className="widget">
                 <h3 className="widget__title">Về chúng tôi</h3>{" "}
                 <ul className="widget__menu widget__text">
@@ -606,7 +605,7 @@ const Home: React.FC = () => {
                 </ul>
               </div>
             </Col>
-            <Col>
+            <Col className="col-lg-20" xs={6} sm={6} md={4}>
               <div className="widget">
                 <h3 className="widget__title">Về chúng tôi</h3>{" "}
                 <Row>

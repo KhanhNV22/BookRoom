@@ -20,6 +20,7 @@ import HostCheckBookingDetail from "./pages/host/hostCheckBookingDetail";
 import HostAddRooms from "./pages/host/hostAddRooms";
 import CheckRoomDetail from "./pages/admin/checkRoomDetail";
 import HostRegistration from "./pages/host/hostRegistration";
+import ErrorPage from "./components/error404";
 
 function App() {
   return (
@@ -48,6 +49,8 @@ function App() {
         <Route path="admin/updateUser/:id" element={<UpdateUser/> }/>
         <Route path="loginAdmin" element={<LoginAdmin/> }/>
         <Route path="admin/checkRoomDetail/:id" element={<CheckRoomDetail/> }/>
+        {/*  */}
+        <Route path="error404" element={<ErrorPage/> }/>
       </Routes>
     </div>
   );

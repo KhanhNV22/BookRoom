@@ -83,17 +83,21 @@ const Rooms = () => {
   const addBookRoom = (e: any) => {
     e.preventDefault();
     try {
-      const data = { host_id, user_id, room_id, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, totalDate, totalPrice, adult, children, guest_nums, status: 0, isCheck: true };
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      };
-      fetch(`${API_URL}/bookings`, requestOptions)
-        .then(response => response.json())
-      // navigate(`/checkoutUserBooking/${room_id}`)
-      navigate("/listBookingsUser")
-      window.location.reload();
+      if (userId) {
+        const data = { host_id, user_id, room_id, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, totalDate, totalPrice, adult, children, guest_nums, status: 0, isCheck: true };
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        };
+        fetch(`${API_URL}/bookings`, requestOptions)
+          .then(response => response.json())
+        // navigate(`/checkoutUserBooking/${room_id}`)
+        navigate("/listBookingsUser")
+        window.location.reload();
+      } else {
+        alert("Bạn Cần Đăng Nhập Trước Khi Đặt Phòng")
+      }
     } catch (error) {
       alert(error)
     }
@@ -272,30 +276,30 @@ const Rooms = () => {
                   </div>
 
                   {guest_nums && totalDate && totalPrice ?
-                      <div>
-                        <div className="room_total mb--12">
-                          <span>Tổng số người:</span>
-                          <span>{guest_nums}</span>
-                        </div>
+                    <div>
+                      <div className="room_total mb--12">
+                        <span>Tổng số người:</span>
+                        <span>{guest_nums}</span>
+                      </div>
 
-                        <div className="room_total mb--12">
-                          <span>Tổng số ngày:</span>
-                          <span>{totalDate}</span>
-                        </div>
-
-                        <div className="room_total mb--12">
-                          <span>Tổng số tiền:</span>
-                          <span>
-                            <NumberFormat
-                              value={totalPrice}
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              suffix={"₫"}
-                            />
-                          </span>
-                        </div>
-                      </div> : null
-                    }
+                      <div className="room_total mb--12">
+                        <span>Tổng số ngày:</span>
+                        <span>{totalDate}</span>
+                      </div>
+                      <hr />
+                      <div className="room_total mb--12">
+                        <span>Tổng số tiền:</span>
+                        <span>
+                          <NumberFormat
+                            value={totalPrice}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            suffix={"₫"}
+                          />
+                        </span>
+                      </div>
+                    </div> : null
+                  }
 
                   <div className='mb--30'></div>
                   <button className='btn_order' type='submit' onClick={addBookRoom}>

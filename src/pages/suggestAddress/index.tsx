@@ -6,13 +6,26 @@ import { Row, Col } from "react-bootstrap";
 import { BsFillGeoAltFill } from "react-icons/bs";
 import { RiBuilding4Line, RiWaterFlashFill, RiPercentLine, RiPriceTag3Fill, RiSendPlaneFill } from "react-icons/ri";
 import { MdBedroomParent } from "react-icons/md";
-import { IoFlash } from "react-icons/io5";
 import axios from "axios";
 import { API_URL } from "../../constants";
 import NumberFormat from "react-number-format";
+import Header from "../header";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const SuggestAddress = () => {
   const [suggests, setSuggests] = useState<any>([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState(10);
+  const indexOfLastRoom = currentPage * postPerPage;
+  const indexOfFirstRoom = indexOfLastRoom - postPerPage;
+  const listAllRoomCurrent = suggests.slice(
+    indexOfFirstRoom,
+    indexOfLastRoom
+  );
+  const pageNumbers = Math.ceil(suggests.length / postPerPage);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,7 +40,8 @@ const SuggestAddress = () => {
 
   return (
     <div>
-      <div className="homestay-page margin--body">
+      <Header />
+      <div className="homestay-page margin--body mt--150">
         <div className="mt--30"></div>
         <ul className="search-filter">
           <li>
@@ -42,23 +56,14 @@ const SuggestAddress = () => {
               Loại Chỗ Ở
             </button>
           </li>
-          <li>
-            <button>
-              Ngày
-            </button>
-          </li>
+
           <li>
             <button>
               <RiWaterFlashFill /> {""}
               Đặt Phòng Nhanh
             </button>
           </li>
-          <li>
-            <button>
-              <RiPercentLine /> {""}
-              Gía Ưu Đãi
-            </button>
-          </li>
+
           <li>
             <button>
               <RiPriceTag3Fill /> {""}
@@ -72,16 +77,11 @@ const SuggestAddress = () => {
               Trải Nghiệm Chyến Đi
             </button>
           </li>
-          <li>
-            <button>
-              <MdBedroomParent /> {""}
-              Phòng Ngủ
-            </button>
-          </li>
+
         </ul>
         <div className="mt--30"></div>
         <Row>
-          {suggests.map((suggest: any, index: any) => (
+          {listAllRoomCurrent.map((suggest: any, index: any) => (
             <Col xs={6} md={6} lg={3} className="col-lg-20" key={suggest.id}>
               <div className="div-room">
                 <Link to={`/rooms/${suggest.id}`} className="text_decoration">
@@ -103,13 +103,13 @@ const SuggestAddress = () => {
                 </div>
                 <div className="promo__price">
                   <span>
-                  <NumberFormat
+                    <NumberFormat
                       value={suggest.price}
                       displayType={"text"}
                       thousandSeparator={true}
                       suffix={"₫"}
                     />
-                     /đêm </span>
+                    /đêm </span>
                 </div>
                 <div className="promo__description">
                   {suggest.addressDetail}
@@ -118,6 +118,14 @@ const SuggestAddress = () => {
               </div>
             </Col>
           ))}
+
+          <Stack spacing={2} className="page">
+            <Pagination
+              count={pageNumbers}
+              color="secondary"
+              onChange={(e: any, page: number) => setCurrentPage(page)}
+            />
+          </Stack>
         </Row>
       </div>
 
