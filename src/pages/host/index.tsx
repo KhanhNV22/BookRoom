@@ -121,9 +121,9 @@ function Host() {
           <Tab eventKey="news" title="Đơn Đặt Phòng">
             <HostBooking />
           </Tab>
-          <Tab eventKey="statistical" title="Thống Kê">
+          {/* <Tab eventKey="statistical" title="Thống Kê">
             <HostStatistical />
-          </Tab>
+          </Tab> */}
         </Tabs>
       </div>
       <Footer />

@@ -46,8 +46,6 @@ const Rooms = () => {
   const eDay = moment(endDate);
   const totalDate = eDay.diff(sDay, 'days');
 
-  const totalDays = totalDate === 0 ?  1 : totalDate;
-
   const navigate = useNavigate();
   const params = useParams();
   const { id } = params;
@@ -80,12 +78,12 @@ const Rooms = () => {
   const bedRoomBook = noteRoom.bedRoom;
 
   // tính tổng tiền
-  const totalPrice = Number(priceBook) * totalDays;
+  const totalPrice = Number(priceBook) * totalDate;
 
   const addBookRoom = (e: any) => {
     e.preventDefault();
     try {
-      const data = { host_id, user_id, room_id, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, totalDays, totalPrice, adult, children, guest_nums, status: 0, isCheck: true };
+      const data = { host_id, user_id, room_id, imgBook, nameBook, infoBook, addressDetailBook, addressBook, typeBook, priceBook, squareBook, bedRoomBook, startDay, endDay, totalDate, totalPrice, adult, children, guest_nums, status: 0, isCheck: true };
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -93,7 +91,9 @@ const Rooms = () => {
       };
       fetch(`${API_URL}/bookings`, requestOptions)
         .then(response => response.json())
-      navigate(`/checkoutUserBooking/${room_id}`)
+      // navigate(`/checkoutUserBooking/${room_id}`)
+      navigate("/listBookingsUser")
+      window.location.reload();
     } catch (error) {
       alert(error)
     }
@@ -265,13 +265,13 @@ const Rooms = () => {
 
                   <div>
                     <label htmlFor="" className='select_peopel-label' >Người Lớn</label>
-                    <input className='select_peopel-input' type="number" min={0} onChange={(e) => setAdult(e.target.value)} />
+                    <input className='select_peopel-input' type="number" min={0} max={noteRoom.people} onChange={(e) => setAdult(e.target.value)} />
 
                     <label htmlFor="" className='select_peopel-label'>Trẻ Em</label>
                     <input className='select_peopel-input' type="number" min={0} onChange={(e) => setChildren(e.target.value)} />
                   </div>
 
-                  {guest_nums && totalDays && totalPrice ?
+                  {guest_nums && totalDate && totalPrice ?
                       <div>
                         <div className="room_total mb--12">
                           <span>Tổng số người:</span>
@@ -280,7 +280,7 @@ const Rooms = () => {
 
                         <div className="room_total mb--12">
                           <span>Tổng số ngày:</span>
-                          <span>{totalDays}</span>
+                          <span>{totalDate}</span>
                         </div>
 
                         <div className="room_total mb--12">
