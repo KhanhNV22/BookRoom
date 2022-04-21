@@ -6,6 +6,7 @@ import Footer from '../../components/footer';
 import { API_URL } from '../../constants';
 import { userHostId } from '../../services/userService';
 import HeaderHost from './headerHost';
+import HostMap from './hostMap';
 
 const options = [
   { value: 'Homestay', label: 'Homestay' },
@@ -58,10 +59,17 @@ function HostAddRooms() {
     setAddress(e.value);
   }
 
+  const [center, setCenter] = useState<any>({});
+  const handeClickCenter = (data: any) => {
+    setCenter(data)
+  }
+  const lat = center.lat;
+  const lng = center.lng;
+
   const addProduct = (e: any) => {
     e.preventDefault();
     try {
-      const data = { host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: 0 };
+      const data = { host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, lat, lng, status: 0 };
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -129,15 +137,27 @@ function HostAddRooms() {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicNameRooms">
-            <Form.Label>Thông tin</Form.Label>
+            <Form.Label>Thông tin (*)</Form.Label>
             <Form.Control type="text" onChange={(e) => setInfo(e.target.value)} />
           </Form.Group>
 
           <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label>Hình ảnh</Form.Label>
+            <Form.Label>Hình ảnh (*)</Form.Label>
             <Form.Control type="text" onChange={(e) => setImg(e.target.value)} />
           </Form.Group>
 
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Kinh độ (*)</Form.Label>
+            <Form.Control type="text" defaultValue={lat} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Vĩ độ (*)</Form.Label>
+            <Form.Control type="text" defaultValue={lng} />
+          </Form.Group>
+
+          <HostMap handeClickCenter={handeClickCenter} />
+          <div className='mt--18'></div>
           <Button variant="primary" type="submit" onClick={addProduct}>
             Thêm
           </Button>

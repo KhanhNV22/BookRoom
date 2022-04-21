@@ -32,8 +32,8 @@ function Host() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: response } = await axios.get(`${API_URL}/rooms?host_id=${userHostId}`);
-        setPosts(response);
+        const response = await axios.get(`${API_URL}/rooms?host_id=${userHostId}`);
+        setPosts(response.data);
         getData();
       } catch (error: any) {
         console.error(error.message);
@@ -41,6 +41,7 @@ function Host() {
       setLoading(false);
     }
     fetchData();
+    getData();
   }, [])
 
   // cập nhật api

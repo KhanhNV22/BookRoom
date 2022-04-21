@@ -49,7 +49,6 @@ function LoginAdmin() {
   const handleClickLogin = async () => {
     try {
       const loginUser = await checkUser(email, password);
-
       if (loginUser) {
         localStorage.setItem("userAd", JSON.stringify(userAdmin.current));
         localStorage.setItem("userEmailAdmin", JSON.stringify(userEmailAdmin.current));

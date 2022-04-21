@@ -8,6 +8,7 @@ import _ from "lodash";
 import { userId } from '../../services/userService';
 import Footer from '../../components/footer';
 import HeaderHost from './headerHost';
+import HostMap from './hostMap';
 
 const options = [
   { value: 'Homestay', label: 'Homestay' },
@@ -47,7 +48,9 @@ function HostRoomDetail() {
   const [bedRoom, setBedRoom] = useState("");
   const [img_rooms, setImg] = useState("");
   const [status, setStatus] = useState(roomdetail.status);
-  
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
+
   const navigate = useNavigate();
   const params = useParams();
   const { id } = params;
@@ -68,7 +71,12 @@ function HostRoomDetail() {
     fetchData();
   }, [])
 
-  const data = { host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status: roomdetail.status };
+  const [center, setCenter] = useState<any>({});
+  const handeClickCenter = (data: any) => {
+    setCenter(data)
+  }
+
+  const data = { host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, lat, lng, status: roomdetail.status };
 
   useEffect(() => {
     if (
@@ -84,7 +92,9 @@ function HostRoomDetail() {
       _.isEmpty(price) &&
       _.isEmpty(people) &&
       _.isEmpty(info) &&
-      _.isEmpty(img_rooms)
+      _.isEmpty(img_rooms) &&
+      _.isEmpty(lat) &&
+      _.isEmpty(lng)
     ) {
       setType(roomdetail.type);
       setName(roomdetail.name);
@@ -97,18 +107,20 @@ function HostRoomDetail() {
       setPeople(roomdetail.people);
       setInfo(roomdetail.info);
       setImg(roomdetail.img_rooms);
+      setImg(roomdetail.lat);
+      setImg(roomdetail.lng);
       setStatus(roomdetail.status)
     }
-  }, [roomdetail, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, status]);
+  }, [roomdetail, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, lat, lng, status]);
 
   const updateItem = (e: any) => {
     e.preventDefault()
-    axios.put(`${API_URL}/rooms/${id}`, { ...data, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms })
+    axios.put(`${API_URL}/rooms/${id}`, { ...data,host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, lat, lng })
       .then(res => console.log(res))
       .catch(err => console.log('Login: ', err));
-      alert("Cập nhật thành công")
-      navigate("/host")
-      window.location.reload();
+    alert("Cập nhật thành công")
+    navigate("/host")
+    window.location.reload();
   }
 
   return (
@@ -198,6 +210,18 @@ function HostRoomDetail() {
             <Form.Label>Hình ảnh (*)</Form.Label>
             <Form.Control type="text" disabled={disable} defaultValue={roomdetail.img_rooms} onChange={(e: any) => setImg(e.target.value)} />
           </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Kinh độ (*)</Form.Label>
+            <Form.Control type="text" disabled={disable} defaultValue={roomdetail.lat} onChange={(e: any) => setLat(e.target.value)} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicNameRooms">
+            <Form.Label>Vĩ độ (*)</Form.Label>
+            <Form.Control type="text" disabled={disable} defaultValue={roomdetail.lng} onChange={(e: any) => setLng(e.target.value)} />
+          </Form.Group>
+
+          <HostMap handeClickCenter={handeClickCenter} disable={disable} />
 
           {disable ? (
             <Button variant="primary" onClick={triggerDisable}>

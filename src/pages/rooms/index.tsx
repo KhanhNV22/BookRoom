@@ -14,6 +14,7 @@ import moment from "moment";
 import { userId } from '../../services/userService';
 import NumberFormat from "react-number-format";
 import Header from '../header';
+import MyMapComponent from "../../components/mapContainer"
 
 const Rooms = () => {
   const minValue: Date = new Date(new Date());
@@ -237,6 +238,11 @@ const Rooms = () => {
             <div className='title mt--60'>
               <h3>Lưu ý đặc biệt</h3>
               <span>Giá có thể tăng vào cuối tuần hoặc ngày lễ</span>
+            </div>
+
+            <div className='title mt--60' id="map">
+              <h3>Bản Đồ</h3>
+              <MyMapComponent lat={noteRoom.lat} lng={noteRoom.lng} />
             </div>
           </Col>
           <Col lg={4}>

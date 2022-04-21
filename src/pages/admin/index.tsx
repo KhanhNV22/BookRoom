@@ -56,6 +56,22 @@ export default function Admin() {
     }
     fetchData();
   }, [])
+  // cập nhật api
+  const getData = () => {
+    axios.get(`${API_URL}/rooms`)
+      .then((getData) => {
+        setRooms(getData.data);
+      })
+  }
+  const deleteItem = async (id: any) => {
+    try {
+      const res = await axios.delete(`${API_URL}/rooms/${id}`);
+      alert('Item successfully deleted.');
+      getData()
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   return (
     <div>
@@ -117,7 +133,7 @@ export default function Admin() {
                           <BsPencilSquare />
                         </button>
                       </Link>
-
+                      <button className='tabs_btn' onClick={() => deleteItem(room.id)}>Xóa</button>
                     </td>
                   </tr>
                 ))}

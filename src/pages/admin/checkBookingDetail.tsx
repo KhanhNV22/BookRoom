@@ -52,7 +52,7 @@ const CheckoutBookingDetail = () => {
                   <div className='check_people'>
                     <p>
                       <FaCalendarAlt />
-                      {check.totalDays} đêm - {check.startDay} - {check.endDay}
+                      {check.totalDate === 0 ? 1 : check.totalDate} đêm - {check.startDay} - {check.endDay}
                     </p>
                     <p>
                       <FaUserAlt />
@@ -74,7 +74,7 @@ const CheckoutBookingDetail = () => {
                   <hr />
 
                   <div className='check_price bold'>
-                    <span>Tổng tiền {check.totalDays} đêm</span>
+                    <span>Tổng tiền {check.totalDate} đêm</span>
                     <span>
                       <NumberFormat
                         value={check.totalPrice}
