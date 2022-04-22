@@ -55,7 +55,7 @@ function Host() {
   const deleteItem = async (id: any) => {
     try {
       const res = await axios.delete(`${API_URL}/rooms/${id}`);
-      alert('Item successfully deleted.');
+      alert('Đã Xóa Phòng Thành Công.');
       getData();
     } catch (error) {
       alert(error)

@@ -11,6 +11,7 @@ import { API_URL } from '../../constants';
 import BtnToTop from '../../components/BtnToTop';
 import NumberFormat from "react-number-format";
 import HeaderAdmin from './headerAdmin';
+import MyMapComponent from '../../components/mapContainer';
 
 const CheckRoomDetail = () => {
   const [checkRoom, setCheckRoom] = useState<any>({});
@@ -131,6 +132,12 @@ const CheckRoomDetail = () => {
               <h3>Lưu ý đặc biệt</h3>
               <span>Giá có thể tăng vào cuối tuần hoặc ngày lễ</span>
             </div>
+
+            <div className='title mt--60'>
+              <h3>Bản Đồ</h3>
+              <MyMapComponent lat={checkRoom.lat} lng={checkRoom.lng} />
+            </div>
+
           </Col>
           <Col lg={4}>
             <div className='room-sidebar'>

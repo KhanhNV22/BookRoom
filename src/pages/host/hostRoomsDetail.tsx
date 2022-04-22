@@ -5,7 +5,7 @@ import axios from 'axios';
 import { API_URL } from '../../constants';
 import { useNavigate, useParams } from 'react-router-dom';
 import _ from "lodash";
-import { userId } from '../../services/userService';
+import { userHostId } from '../../services/userService';
 import Footer from '../../components/footer';
 import HeaderHost from './headerHost';
 import HostMap from './hostMap';
@@ -29,13 +29,15 @@ const options_city = [
   { value: 'TP. Hồ Chí Minh', label: 'TP. Hồ Chí Minh' },
   { value: 'Đà Nẵng', label: 'Đà Nẵng' },
   { value: 'Đà Lạt', label: 'Đà Lạt' },
+  { value: 'Đà Nẵng', label: 'Đà Nẵng' },
+  { value: 'Nha Trang', label: 'Nha Trang' },
 ]
 
 function HostRoomDetail() {
   const [disable, setDisable] = useState(true);
   const [roomdetail, setRoomDetail] = useState<any>({});
 
-  const host_id = userId;
+  const host_id = userHostId;
   const [type, setType] = useState("");
   const [name, setName] = useState("");
   const [cate, setCate] = useState("");
@@ -48,8 +50,8 @@ function HostRoomDetail() {
   const [bedRoom, setBedRoom] = useState("");
   const [img_rooms, setImg] = useState("");
   const [status, setStatus] = useState(roomdetail.status);
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
+  const [lat, setLat] = useState(roomdetail.lat);
+  const [lng, setLng] = useState(roomdetail.lng);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -62,8 +64,8 @@ function HostRoomDetail() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: response } = await axios.get(`${API_URL}/rooms/${id}`);
-        setRoomDetail(response);
+        const response = await axios.get(`${API_URL}/rooms/${id}`);
+        setRoomDetail(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -71,9 +73,9 @@ function HostRoomDetail() {
     fetchData();
   }, [])
 
-  const [center, setCenter] = useState<any>({});
   const handeClickCenter = (data: any) => {
-    setCenter(data)
+    setLat(data.lat);
+    setLng(data.lng);
   }
 
   const data = { host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, lat, lng, status: roomdetail.status };
@@ -107,20 +109,28 @@ function HostRoomDetail() {
       setPeople(roomdetail.people);
       setInfo(roomdetail.info);
       setImg(roomdetail.img_rooms);
-      setImg(roomdetail.lat);
-      setImg(roomdetail.lng);
+      setLat(roomdetail.lat);
+      setLng(roomdetail.lng);
       setStatus(roomdetail.status)
     }
   }, [roomdetail, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, lat, lng, status]);
 
+  // cập nhật api
+  const getData = () => {
+    axios.get(`${API_URL}/rooms`)
+      .then((getData) => {
+        setRoomDetail(getData.data);
+      })
+  }
+
   const updateItem = (e: any) => {
     e.preventDefault()
-    axios.put(`${API_URL}/rooms/${id}`, { ...data,host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, lat, lng })
+    axios.put(`${API_URL}/rooms/${id}`, { ...data, host_id, type, name, cate, address, addressDetail, square, bedRoom, price, people, info, img_rooms, lat, lng })
       .then(res => console.log(res))
       .catch(err => console.log('Login: ', err));
     alert("Cập nhật thành công")
     navigate("/host")
-    window.location.reload();
+    getData();
   }
 
   return (
@@ -183,46 +193,71 @@ function HostRoomDetail() {
 
           <Form.Group className="mb-3" controlId="formBasicNameRooms">
             <Form.Label>Diện tích m<sup>2</sup> (*)</Form.Label>
-            <Form.Control type="number" disabled={disable} defaultValue={roomdetail.square} onChange={(e: any) => setSquare(e.target.value)} />
+            <Form.Control type="number"
+              disabled={disable}
+              defaultValue={roomdetail.square}
+              onChange={(e: any) => setSquare(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicNameRooms">
             <Form.Label>Số Phòng (*)</Form.Label>
-            <Form.Control type="number" disabled={disable} defaultValue={roomdetail.bedRoom} onChange={(e: any) => setBedRoom(e.target.value)} />
+            <Form.Control type="number"
+              disabled={disable}
+              defaultValue={roomdetail.bedRoom}
+              onChange={(e: any) => setBedRoom(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicNameRooms">
             <Form.Label>Gía Phòng (*)</Form.Label>
-            <Form.Control type="number" disabled={disable} defaultValue={roomdetail.price} onChange={(e: any) => setPrice(e.target.value)} />
+            <Form.Control type="number"
+              disabled={disable}
+              defaultValue={roomdetail.price}
+              onChange={(e: any) => setPrice(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicNameRooms">
             <Form.Label>Số Người (*)</Form.Label>
-            <Form.Control type="number" disabled={disable} defaultValue={roomdetail.people} onChange={(e: any) => setPeople(e.target.value)} />
+            <Form.Control type="number"
+              disabled={disable}
+              defaultValue={roomdetail.people}
+              onChange={(e: any) => setPeople(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicNameRooms">
             <Form.Label>Thông tin (*)</Form.Label>
-            <Form.Control type="text" disabled={disable} defaultValue={roomdetail.info} onChange={(e: any) => setInfo(e.target.value)} />
+            <Form.Control type="text"
+              disabled={disable}
+              defaultValue={roomdetail.info}
+              onChange={(e: any) => setInfo(e.target.value)} />
           </Form.Group>
 
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Hình ảnh (*)</Form.Label>
-            <Form.Control type="text" disabled={disable} defaultValue={roomdetail.img_rooms} onChange={(e: any) => setImg(e.target.value)} />
+            <Form.Control type="text"
+              disabled={disable}
+              defaultValue={roomdetail.img_rooms}
+              onChange={(e: any) => setImg(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicNameRooms">
             <Form.Label>Kinh độ (*)</Form.Label>
-            <Form.Control type="text" disabled={disable} defaultValue={roomdetail.lat} onChange={(e: any) => setLat(e.target.value)} />
+            <Form.Control type="text"
+              disabled={disable}
+              defaultValue={ lat}
+              onChange={(e: any) => setLat(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicNameRooms">
             <Form.Label>Vĩ độ (*)</Form.Label>
-            <Form.Control type="text" disabled={disable} defaultValue={roomdetail.lng} onChange={(e: any) => setLng(e.target.value)} />
+            <Form.Control type="text"
+              disabled={disable}
+              defaultValue={ lng}
+              onChange={(e: any) => setLng(e.target.value)} />
           </Form.Group>
 
-          <HostMap handeClickCenter={handeClickCenter} disable={disable} />
+          <HostMap handeClickCenter={handeClickCenter} lat={lat} lng={lng} />
 
+          <div className='mt--18'></div>
           {disable ? (
             <Button variant="primary" onClick={triggerDisable}>
               Chỉnh sửa

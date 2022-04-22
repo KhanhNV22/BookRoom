@@ -127,7 +127,7 @@ function HostAddRooms() {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicNameRooms">
-            <Form.Label>Gía Phòng (*)</Form.Label>
+            <Form.Label>Giá Phòng (*)</Form.Label>
             <Form.Control type="number" onChange={(e) => setPrice(e.target.value)} />
           </Form.Group>
 
