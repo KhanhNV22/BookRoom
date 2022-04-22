@@ -332,3 +332,10 @@
     display: block;
   }
 }
+
+@media only screen and (max-width: 425px) {
+  .input_header {
+    width: 180px;
+    margin-right: 5px;
+  }
+}
